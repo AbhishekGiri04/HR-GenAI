@@ -163,6 +163,7 @@ HR-GenAI/
 | Loading Screen              | ![Loading Screen](docs/Loading_Page.png)        |
 | Dashboard                   | ![Dashboard](docs/Home_Page.png)                   |
 | Analysis Pipeline           | ![Analysis](docs/Analysis_Page.png)          |
+| HR Bot (Huma)               | ![HR Bot](docs/HR-Bot.png)                     |
 | Real-time Analytics         | ![Analytics](docs/Analytics_Page.png)    |
 
 <br>
