@@ -32,10 +32,10 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/dashboard" className="text-gray-400 hover:text-blue-400 transition-colors">Dashboard</a></li>
+              <li><a href="/" className="text-gray-400 hover:text-blue-400 transition-colors">Dashboard</a></li>
               <li><a href="/analysis" className="text-gray-400 hover:text-blue-400 transition-colors">Analysis</a></li>
               <li><a href="/analytics" className="text-gray-400 hover:text-blue-400 transition-colors">Analytics</a></li>
-              <li><a href="/docs" className="text-gray-400 hover:text-blue-400 transition-colors">Documentation</a></li>
+              <li><a href="https://github.com/abhishekgiri04/HR-GenAI" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">Documentation</a></li>
             </ul>
           </div>
 

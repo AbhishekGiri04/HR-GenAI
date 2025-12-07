@@ -50,15 +50,25 @@ const LoadingScreen = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl">
-        {/* GIF */}
+        {/* Logo */}
         <div className="mb-8 flex justify-center">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-            <img 
-              src="https://assets-v2.lottiefiles.com/a/79ff67b0-1163-11ee-9c0e-cb44a51043f4/IgIvoaMw7t.gif" 
-              alt="Loading" 
-              className="relative h-48 w-48 rounded-full"
-            />
+            <div className="relative h-48 w-48 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-full shadow-2xl flex items-center justify-center overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center">
+                <div className="text-6xl font-black text-white">🧬</div>
+              </div>
+              <img 
+                src="https://assets-v2.lottiefiles.com/a/79ff67b0-1163-11ee-9c0e-cb44a51043f4/IgIvoaMw7t.gif" 
+                alt="HR-GenAI Logo" 
+                className="absolute inset-0 w-full h-full object-cover rounded-full opacity-90"
+                loading="eager"
+                onLoad={(e) => e.target.style.opacity = '1'}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
           </div>
         </div>
 
@@ -160,6 +170,13 @@ const LoadingScreen = () => {
         .animate-gradient {
           background-size: 200% 200%;
           animation: gradient 3s ease infinite;
+        }
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 8s linear infinite;
         }
       `}</style>
     </div>

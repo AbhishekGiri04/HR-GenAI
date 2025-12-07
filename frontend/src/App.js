@@ -4,6 +4,7 @@ import LoadingScreen from './pages/LoadingScreen';
 import Dashboard from './pages/Dashboard';
 import CandidateAnalysis from './pages/CandidateAnalysis';
 import GenomeProfile from './pages/GenomeProfile';
+import ProfilePage from './pages/ProfilePage';
 import Analytics from './pages/Analytics';
 import './styles/App.css';
 
@@ -33,7 +34,8 @@ function AppContent() {
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/analysis" element={<CandidateAnalysis />} />
-      <Route path="/profile/:id" element={<GenomeProfile />} />
+      <Route path="/profile/:candidateId" element={<ProfilePage />} />
+      <Route path="/genome/:id" element={<GenomeProfile />} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

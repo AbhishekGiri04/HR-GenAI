@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, Brain, Users, TrendingUp, Sparkles, Target, Award, Zap, Shield, Clock } from 'lucide-react';
+import { Upload, Brain, Users, TrendingUp, Sparkles, Target, Award, Zap, Shield, Clock, CheckCircle, ArrowRight } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ResumeUpload from '../components/ResumeUpload';
@@ -11,6 +11,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [candidateData, setCandidateData] = useState(null);
+  const [showResults, setShowResults] = useState(false);
 
   const handleFileUpload = (file) => {
     setUploadedFile(file);
@@ -23,19 +25,33 @@ const Dashboard = () => {
     try {
       const formData = new FormData();
       formData.append('resume', uploadedFile);
-      formData.append('name', 'Candidate');
-      formData.append('email', 'candidate@example.com');
 
-      const response = await axios.post('http://localhost:5000/api/candidates/upload', formData, {
+      const response = await axios.post('http://localhost:5001/api/candidates/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       if (response.data.candidateId) {
-        navigate('/analysis', { state: { candidateId: response.data.candidateId } });
+        setCandidateData({
+          candidateId: response.data.candidateId,
+          skillDNA: response.data.skillDNA,
+          personalInfo: response.data.personalInfo,
+          questions: response.data.questions || []
+        });
+        setShowResults(true);
       }
     } catch (error) {
       console.error('Analysis error:', error);
-      navigate('/analysis', { state: { candidateId: 'demo-123' } });
+      let errorMessage = 'Resume analysis failed. ';
+      if (error.response?.status === 500) {
+        errorMessage += 'Server error. Please check if the backend is running.';
+      } else if (error.response?.status === 400) {
+        errorMessage += 'Invalid file format. Please upload a PDF file.';
+      } else if (error.code === 'ECONNREFUSED') {
+        errorMessage += 'Cannot connect to server. Please start the backend server.';
+      } else {
+        errorMessage += 'Please try again with a different file.';
+      }
+      alert(errorMessage);
     } finally {
       setIsAnalyzing(false);
     }
@@ -175,7 +191,7 @@ const Dashboard = () => {
 
             <ResumeUpload onFileUpload={handleFileUpload} />
             
-            {uploadedFile && (
+            {uploadedFile && !showResults && (
               <div className="mt-8 p-8 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl border-2 border-emerald-200">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
@@ -207,6 +223,82 @@ const Dashboard = () => {
                     )}
                   </button>
                 </div>
+              </div>
+            )}
+
+            {showResults && candidateData && (
+              <div className="mt-8 space-y-6">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                    <CheckCircle className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">Resume Analysis Complete</h3>
+                    <p className="text-gray-600">Profile extracted successfully</p>
+                  </div>
+                </div>
+                
+                {candidateData.personalInfo && (
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border border-blue-200">
+                    <h4 className="font-bold text-gray-900 mb-3">Candidate Profile</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-gray-600">Name</p>
+                        <p className="font-semibold text-gray-900">{candidateData.personalInfo.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Email</p>
+                        <p className="font-semibold text-gray-900">{candidateData.personalInfo.email}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Phone</p>
+                        <p className="font-semibold text-gray-900">{candidateData.personalInfo.phone}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Location</p>
+                        <p className="font-semibold text-gray-900">{candidateData.personalInfo.location}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {candidateData.skillDNA && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                      <p className="text-sm text-gray-600 mb-1">Overall Skill Score</p>
+                      <p className="text-3xl font-bold text-blue-600">
+                        {candidateData.skillDNA.overallScore || 0}/100
+                      </p>
+                    </div>
+                    <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                      <p className="text-sm text-gray-600 mb-1">Learning Velocity</p>
+                      <p className="text-3xl font-bold text-purple-600">
+                        {candidateData.skillDNA.learningVelocity || 0}/10
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {candidateData.skillDNA?.technicalSkills && (
+                  <div>
+                    <p className="text-sm text-gray-600 mb-2">Technical Skills</p>
+                    <div className="flex flex-wrap gap-2">
+                      {candidateData.skillDNA.technicalSkills.slice(0, 10).map((skill, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                <button
+                  onClick={() => navigate('/analysis', { state: { candidateId: candidateData.candidateId } })}
+                  className="w-full bg-blue-600 text-white px-6 py-4 rounded-xl hover:bg-blue-700 font-semibold flex items-center justify-center space-x-2 shadow-lg"
+                >
+                  <span>Start Interview Process</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
               </div>
             )}
           </div>
