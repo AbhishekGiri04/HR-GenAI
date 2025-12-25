@@ -34,16 +34,17 @@ const templateSchema = new mongoose.Schema({
   }],
   createdBy: { type: String, default: 'HR User' },
   isActive: { type: Boolean, default: true },
+  isDeployed: { type: Boolean, default: false }, // For public access
   expiresAt: { type: Date },
   validFor: { type: Number, default: 60 }, // minutes
   
   // Scheduling fields
-  scheduledDate: { type: Date }, // Date when template should activate
-  scheduledStartTime: { type: String }, // e.g., "10:00"
-  scheduledEndTime: { type: String }, // e.g., "11:00"
-  isScheduled: { type: Boolean, default: false },
+  scheduledDate: { type: String },
+  scheduledStartTime: { type: String },
+  scheduledEndTime: { type: String },
   autoActivate: { type: Boolean, default: false },
-  notificationSent: { type: Boolean, default: false }
+  isScheduled: { type: Boolean, default: false },
+  activatedAt: { type: Date }
 }, {
   timestamps: true
 });

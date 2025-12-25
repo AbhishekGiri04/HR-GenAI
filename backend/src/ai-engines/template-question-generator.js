@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'AIzaSyDWHELI
  */
 async function generateTemplateQuestions(templateConfig, candidateInfo = null) {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     
     const { 
       positionTitle, 
@@ -59,18 +59,30 @@ async function generateTemplateQuestions(templateConfig, candidateInfo = null) {
     for (const [categoryKey, categoryData] of Object.entries(categoryMapping)) {
       const count = categories[categoryKey] || 0;
       if (count > 0) {
+        // Calculate time per question based on total duration
+        const totalQuestions = Object.values(categories).reduce((sum, c) => sum + c, 0);
+        const timePerQuestion = Math.floor((templateConfig.duration * 60) / totalQuestions); // in seconds
+        
+        // Difficulty-specific prompts
+        const difficultyPrompts = {
+          easy: 'basic, straightforward questions suitable for entry-level candidates with 0-2 years experience',
+          medium: 'intermediate questions requiring practical experience, suitable for mid-level candidates with 2-5 years experience',
+          hard: 'advanced, complex questions requiring deep expertise, suitable for senior-level candidates with 5+ years experience'
+        };
+        
         const prompt = `Generate ${count} UNIQUE and DIFFERENT ${difficulty} level ${categoryData.name} interview questions for a ${positionTitle} position.
 Tech Stack: ${techStack.join(', ')}
 Interview Type: ${interviewType}
+Difficulty: ${difficultyPrompts[difficulty]}
 ${candidateInfo ? `Candidate Background: ${JSON.stringify(candidateInfo)}` : ''}
 
 IMPORTANT:
 - Generate ${count} COMPLETELY DIFFERENT questions
 - NO repetition or similar questions
-- Questions should be practical and scenario-based
+- Questions should be ${difficulty} level: ${difficultyPrompts[difficulty]}
 - Suitable for ${categoryData.type} interview
-- ${difficulty} difficulty level
-- Each question should take ${categoryData.type === 'voice' ? '1-2' : '2-3'} minutes to answer
+- Each question should take approximately ${Math.floor(timePerQuestion / 60)} minutes to answer
+- Time limit per question: ${timePerQuestion} seconds
 - Add variety in question types and scenarios
 - Use current date/time as seed for randomization: ${Date.now()}
 
@@ -81,7 +93,7 @@ Return ONLY a JSON array of ${count} questions in this format:
     "category": "${categoryKey}",
     "difficulty": "${difficulty}",
     "type": "${categoryData.type}",
-    "timeLimit": ${categoryData.type === 'voice' ? 120 : 180},
+    "timeLimit": ${timePerQuestion},
     "expectedPoints": ["point1", "point2", "point3"]
   }
 ]`;
@@ -93,11 +105,10 @@ Return ONLY a JSON array of ${count} questions in this format:
           const cleanJson = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
           const questions = JSON.parse(cleanJson);
           allQuestions.push(...questions);
-          console.log(`✅ Generated ${questions.length} ${categoryData.name} questions`);
+          console.log(`✅ Generated ${questions.length} ${categoryData.name} questions (${difficulty} level, ${timePerQuestion}s each)`);
         } catch (parseError) {
           console.log(`⚠️ Failed to parse ${categoryData.name} questions, using fallback`);
-          // Add fallback questions
-          allQuestions.push(...generateFallbackForCategory(categoryKey, categoryData, count, difficulty, positionTitle));
+          allQuestions.push(...generateFallbackForCategory(categoryKey, categoryData, count, difficulty, positionTitle, timePerQuestion));
         }
       }
     }
@@ -126,6 +137,7 @@ Return ONLY a JSON array of ${count} questions in this format:
     const voiceQuestions = allQuestions.filter(q => q.type === 'voice');
 
     console.log(`🎯 Total: ${allQuestions.length} questions (${textQuestions.length} text, ${voiceQuestions.length} voice)`);
+    console.log(`⏱️ Total interview duration: ${Math.ceil(allQuestions.reduce((sum, q) => sum + (q.timeLimit || 120), 0) / 60)} minutes`);
 
     return {
       success: true,
@@ -151,7 +163,7 @@ Return ONLY a JSON array of ${count} questions in this format:
 /**
  * Generate fallback questions for a specific category
  */
-function generateFallbackForCategory(categoryKey, categoryData, count, difficulty, positionTitle) {
+function generateFallbackForCategory(categoryKey, categoryData, count, difficulty, positionTitle, timePerQuestion = 120) {
   const fallbackQuestions = [];
   const timestamp = Date.now();
   
@@ -161,7 +173,7 @@ function generateFallbackForCategory(categoryKey, categoryData, count, difficult
       category: categoryKey,
       difficulty: difficulty,
       type: categoryData.type,
-      timeLimit: categoryData.type === 'voice' ? 120 : 180,
+      timeLimit: timePerQuestion,
       expectedPoints: ['Point 1', 'Point 2', 'Point 3']
     });
   }

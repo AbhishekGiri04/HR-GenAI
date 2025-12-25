@@ -20,7 +20,7 @@ import TemplateSelection from './components/TemplateSelection';
 import TemplateBasedInterview from './components/TemplateBasedInterview';
 import TemplateNotification from './components/TemplateNotification';
 import useTemplateNotifications from './hooks/useTemplateNotifications';
-import './index.css';
+import './styles/main.css';
 
 function AppContent() {
   const [showLoading, setShowLoading] = useState(true);
@@ -60,6 +60,7 @@ function AppContent() {
         } />
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
         <Route path="/template-selection/:candidateId" element={<ProtectedRoute><TemplateSelection /></ProtectedRoute>} />
+        <Route path="/template-selection" element={<ProtectedRoute><TemplateSelection /></ProtectedRoute>} />
         <Route path="/analysis" element={<ProtectedRoute requireRole="hr"><AnalysisPage /></ProtectedRoute>} />
         <Route path="/profile/:candidateId" element={<ProtectedRoute><CandidateProfilePage /></ProtectedRoute>} />
         <Route path="/genome/:id" element={<ProtectedRoute><GenomeProfilePage /></ProtectedRoute>} />

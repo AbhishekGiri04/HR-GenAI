@@ -18,29 +18,53 @@ const TemplateSelection = () => {
 
   const fetchTemplates = async () => {
     try {
-      console.log('Fetching templates for candidate:', candidateId);
+      console.log('=== FETCH TEMPLATES START ===');
+      console.log('Candidate ID:', candidateId);
       
-      // Try candidate-specific templates first
-      let response = await fetch(`http://localhost:5001/api/interview/templates/${candidateId}`);
-      
-      if (!response.ok) {
-        console.log('Candidate-specific fetch failed, trying general templates');
-        // Fallback to general templates
-        response = await fetch('http://localhost:5001/api/hr/templates');
+      // Try to fetch assigned template if valid candidate ID
+      if (candidateId && candidateId !== 'public' && candidateId.length === 24) {
+        console.log('Attempting to fetch assigned template for candidate');
+        try {
+          const candidateResponse = await fetch(`http://localhost:5001/api/candidates/${candidateId}`);
+          
+          if (candidateResponse.ok) {
+            const candidate = await candidateResponse.json();
+            console.log('Candidate data:', candidate);
+            
+            if (candidate.assignedTemplate) {
+              const templateResponse = await fetch(`http://localhost:5001/api/hr/templates/${candidate.assignedTemplate}`);
+              
+              if (templateResponse.ok) {
+                const template = await templateResponse.json();
+                console.log('Assigned template found:', template);
+                setTemplates([template]);
+                setLoading(false);
+                return;
+              }
+            }
+          }
+        } catch (err) {
+          console.log('Candidate fetch error:', err);
+        }
       }
       
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Templates fetched:', data);
-        
-        // Always show templates, don't auto-start
-        setTemplates(data);
+      // No assigned template or public access - show deployed templates
+      console.log('Fetching deployed templates for public access');
+      const deployedResponse = await fetch('http://localhost:5001/api/hr/templates/deployed/public');
+      console.log('Deployed response status:', deployedResponse.status);
+      
+      if (deployedResponse.ok) {
+        const deployedTemplates = await deployedResponse.json();
+        console.log('Deployed templates received:', deployedTemplates);
+        console.log('Number of templates:', deployedTemplates.length);
+        setTemplates(deployedTemplates);
       } else {
-        console.error('Failed to fetch templates:', response.status);
+        console.error('Failed to fetch deployed templates:', deployedResponse.status);
       }
     } catch (error) {
       console.error('Failed to fetch templates:', error);
     } finally {
+      console.log('=== FETCH TEMPLATES END ===');
       setLoading(false);
     }
   };

@@ -138,6 +138,22 @@ const HRDashboard = () => {
     });
   };
 
+  const handleDeployTemplate = async (template) => {
+    try {
+      const endpoint = template.isDeployed ? 'undeploy' : 'deploy';
+      const response = await fetch(`http://localhost:5001/api/hr/templates/${template._id}/${endpoint}`, {
+        method: 'POST'
+      });
+      
+      if (response.ok) {
+        showSuccess(`Template ${template.isDeployed ? 'undeployed' : 'deployed'} successfully!`);
+        await fetchTemplates();
+      }
+    } catch (error) {
+      console.error('Error deploying template:', error);
+    }
+  };
+
   const handleSaveTemplate = async (newTemplate) => {
     console.log('Saving template:', newTemplate);
     // Force immediate refresh
@@ -282,7 +298,17 @@ const HRDashboard = () => {
                     <span>Use Template</span>
                   </button>
                   <button 
-                    onClick={() => handleDeleteTemplate(template)}
+                    onClick={() => handleDeployTemplate(template)}
+                    className={`w-full py-2 rounded-lg transition-colors font-medium flex items-center justify-center space-x-2 mb-2 ${
+                      template.isDeployed 
+                        ? 'bg-orange-500 text-white hover:bg-orange-600' 
+                        : 'bg-blue-500 text-white hover:bg-blue-600'
+                    }`}
+                  >
+                    <Settings className="w-4 h-4" />
+                    <span>{template.isDeployed ? 'Undeploy' : 'Deploy'}</span>
+                  </button>
+                  <button                     onClick={() => handleDeleteTemplate(template)}
                     className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors font-medium flex items-center justify-center space-x-2"
                   >
                     <Trash2 className="w-4 h-4" />

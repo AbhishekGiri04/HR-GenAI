@@ -29,6 +29,9 @@ websocketService.initialize(server);
 // Connect to MongoDB
 connectDB();
 
+// Start template scheduler
+templateScheduler.start();
+
 // Security middleware
 app.use(helmet());
 app.use(cors());
@@ -46,7 +49,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/candidates', candidateRoutes);
-app.use('/api/candidates', invitationRoutes);
 app.use('/api/analysis', analysisRoutes);
 app.use('/api/genome', genomeRoutes);
 app.use('/api/analytics', analyticsRoutes);
@@ -55,6 +57,7 @@ app.use('/api', aiCopilotRoutes);
 app.use('/api/hr', hrInterviewRoutes);
 app.use('/api/hr', templateRoutes);
 app.use('/api/interview', interviewRoutes);
+app.use('/api/invitations', invitationRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -70,7 +73,4 @@ app.use((err, req, res, next) => {
 server.listen(PORT, () => {
   console.log(`🚀 HR-GenAI Server running on port ${PORT}`);
   console.log(`📡 WebSocket service active`);
-  
-  // Start template scheduler
-  templateScheduler.start();
 });

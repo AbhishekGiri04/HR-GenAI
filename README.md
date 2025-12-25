@@ -210,22 +210,47 @@ HR-GenAI/
 ```
 <br>
 
-## 📸 Preview Images
+## 📸 Application Screenshots
 
-| 📍 Page / Feature            | 📸 Screenshot                                              |
-|:----------------------------|:-----------------------------------------------------------|
-| Loading Screen              | ![Loading Screen](docs/Loading_Page.png)        |
-| Sign In                     | ![Sign In](docs/SignIn_Page.png)                   |
-| Sign Up                     | ![Sign Up](docs/SignUp_Page.png)                   |
-| Dashboard                   | ![Dashboard](docs/Home_Page.png)                   |
-| HR Dashboard                | ![HR Dashboard](docs/HR_Dashboard.png)             |
-| Analytics                   | ![Analytics](docs/Analytics_Page.png)              |
-| Candidate Profile           | ![Candidate Profile](docs/Candidate_Profile.png)   |
-| Assessment                  | ![Assessment](docs/Assessment_Page.png)            |
-| Proctoring Setup            | ![Proctoring](docs/Proctoring_Setup.png)          |
-| Huma AI Interviewer         | ![Huma AI](docs/Huma_AI.png)                       |
-| Settings                    | ![Settings](docs/Settings_Page.png)                |
-| User Profile                | ![Profile](docs/Profile_Page.png)                  |
+### Loading & Authentication
+<table>
+  <tr>
+    <td><img src="docs/Loading_Page.png" alt="Loading Screen" width="400"/><br/><b>Loading Screen</b></td>
+    <td><img src="docs/SignIn_Page.png" alt="Sign In" width="400"/><br/><b>Sign In Page</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/SignUp_Page.png" alt="Sign Up" width="400"/><br/><b>Sign Up Page</b></td>
+    <td><img src="docs/Home_Page.png" alt="Dashboard" width="400"/><br/><b>Main Dashboard</b></td>
+  </tr>
+</table>
+
+### HR Management
+<table>
+  <tr>
+    <td><img src="docs/HR_Dashboard.png" alt="HR Dashboard" width="400"/><br/><b>HR Dashboard</b></td>
+    <td><img src="docs/Analytics_Page.png" alt="Analytics" width="400"/><br/><b>Analytics Dashboard</b></td>
+  </tr>
+</table>
+
+### Interview & Assessment
+<table>
+  <tr>
+    <td><img src="docs/Assessment_Page.png" alt="Assessment" width="400"/><br/><b>Assessment Selection</b></td>
+    <td><img src="docs/Proctoring_Setup.png" alt="Proctoring" width="400"/><br/><b>Proctoring Setup</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/Huma_AI.png" alt="Huma AI" width="400"/><br/><b>Huma AI Interviewer</b></td>
+    <td><img src="docs/Candidate_Profile.png" alt="Profile" width="400"/><br/><b>Candidate Profile</b></td>
+  </tr>
+</table>
+
+### Settings & Profile
+<table>
+  <tr>
+    <td><img src="docs/Settings_Page.png" alt="Settings" width="400"/><br/><b>Settings Page</b></td>
+    <td><img src="docs/Profile_Page.png" alt="User Profile" width="400"/><br/><b>User Profile</b></td>
+  </tr>
+</table>
 
 <br>
 
@@ -466,10 +491,46 @@ JWT_EXPIRE=7d
 
 | Member | Role | Contribution |
 |--------|------|--------------|
-| **Abhishek Giri** | Team Lead | Architecture, AI Integration, Full-stack Development |
-| **Muskan Sharma** | Frontend Developer | React UI, Data Visualization |
-| **Kashish Sharma** | Backend Developer | APIs, Database Design |
-| **Sidh Khurana** | AI/ML Engineer | AI Models, Analysis Algorithms |
+| **Abhishek Giri** | Team Lead & Full-stack Developer | Architecture Design, AI Integration, Backend Development, Frontend Development |
+| **Muskan Sharma** | Frontend Developer | React UI Components, Data Visualization, User Experience |
+| **Kashish Sharma** | Backend Developer | REST APIs, Database Design, Authentication System |
+| **Sidh Khurana** | AI/ML Engineer | AI Models Integration, Analysis Algorithms, Voice Processing |
+
+<br>
+
+---
+
+## 🎥 Demo Video
+
+**📹 Watch our complete demo and architecture walkthrough:**
+
+[![HR-GenAI Demo Video](https://img.shields.io/badge/▶️_Watch_Demo-YouTube-red?style=for-the-badge&logo=youtube)](YOUR_YOUTUBE_VIDEO_LINK_HERE)
+
+**Video Contents:**
+- Problem Statement & Solution Overview
+- Tech Stack & Architecture Explanation  
+- Live Platform Walkthrough
+- Key Features Demonstration
+- HR Dashboard & Template Management
+- Candidate Interview Experience
+- AI Analysis & Results
+
+**Duration:** 5 minutes  
+**Direct Link:** [YOUR_VIDEO_LINK_HERE]
+
+<br>
+
+---
+
+## 🌐 Deployment
+
+**🚀 Live Application:** [Coming Soon]
+
+**Local Development:**
+```bash
+Frontend: http://localhost:3000
+Backend:  http://localhost:5001
+```
 
 <br>
 

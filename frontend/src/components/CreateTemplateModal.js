@@ -69,45 +69,40 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
     const isSelected = template.categories.includes(category);
     
     if (isSelected) {
-      // Deselecting - remove from categories
+      // Deselecting - remove from categories and reset count
       setTemplate(prev => ({
         ...prev,
         categories: prev.categories.filter(c => c !== category)
       }));
+      setCategoryQuestions(prev => ({ ...prev, [category]: 0 }));
     } else {
       // Selecting - add to categories and set default count
+      const defaultCount = questionCategories.find(c => c.value === category)?.defaultCount || 1;
       setTemplate(prev => ({
         ...prev,
         categories: [...prev.categories, category]
       }));
-      
-      // Set default count for newly selected category
-      const defaultCount = questionCategories.find(c => c.value === category)?.defaultCount || 1;
       setCategoryQuestions(prev => ({ ...prev, [category]: defaultCount }));
     }
-    
-    // Update estimated questions after state updates
-    setTimeout(() => updateEstimatedQuestions(), 0);
   };
 
   const updateCategoryQuestionCount = (category, count) => {
     setCategoryQuestions(prev => ({ ...prev, [category]: count }));
-    setTimeout(() => updateEstimatedQuestions(), 0);
   };
 
-  const updateEstimatedQuestions = () => {
+  // Auto-update estimated questions whenever dependencies change
+  React.useEffect(() => {
     const total = template.categories.reduce((sum, cat) => {
       return sum + (categoryQuestions[cat] || 0);
     }, 0) + template.customQuestions.length;
     setEstimatedQuestions(total);
-  };
+  }, [template.categories, categoryQuestions, template.customQuestions]);
 
   const addCustomQuestion = () => {
     setTemplate(prev => ({
       ...prev,
       customQuestions: [...prev.customQuestions, { question: '', category: 'technical' }]
     }));
-    setTimeout(() => updateEstimatedQuestions(), 0);
   };
 
   const removeCustomQuestion = (index) => {
@@ -115,7 +110,6 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
       ...prev,
       customQuestions: prev.customQuestions.filter((_, i) => i !== index)
     }));
-    setTimeout(() => updateEstimatedQuestions(), 0);
   };
 
   const updateCustomQuestion = (index, field, value) => {
@@ -136,8 +130,10 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
       return;
     }
     
-    if (!template.techStack || template.techStack.length === 0) {
-      alert('Please enter at least one tech stack skill');
+    // Tech stack required only for technical/mixed interviews
+    if ((template.interviewType === 'technical' || template.interviewType === 'mixed') && 
+        (!template.techStack || template.techStack.length === 0)) {
+      alert('Please enter at least one tech stack skill for technical interviews');
       return;
     }
     
@@ -147,7 +143,7 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
         categoryQuestions,
         totalQuestions: estimatedQuestions,
         createdBy: 'HR',
-        isScheduled: template.autoActivate && template.scheduledDate && template.scheduledStartTime && template.scheduledEndTime
+        isScheduled: template.autoActivate && !!template.scheduledDate && !!template.scheduledStartTime && !!template.scheduledEndTime
       };
       
       console.log('Submitting template:', templateData);
@@ -235,9 +231,13 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                 className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
                 placeholder="React\nJavaScript\nNode.js"
                 rows="3"
-                required
+                required={template.interviewType === 'technical' || template.interviewType === 'mixed'}
               />
-              <p className="text-xs text-gray-500 mt-1">Enter each skill on a new line</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {template.interviewType === 'behavioral' 
+                  ? 'Optional for behavioral interviews' 
+                  : 'Enter each skill on a new line (Required)'}
+              </p>
             </div>
           </div>
 
@@ -250,6 +250,14 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                   key={type.value}
                   onClick={() => {
                     setTemplate(prev => ({ ...prev, interviewType: type.value, categories: [] }));
+                    setCategoryQuestions({
+                      'technical': 0,
+                      'behavioral': 0,
+                      'problem-solving': 0,
+                      'communication': 0,
+                      'leadership': 0,
+                      'cultural-fit': 0
+                    });
                     setEstimatedQuestions(0);
                   }}
                   className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${

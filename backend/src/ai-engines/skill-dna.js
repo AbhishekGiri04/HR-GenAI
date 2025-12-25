@@ -133,7 +133,7 @@ Make questions specific to their ${skills} expertise and vary difficulty levels.
       if (process.env.GEMINI_API_KEY) {
         try {
           const geminiResponse = await axios.post(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
             {
               contents: [{ parts: [{ text: prompt }] }]
             },

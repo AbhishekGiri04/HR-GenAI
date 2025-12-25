@@ -59,10 +59,11 @@ class TemplateScheduler {
   async activateTemplate(template) {
     try {
       template.isActive = true;
+      template.isDeployed = true; // Auto-deploy when time starts
       template.notificationSent = true;
       await template.save();
 
-      console.log(`✅ Template activated: ${template.name} at ${new Date().toLocaleTimeString()}`);
+      console.log(`✅ Template auto-deployed: ${template.name} at ${new Date().toLocaleTimeString()}`);
 
       // Send notifications to candidates (if assigned)
       await this.notifyCandidates(template);
@@ -74,9 +75,10 @@ class TemplateScheduler {
   async deactivateTemplate(template) {
     try {
       template.isActive = false;
+      template.isDeployed = false; // Auto-undeploy when time ends
       await template.save();
 
-      console.log(`⏹️ Template deactivated: ${template.name} at ${new Date().toLocaleTimeString()}`);
+      console.log(`⏹️ Template auto-undeployed: ${template.name} at ${new Date().toLocaleTimeString()}`);
     } catch (error) {
       console.error('❌ Failed to deactivate template:', error);
     }

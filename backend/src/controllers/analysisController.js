@@ -1,7 +1,9 @@
 const Candidate = require('../models/Candidate');
+const Template = require('../models/Template');
 // const adaptiveInterviewer = require('../ai-engines/adaptive-interviewer');
 const voiceEmotionAnalyzer = require('../ai-engines/voice-emotion-analyzer');
 const emailService = require('../services/emailService');
+const offerLetterService = require('../services/offerLetterService');
 
 exports.analyzeResume = async (req, res) => {
   try {
@@ -108,6 +110,26 @@ exports.analyzeInterview = async (req, res) => {
       await emailService.sendInterviewCompletionEmail(candidate, summary);
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
+    }
+    
+    // Auto-generate offer letter if candidate passed
+    if (candidate.assignedTemplate) {
+      try {
+        const template = await Template.findById(candidate.assignedTemplate);
+        if (template && candidate.finalScore >= template.passingScore) {
+          console.log(`🎉 Candidate passed! Generating offer letter...`);
+          const offerResult = await offerLetterService.generateAndSendOfferLetter(
+            candidate,
+            template,
+            { overallScore: candidate.finalScore }
+          );
+          if (offerResult.success) {
+            console.log(`✅ Offer letter sent to ${candidate.email}`);
+          }
+        }
+      } catch (offerError) {
+        console.error('Offer letter generation failed:', offerError);
+      }
     }
 
     res.json({ 

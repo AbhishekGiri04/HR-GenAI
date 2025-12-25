@@ -23,7 +23,7 @@ class OfferLetterService {
         return { success: false, reason: 'Did not meet passing criteria' };
       }
 
-      console.log(`✅ Generating offer letter for ${candidate.personalInfo?.name}`);
+      console.log(`✅ Generating offer letter for ${candidate.name || candidate.personalInfo?.name}`);
 
       // Generate PDF
       const pdfPath = await this.generateOfferLetterPDF(candidate, template, interviewResults);
@@ -73,7 +73,7 @@ class OfferLetterService {
       doc.moveDown(2);
 
       // Candidate Details
-      doc.fontSize(12).fillColor('#000').text(`Dear ${candidate.personalInfo?.name || 'Candidate'},`, { align: 'left' });
+      doc.fontSize(12).fillColor('#000').text(`Dear ${candidate.name || candidate.personalInfo?.name || 'Candidate'},`, { align: 'left' });
       doc.moveDown();
 
       // Congratulations
@@ -172,7 +172,7 @@ class OfferLetterService {
       html: this.generateOfferEmailHTML(candidate, template),
       attachments: [
         {
-          filename: `Offer_Letter_${candidate.personalInfo?.name?.replace(/\s+/g, '_')}.pdf`,
+          filename: `Offer_Letter_${(candidate.name || candidate.personalInfo?.name || 'Candidate').replace(/\s+/g, '_')}.pdf`,
           path: pdfPath
         }
       ]
@@ -206,7 +206,7 @@ class OfferLetterService {
           </div>
           
           <div class="content">
-            <h2>Dear ${candidate.personalInfo?.name},</h2>
+            <h2>Dear ${candidate.name || candidate.personalInfo?.name},</h2>
             
             <p>We are thrilled to inform you that you have <strong>successfully passed</strong> the interview for the position of <strong>${template.name}</strong>!</p>
             

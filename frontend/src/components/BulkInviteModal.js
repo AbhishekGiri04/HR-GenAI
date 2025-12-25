@@ -37,7 +37,7 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
     setSending(true);
 
     try {
-      const response = await fetch('http://localhost:5001/api/candidates/bulk-invite', {
+      const response = await fetch('http://localhost:5001/api/invitations/bulk-invite', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
