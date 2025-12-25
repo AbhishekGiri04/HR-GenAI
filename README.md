@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white"/>
   <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/>
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
-  <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi"/>
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/>
 </p>
 <br>
 
@@ -33,6 +33,8 @@ HR-GenAI is a revolutionary AI-powered platform that transforms hiring through:
 - 🎭 **Personality Detection** — MBTI, OCEAN traits, and EQ analysis
 - 📊 **Predictive Analytics** — Performance and retention predictions
 - ✉️ **Automated Notifications** — Professional email reports with results
+- 📅 **Template Scheduling** — Auto-activate interviews at specific times
+- 📧 **Bulk Invitations** — Send interview invites to multiple candidates
 
 <br>
 
@@ -48,6 +50,9 @@ HR-GenAI is a revolutionary AI-powered platform that transforms hiring through:
 ✅  **EQ Analysis** — Voice confidence, stress management, and emotional intelligence  
 ✅  **Bias-Free Hiring** — 100% objective assessment eliminating unconscious bias  
 ✅  **Predictive Scoring** — Performance and retention probability predictions  
+✅  **Template System** — Create reusable interview templates with scheduling  
+✅  **Bulk Email Invitations** — Invite multiple candidates with one click  
+✅  **Auto Offer Letters** — Generate and send PDF offer letters to qualified candidates
 
 <br>
 
@@ -78,12 +83,16 @@ HR-GenAI is a revolutionary AI-powered platform that transforms hiring through:
 <td>GPT-4 for resume analysis and question generation</td>
 </tr>
 <tr>
+<td><img src="https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white"/></td>
+<td>Gemini AI for fallback processing</td>
+</tr>
+<tr>
 <td><img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/></td>
 <td>NoSQL database for candidate profiles</td>
 </tr>
 <tr>
-<td><img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi"/></td>
-<td>High-performance Python AI services</td>
+<td><img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/></td>
+<td>Authentication and user management</td>
 </tr>
 <tr>
 <td><img src="https://img.shields.io/badge/Web%20Speech%20API-FF6B6B?style=for-the-badge&logo=html5&logoColor=white"/></td>
@@ -92,6 +101,14 @@ HR-GenAI is a revolutionary AI-powered platform that transforms hiring through:
 <tr>
 <td><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/></td>
 <td>Utility-first CSS framework</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/PDFKit-E74C3C?style=for-the-badge&logo=adobe&logoColor=white"/></td>
+<td>PDF generation for offer letters</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/Nodemailer-339933?style=for-the-badge&logo=node.js&logoColor=white"/></td>
+<td>Email service for invitations and offers</td>
 </tr>
 </tbody>
 </table>
@@ -109,49 +126,86 @@ HR-GenAI/
 ├── 📂 frontend/                    # 🎨 React frontend application (Port 3000)
 │   ├── 📂 src/
 │   │   ├── 📂 components/          # 🧩 Reusable UI components
-│   │   │   ├── 📄 EnhancedAIAgent.js    # 🤖 Huma AI interviewer
 │   │   │   ├── 📄 Header.js             # 🔝 Navigation header
 │   │   │   ├── 📄 Footer.js             # 🔻 Footer component
 │   │   │   ├── 📄 ResumeUpload.js       # 📄 File upload interface
 │   │   │   ├── 📄 GenomeChart.js        # 📊 DNA visualization
-│   │   │   └── 📄 TextInterview.js      # 💬 Text-based interview
+│   │   │   ├── 📄 TextInterview.js      # 💬 Text-based interview
+│   │   │   ├── 📄 TimedCulturalInterview.js # ⏱️ Timed interview with proctoring
+│   │   │   ├── 📄 VoiceInterviewBox.js  # 🎤 Huma AI voice interviewer
+│   │   │   ├── 📄 TemplateSelection.js  # 📋 Template selection interface
+│   │   │   ├── 📄 TemplateBasedInterview.js # 🎯 Template interview flow
+│   │   │   ├── 📄 CreateTemplateModal.js # ➕ Create interview templates
+│   │   │   ├── 📄 BulkInviteModal.js    # 📧 Bulk candidate invitations
+│   │   │   ├── 📄 ProtectedRoute.js     # 🔐 Route protection
+│   │   │   ├── 📄 RoleSelection.js      # 👤 User role selection
+│   │   │   └── 📄 StatsCard.js          # 📊 Statistics cards
 │   │   ├── 📂 pages/               # 📄 Main application pages
-│   │   │   ├── 📄 Dashboard.js          # 🏠 Main dashboard
-│   │   │   ├── 📄 LoadingScreen.js      # ⏳ Loading animation
-│   │   │   ├── 📄 CandidateAnalysis.js  # 📊 Analysis pipeline
-│   │   │   ├── 📄 Analytics.js          # 📈 Real-time analytics
-│   │   │   ├── 📄 GenomeProfile.js      # 🧬 DNA profile display
-│   │   │   └── 📄 ProfilePage.js        # 👤 User profile
+│   │   │   ├── 📄 LoadingPage.js        # ⏳ Loading animation
+│   │   │   ├── 📄 SignInPage.js         # 🔑 Sign in page
+│   │   │   ├── 📄 SignUpPage.js         # 📝 Sign up page
+│   │   │   ├── 📄 DashboardPage.js      # 🏠 Main dashboard
+│   │   │   ├── 📄 HRDashboardPage.js    # 👔 HR management dashboard
+│   │   │   ├── 📄 AnalyticsPage.js      # 📈 Real-time analytics
+│   │   │   ├── 📄 CandidateProfilePage.js # 👤 Candidate profile view
+│   │   │   ├── 📄 GenomeProfilePage.js  # 🧬 DNA profile display
+│   │   │   ├── 📄 InterviewPage.js      # 🎤 Interview interface
+│   │   │   ├── 📄 SettingsPage.js       # ⚙️ User settings
+│   │   │   └── 📄 UserProfilePage.js    # 👤 User profile management
+│   │   ├── 📂 contexts/            # 🔄 React context providers
+│   │   │   └── 📄 authContext.js        # 🔐 Authentication state
+│   │   ├── 📂 firebase/            # 🔥 Firebase configuration
+│   │   │   └── 📄 firebaseConfig.js     # 🔥 Firebase setup
+│   │   ├── 📂 services/            # 🔌 API integration
+│   │   │   └── 📄 websocketService.js   # 🔌 WebSocket client
 │   │   └── 📄 App.js               # 🚀 Main application
+│   └── 📄 package.json             # 📦 Frontend dependencies
 ├── 📂 backend/                     # 🔧 Node.js backend service (Port 5001)
 │   └── 📂 src/
 │       ├── 📂 ai-engines/          # 🤖 AI processing engines
 │       │   ├── 📄 skill-dna.js          # 📄 Resume extraction engine
-│       │   ├── 📄 adaptive-interviewer.js # 🎯 Question generation
-│       │   ├── 📄 behavior-dna.js       # 🎭 Personality analysis
-│       │   └── 📄 voice-emotion-analyzer.js # 🎤 Voice analysis
+│       │   ├── 📄 template-question-generator.js # 🎯 Question generation
+│       │   ├── 📄 voice-emotion-analyzer.js # 🎤 Voice analysis
+│       │   └── 📄 ai-evaluation-engine.js # 📊 Interview evaluation
 │       ├── 📂 controllers/         # 🎮 API controllers
 │       │   ├── 📄 candidateController.js # 👤 Candidate management
 │       │   ├── 📄 analysisController.js  # 📊 Analysis processing
 │       │   └── 📄 genomeController.js    # 🧬 DNA profiling
 │       ├── 📂 models/              # 📋 Database models
 │       │   ├── 📄 Candidate.js          # 👤 Candidate schema
-│       │   └── 📄 GenomeProfile.js      # 🧬 DNA profile schema
+│       │   ├── 📄 GenomeProfile.js      # 🧬 DNA profile schema
+│       │   ├── 📄 Template.js           # 📋 Interview template schema
+│       │   └── 📄 Interview.js          # 🎤 Interview session schema
 │       ├── 📂 routes/              # 🛣️ API routes
+│       │   ├── 📄 candidates.js         # 👤 Candidate routes
+│       │   ├── 📄 analysis.js           # 📊 Analysis routes
+│       │   ├── 📄 templates.js          # 📋 Template routes
+│       │   ├── 📄 invitations.js        # 📧 Invitation routes
+│       │   └── 📄 interview.js          # 🎤 Interview routes
 │       ├── 📂 services/            # 📧 External services
-│       │   └── 📄 emailService.js       # ✉️ Email notifications
+│       │   ├── 📄 emailService.js       # ✉️ Email notifications
+│       │   ├── 📄 websocketService.js   # 🔌 WebSocket server
+│       │   ├── 📄 templateScheduler.js  # 📅 Template auto-activation
+│       │   └── 📄 offerLetterService.js # 📄 PDF offer letter generation
 │       └── 📄 server.js            # 🚀 Express server
-├── 📂 ai-services/                 # 🤖 Python AI services (Port 8000)
-│   ├── 📄 main.py                  # 🚀 FastAPI application
-│   └── 📄 requirements.txt         # 📦 Python dependencies
 ├── 📂 docs/                        # 📸 Documentation and screenshots
 │   ├── 📄 Loading_Page.png         # 🖼️ Loading screen
+│   ├── 📄 SignIn_Page.png          # 🖼️ Sign in page
+│   ├── 📄 SignUp_Page.png          # 🖼️ Sign up page
 │   ├── 📄 Home_Page.png            # 🖼️ Dashboard page
-│   ├── 📄 Analysis_Page.png        # 🖼️ Analysis pipeline
-│   └── 📄 Analytics_Page.png       # 🖼️ Analytics dashboard
+│   ├── 📄 HR_Dashboard.png         # 🖼️ HR dashboard
+│   ├── 📄 Analytics_Page.png       # 🖼️ Analytics dashboard
+│   ├── 📄 Candidate_Profile.png    # 🖼️ Candidate profile
+│   ├── 📄 Assessment_Page.png      # 🖼️ Assessment interface
+│   ├── 📄 Proctoring_Setup.png     # 🖼️ Proctoring setup
+│   ├── 📄 Huma_AI.png              # 🖼️ Huma AI interviewer
+│   ├── 📄 Settings_Page.png        # 🖼️ Settings page
+│   └── 📄 Profile_Page.png         # 🖼️ User profile
 ├── 📄 start-dev.sh                 # 🚀 Start all services
 ├── 📄 stop-dev.sh                  # 🛑 Stop all services
+├── 📄 .env                         # 🔐 Environment variables
 ├── 📄 .env.example                 # 🔧 Environment template
+├── 📄 .gitignore                   # 🚫 Git ignore patterns
 └── 📄 README.md                    # 📖 Project documentation
 ```
 <br>
@@ -161,10 +215,17 @@ HR-GenAI/
 | 📍 Page / Feature            | 📸 Screenshot                                              |
 |:----------------------------|:-----------------------------------------------------------|
 | Loading Screen              | ![Loading Screen](docs/Loading_Page.png)        |
+| Sign In                     | ![Sign In](docs/SignIn_Page.png)                   |
+| Sign Up                     | ![Sign Up](docs/SignUp_Page.png)                   |
 | Dashboard                   | ![Dashboard](docs/Home_Page.png)                   |
-| Analysis Pipeline           | ![Analysis](docs/Analysis_Page.png)          |
-| HR Bot (Huma)               | ![HR Bot](docs/HR-Bot.png)                     |
-| Real-time Analytics         | ![Analytics](docs/Analytics_Page.png)    |
+| HR Dashboard                | ![HR Dashboard](docs/HR_Dashboard.png)             |
+| Analytics                   | ![Analytics](docs/Analytics_Page.png)              |
+| Candidate Profile           | ![Candidate Profile](docs/Candidate_Profile.png)   |
+| Assessment                  | ![Assessment](docs/Assessment_Page.png)            |
+| Proctoring Setup            | ![Proctoring](docs/Proctoring_Setup.png)          |
+| Huma AI Interviewer         | ![Huma AI](docs/Huma_AI.png)                       |
+| Settings                    | ![Settings](docs/Settings_Page.png)                |
+| User Profile                | ![Profile](docs/Profile_Page.png)                  |
 
 <br>
 
@@ -174,9 +235,10 @@ HR-GenAI/
 
 ### 📌 Prerequisites
 - ✅ **Node.js 18+** installed
-- ✅ **Python 3.8+** installed  
 - ✅ **MongoDB** installed and running
 - ✅ **OpenAI API Key** (required)
+- ✅ **Gemini API Key** (optional, for fallback)
+- ✅ **Gmail Account** (for email notifications)
 
 <br>
 
@@ -206,20 +268,33 @@ sudo systemctl start mongod
 
    ```bash
    cp .env.example .env
-   # Add your OPENAI_API_KEY to .env file
+   # Add your API keys to .env file:
+   # - OPENAI_API_KEY
+   # - GEMINI_API_KEY
+   # - EMAIL_USER
+   # - EMAIL_PASS (Gmail App Password)
    ```
 
-3. **Start all services:**
+3. **Install dependencies:**
+
+   ```bash
+   cd backend && npm install
+   cd ../frontend && npm install
+   cd ..
+   ```
+
+4. **Start all services:**
 
    ```bash
    chmod +x start-dev.sh
    ./start-dev.sh
    ```
 
-4. **Access the platform:**
+5. **Access the platform:**
 
    ```
-   http://localhost:3000
+   Frontend: http://localhost:3000
+   Backend:  http://localhost:5001
    ```
 
 ### 🔧 Troubleshooting
@@ -264,15 +339,14 @@ cd ..
 
 ```bash
 # Backend API (Port 5001)
-POST /api/candidates/upload     # Upload and analyze resume
-GET  /api/candidates/:id        # Get candidate profile
-GET  /api/candidates/:id/questions # Get dynamic questions
-POST /api/analysis/interview    # Process interview responses
-POST /api/analysis/followup     # Generate follow-up questions
-GET  /health                    # Health check
-
-# AI Services API (Port 8000) - Optional
-GET  /                          # Service status
+POST /api/candidates/upload          # Upload and analyze resume
+POST /api/candidates/bulk-invite     # Send bulk invitations
+GET  /api/candidates/:id             # Get candidate profile
+GET  /api/candidates/:id/questions   # Get dynamic questions
+POST /api/analysis/interview         # Process interview responses
+GET  /api/hr/templates               # Get interview templates
+POST /api/hr/templates               # Create interview template
+GET  /health                         # Health check
 ```
 <br>
 
@@ -283,9 +357,6 @@ GET  /                          # Service status
 ```bash
 # Test backend API
 curl http://localhost:5001/health
-
-# Test AI services (if running)
-curl http://localhost:8000/
 
 # Test frontend
 npm run test
@@ -302,11 +373,12 @@ sudo systemctl start mongod                          # Linux
 **OpenAI API errors:**
 - Ensure valid API key in `.env` file
 - Check API quota and billing
+- Gemini API will be used as fallback
 
-**Port conflicts:**
-- Frontend: 3000
-- Backend: 5001  
-- AI Services: 8000 (optional)
+**Email not sending:**
+- Use Gmail App Password (not regular password)
+- Enable 2-Step Verification in Google Account
+- Generate App Password from Security settings
 
 **Voice not working:**
 - Use Chrome browser
@@ -327,14 +399,20 @@ MONGODB_URI=mongodb://localhost:27017/hr-genai
 
 # OpenAI (REQUIRED)
 OPENAI_API_KEY=your_openai_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
 
-# Email (Optional)
+# Email Configuration
 EMAIL_USER=your-email@gmail.com
-EMAIL_PASSWORD=your-app-password
+EMAIL_PASS=your-gmail-app-password
+FRONTEND_URL=http://localhost:3000
 
 # Server
 PORT=5001
 NODE_ENV=development
+
+# JWT
+JWT_SECRET=hr-genai-secret-key-2025
+JWT_EXPIRE=7d
 ```
 <br>
 
@@ -348,6 +426,8 @@ NODE_ENV=development
 - **91.5% Retention** — 6-month employee retention prediction
 - **100% Bias-Free** — Objective AI-powered evaluation
 - **10x Faster** — Compared to traditional hiring processes
+- **Auto-Scheduling** — Templates activate automatically at set times
+- **Bulk Processing** — Invite unlimited candidates simultaneously
 
 <br>
 
@@ -356,13 +436,14 @@ NODE_ENV=development
 ## 🎯 Core Workflow
 
 1. **📄 Resume Upload** → GPT-4 extracts complete candidate profile
-2. **🎲 Question Generation** → AI creates unique questions per candidate  
-3. **📝 Text Interview** → Basic questions in text format
-4. **🎤 Voice Interview** → Technical questions with Huma AI
-5. **🛡️ Real-time Proctoring** → Camera, mic, screen sharing enforcement
-6. **🧬 DNA Analysis** → Personality, EQ, and behavioral profiling
-7. **📊 Predictive Scoring** → Performance and retention predictions
-8. **✉️ Email Reports** → Automated results and recommendations
+2. **📧 Bulk Invitations** → HR sends interview invites to multiple candidates
+3. **📋 Template Selection** → Candidate selects assigned interview template
+4. **📝 Text Interview** → Basic questions in text format (behavioral)
+5. **🎤 Voice Interview** → Technical questions with Huma AI
+6. **🛡️ Real-time Proctoring** → Camera, mic, screen sharing enforcement
+7. **🧬 DNA Analysis** → Personality, EQ, and behavioral profiling
+8. **📊 Predictive Scoring** → Performance and retention predictions
+9. **✉️ Auto Offer Letter** → PDF offer letter sent to qualified candidates
 
 <br>
 
@@ -375,6 +456,7 @@ NODE_ENV=development
 - 👥 **Team Compatibility** — Team fit analysis
 - 🔐 **Enterprise Security** — Advanced authentication and encryption
 - 📊 **Advanced Analytics** — Predictive hiring insights
+- 🔗 **ATS Integration** — Connect with existing HR systems
 
 <br>
 

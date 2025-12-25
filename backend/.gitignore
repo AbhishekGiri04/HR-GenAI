@@ -1,0 +1,12 @@
+node_modules/
+.env
+uploads/*.pdf
+uploads/*.docx
+uploads/*.doc
+uploads/*
+!uploads/.gitkeep
+!uploads/documents/
+!uploads/temp/
+*.log
+*.pid
+.DS_Store

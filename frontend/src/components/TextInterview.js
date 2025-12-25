@@ -7,12 +7,6 @@ const TextInterview = ({ questions, candidateInfo, onComplete }) => {
   const [currentAnswer, setCurrentAnswer] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [wordCount, setWordCount] = useState(0);
-  const [timeSpent, setTimeSpent] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => setTimeSpent(prev => prev + 1), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     setWordCount(currentAnswer.split(' ').filter(word => word.length > 0).length);
@@ -26,13 +20,11 @@ const TextInterview = ({ questions, candidateInfo, onComplete }) => {
       question: questions[currentQuestion].question,
       type: questions[currentQuestion].type,
       answer: currentAnswer.trim(),
-      wordCount,
-      timeSpent
+      wordCount
     }];
     
     setAnswers(newAnswers);
     setCurrentAnswer('');
-    setTimeSpent(0);
 
     if (currentQuestion < 1) {
       setCurrentQuestion(currentQuestion + 1);
@@ -123,10 +115,6 @@ const TextInterview = ({ questions, candidateInfo, onComplete }) => {
                   <div className="flex items-center justify-between">
                     <span className="text-white/70 text-sm">Questions</span>
                     <span className="text-cyan-400 font-bold">{currentQuestion + 1}/2</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/70 text-sm">Time Spent</span>
-                    <span className="text-purple-400 font-bold">{Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-white/70 text-sm">Words Typed</span>
@@ -248,7 +236,7 @@ const TextInterview = ({ questions, candidateInfo, onComplete }) => {
                           value={currentAnswer}
                           onChange={(e) => setCurrentAnswer(e.target.value)}
                           placeholder="Share your thoughts in detail. Take your time to craft a comprehensive response..."
-                          className="w-full p-6 rounded-2xl bg-black/40 border-2 border-white/20 text-white placeholder-white/40 focus:border-cyan-400 focus:outline-none resize-none transition-all duration-300 backdrop-blur-sm"
+                          className="w-full p-6 rounded-2xl bg-white/95 border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-cyan-400 focus:outline-none resize-none transition-all duration-300"
                           rows={8}
                           style={{
                             minHeight: '200px',

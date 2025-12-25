@@ -2,15 +2,29 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const http = require('http');
 require('dotenv').config();
 
 const connectDB = require('./config/database');
 const candidateRoutes = require('./routes/candidates');
 const analysisRoutes = require('./routes/analysis');
 const genomeRoutes = require('./routes/genome');
+const analyticsRoutes = require('./routes/analytics');
+const aiCompletionRoutes = require('./routes/aiCompletion');
+const aiCopilotRoutes = require('./routes/aiCopilot');
+const hrInterviewRoutes = require('./routes/hrInterview');
+const templateRoutes = require('./routes/templates');
+const interviewRoutes = require('./routes/interview');
+const invitationRoutes = require('./routes/invitations');
+const websocketService = require('./services/websocketService');
+const templateScheduler = require('./services/templateScheduler');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const server = http.createServer(app);
+const PORT = process.env.PORT || 5001;
+
+// Initialize WebSocket service
+websocketService.initialize(server);
 
 // Connect to MongoDB
 connectDB();
@@ -32,8 +46,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/candidates', candidateRoutes);
+app.use('/api/candidates', invitationRoutes);
 app.use('/api/analysis', analysisRoutes);
 app.use('/api/genome', genomeRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api', aiCompletionRoutes);
+app.use('/api', aiCopilotRoutes);
+app.use('/api/hr', hrInterviewRoutes);
+app.use('/api/hr', templateRoutes);
+app.use('/api/interview', interviewRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -46,6 +67,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`🚀 HR-GenAI Server running on port ${PORT}`);
+  console.log(`📡 WebSocket service active`);
+  
+  // Start template scheduler
+  templateScheduler.start();
 });
