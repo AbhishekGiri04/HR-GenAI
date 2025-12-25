@@ -59,6 +59,24 @@ app.use('/api/hr', templateRoutes);
 app.use('/api/interview', interviewRoutes);
 app.use('/api/invitations', invitationRoutes);
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({
+    name: 'HR-GenAI API',
+    version: '1.0.0',
+    status: 'running',
+    message: 'Welcome to HR-GenAI - AI-Powered Hiring Intelligence Platform',
+    endpoints: {
+      health: '/health',
+      candidates: '/api/candidates',
+      templates: '/api/hr/templates',
+      invitations: '/api/invitations',
+      interview: '/api/interview'
+    },
+    documentation: 'https://github.com/AbhishekGiri04/HR-GenAI'
+  });
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'HR-GenAI API is running' });
