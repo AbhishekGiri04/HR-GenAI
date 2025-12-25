@@ -23,31 +23,43 @@ try {
 // Bulk invite candidates
 router.post('/bulk-invite', async (req, res) => {
   try {
+    console.log('=== BULK INVITE REQUEST ===');
+    console.log('Request body:', JSON.stringify(req.body, null, 2));
+    
     const { candidates, templateId, customMessage } = req.body;
 
     if (!candidates || candidates.length === 0) {
+      console.log('❌ No candidates provided');
       return res.status(400).json({ error: 'No candidates provided' });
     }
 
     if (!templateId) {
+      console.log('❌ No template ID provided');
       return res.status(400).json({ error: 'Template ID required' });
     }
     
     if (!transporter) {
-      return res.status(500).json({ error: 'Email service not configured' });
+      console.log('❌ Email transporter not configured');
+      console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');
+      console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'Set' : 'Not set');
+      return res.status(500).json({ error: 'Email service not configured. Please check EMAIL_USER and EMAIL_PASS in .env file' });
     }
 
     // Get template details
+    console.log('Fetching template:', templateId);
     const template = await Template.findById(templateId);
     if (!template) {
+      console.log('❌ Template not found:', templateId);
       return res.status(404).json({ error: 'Template not found' });
     }
+    console.log('✅ Template found:', template.name);
 
     const results = [];
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
 
     for (const candidateData of candidates) {
       try {
+        console.log(`Processing candidate: ${candidateData.email}`);
+        
         // Create or update candidate
         let candidate = await Candidate.findOne({ email: candidateData.email });
         
@@ -61,16 +73,19 @@ router.post('/bulk-invite', async (req, res) => {
             invitedAt: new Date()
           });
           await candidate.save();
+          console.log('✅ New candidate created:', candidate._id);
         } else {
           candidate.appliedFor = template.name;
           candidate.assignedTemplate = templateId;
           candidate.interviewStatus = 'invited';
           candidate.invitedAt = new Date();
           await candidate.save();
+          console.log('✅ Existing candidate updated:', candidate._id);
         }
 
         // Generate interview link
         const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}`;
+        console.log('Interview link:', interviewLink);
 
         // Send invitation email
         const mailOptions = {
@@ -80,6 +95,7 @@ router.post('/bulk-invite', async (req, res) => {
           html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage)
         };
 
+        console.log(`Sending email to ${candidateData.email}...`);
         await transporter.sendMail(mailOptions);
         
         results.push({
@@ -100,6 +116,7 @@ router.post('/bulk-invite', async (req, res) => {
     }
 
     const successCount = results.filter(r => r.status === 'sent').length;
+    console.log(`=== BULK INVITE COMPLETE: ${successCount}/${results.length} sent ===`);
 
     res.json({
       success: true,
@@ -108,7 +125,7 @@ router.post('/bulk-invite', async (req, res) => {
       results
     });
   } catch (error) {
-    console.error('Bulk invite error:', error.message);
+    console.error('❌ Bulk invite error:', error);
     res.status(500).json({ error: 'Failed to send invitations: ' + error.message });
   }
 });
