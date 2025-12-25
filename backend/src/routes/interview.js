@@ -1,6 +1,7 @@
 const express = require('express');
 const Template = require('../models/Template');
 const Candidate = require('../models/Candidate');
+const offerLetterService = require('../services/offerLetterService');
 const router = express.Router();
 
 // Configure new interview template - NO AI DEPENDENCIES
@@ -353,19 +354,36 @@ router.post('/evaluate/:candidateId', async (req, res) => {
     };
 
     // Update candidate with results
-    await Candidate.findByIdAndUpdate(candidateId, {
+    const updatedCandidate = await Candidate.findByIdAndUpdate(candidateId, {
       interviewCompleted: true,
       interviewScore: overallScore,
+      overallScore: overallScore,
       genomeProfile: genomeProfile,
       evaluatedAnswers: evaluatedAnswers,
       lastInterviewDate: new Date()
-    });
+    }, { new: true });
+
+    // Auto-send offer letter if candidate passed
+    let offerLetterSent = false;
+    if (overallScore >= template.passingScore) {
+      console.log(`✅ Candidate passed! Score: ${overallScore}% >= ${template.passingScore}%`);
+      const offerResult = await offerLetterService.generateAndSendOfferLetter(
+        updatedCandidate,
+        template,
+        { overallScore, evaluatedAnswers }
+      );
+      offerLetterSent = offerResult.success;
+      if (offerLetterSent) {
+        console.log(`📧 Offer letter sent to ${updatedCandidate.email || updatedCandidate.personalInfo?.email}`);
+      }
+    }
 
     res.json({
       success: true,
       genomeProfile,
       finalScore: overallScore,
       passed: overallScore >= template.passingScore,
+      offerLetterSent,
       evaluatedAnswers,
       redirect: '/dashboard'
     });

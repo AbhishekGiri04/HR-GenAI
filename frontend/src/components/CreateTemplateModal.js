@@ -37,12 +37,12 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
   ];
 
   const questionCategories = [
-    { value: 'technical', label: 'Technical Skills', defaultCount: 3, type: 'voice' },
-    { value: 'behavioral', label: 'Behavioral Assessment', defaultCount: 2, type: 'text' },
-    { value: 'problem-solving', label: 'Problem Solving', defaultCount: 2, type: 'voice' },
-    { value: 'communication', label: 'Communication', defaultCount: 1, type: 'voice' },
-    { value: 'leadership', label: 'Leadership', defaultCount: 1, type: 'text' },
-    { value: 'cultural-fit', label: 'Cultural Fit', defaultCount: 1, type: 'text' }
+    { value: 'technical', label: 'Technical Skills', defaultCount: 3, type: 'voice', interviewMode: 'voice' },
+    { value: 'behavioral', label: 'Behavioral Assessment', defaultCount: 2, type: 'text', interviewMode: 'text' },
+    { value: 'problem-solving', label: 'Problem Solving', defaultCount: 2, type: 'voice', interviewMode: 'voice' },
+    { value: 'communication', label: 'Communication', defaultCount: 1, type: 'voice', interviewMode: 'voice' },
+    { value: 'leadership', label: 'Leadership', defaultCount: 1, type: 'text', interviewMode: 'text' },
+    { value: 'cultural-fit', label: 'Cultural Fit', defaultCount: 1, type: 'text', interviewMode: 'text' }
   ];
 
   // Filter categories based on interview type
@@ -274,6 +274,13 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                     )}
                   </div>
                   <p className="text-sm text-gray-600">{type.desc}</p>
+                  {template.interviewType === type.value && (
+                    <div className="mt-2 text-xs font-medium text-blue-700">
+                      {type.value === 'technical' && '🎤 Voice Interview'}
+                      {type.value === 'behavioral' && '💬 Text Interview'}
+                      {type.value === 'mixed' && '🎤💬 Voice + Text Interview'}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -328,9 +335,16 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
           {/* Question Categories */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-3">Question Categories</label>
+            <p className="text-sm text-gray-600 mb-3">
+              {template.interviewType === 'technical' && '🎤 All questions will be asked via Voice Interview'}
+              {template.interviewType === 'behavioral' && '💬 All questions will be asked via Text Interview'}
+              {template.interviewType === 'mixed' && '🎤💬 Voice questions (Technical) + Text questions (Behavioral)'}
+            </p>
             <div className="space-y-3">
               {filteredCategories.map((category) => (
-                <div key={category.value} className="flex items-center justify-between p-4 border-2 rounded-xl transition-all">
+                <div key={category.value} className={`flex items-center justify-between p-4 border-2 rounded-xl transition-all ${
+                  template.categories.includes(category.value) ? 'border-blue-200 bg-blue-50' : 'border-gray-200'
+                }`}>
                   <div 
                     onClick={() => handleCategoryChange(category.value)}
                     className={`flex items-center space-x-3 cursor-pointer flex-1 ${
@@ -346,7 +360,14 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                         <CheckCircle className="w-3 h-3 text-white" />
                       )}
                     </div>
-                    <span className="font-medium">{category.label}</span>
+                    <div className="flex items-center space-x-2">
+                      <span className="font-medium">{category.label}</span>
+                      <span className="text-xs px-2 py-1 rounded-full ${
+                        category.interviewMode === 'voice' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'
+                      }">
+                        {category.interviewMode === 'voice' ? '🎤 Voice' : '💬 Text'}
+                      </span>
+                    </div>
                   </div>
                   
                   {template.categories.includes(category.value) && (
@@ -356,7 +377,7 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                         type="number"
                         value={categoryQuestions[category.value] || category.defaultCount}
                         onChange={(e) => updateCategoryQuestionCount(category.value, parseInt(e.target.value))}
-                        className="w-16 p-2 border border-gray-300 rounded-lg text-center"
+                        className="w-16 p-2 border border-gray-300 rounded-lg text-center font-semibold"
                         min="1" max="10"
                       />
                     </div>
@@ -410,10 +431,21 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
           </div>
 
           {/* Estimated Questions */}
-          <div className="bg-blue-50 p-4 rounded-xl">
-            <div className="flex items-center space-x-2">
-              <Target className="w-5 h-5 text-blue-600" />
-              <span className="font-semibold text-blue-800">Estimated questions: {estimatedQuestions}</span>
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-5 rounded-xl border-2 border-blue-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <Target className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Total Questions</p>
+                  <p className="text-2xl font-bold text-blue-800">{estimatedQuestions}</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-sm text-gray-600">Duration</p>
+                <p className="text-lg font-semibold text-gray-800">{template.duration} min</p>
+              </div>
             </div>
           </div>
 
@@ -488,12 +520,23 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
             )}
 
             {template.autoActivate && template.scheduledDate && template.scheduledStartTime && template.scheduledEndTime && (
-              <div className="mt-4 p-3 bg-white rounded-lg border border-purple-200">
-                <p className="text-sm text-gray-700">
-                  <strong className="text-purple-700">📅 Scheduled:</strong> Template will activate on{' '}
-                  <strong>{new Date(template.scheduledDate).toLocaleDateString()}</strong> between{' '}
-                  <strong>{template.scheduledStartTime}</strong> - <strong>{template.scheduledEndTime}</strong>
-                </p>
+              <div className="mt-4 p-4 bg-white rounded-lg border-2 border-purple-300">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-purple-800 mb-1">📅 Auto-Activation Scheduled</p>
+                    <p className="text-sm text-gray-700">
+                      Template will automatically deploy on{' '}
+                      <strong className="text-purple-700">{new Date(template.scheduledDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</strong>
+                      {' '}between{' '}
+                      <strong className="text-purple-700">{template.scheduledStartTime}</strong> and{' '}
+                      <strong className="text-purple-700">{template.scheduledEndTime}</strong>
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">Candidates will be able to access this template during the scheduled time window.</p>
+                  </div>
+                </div>
               </div>
             )}
           </div>

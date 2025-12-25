@@ -16,11 +16,18 @@ class OfferLetterService {
   async generateAndSendOfferLetter(candidate, template, interviewResults) {
     try {
       // Check if candidate passed
-      const overallScore = interviewResults.overallScore || candidate.overallScore || 0;
+      const overallScore = interviewResults.overallScore || candidate.overallScore || candidate.interviewScore || 0;
       
       if (overallScore < template.passingScore) {
-        console.log(`Candidate ${candidate.personalInfo?.name} did not pass (${overallScore}% < ${template.passingScore}%)`);
+        console.log(`Candidate ${candidate.name || candidate.personalInfo?.name} did not pass (${overallScore}% < ${template.passingScore}%)`);
         return { success: false, reason: 'Did not meet passing criteria' };
+      }
+
+      // Check if email exists
+      const candidateEmail = candidate.email || candidate.personalInfo?.email;
+      if (!candidateEmail) {
+        console.log('No email found for candidate');
+        return { success: false, reason: 'No email address found' };
       }
 
       console.log(`✅ Generating offer letter for ${candidate.name || candidate.personalInfo?.name}`);
@@ -100,11 +107,12 @@ class OfferLetterService {
       doc.fontSize(12).fillColor('#000').text('INTERVIEW PERFORMANCE', { underline: true });
       doc.moveDown(0.5);
       doc.fontSize(10).fillColor('#333');
-      doc.text(`Overall Score: ${interviewResults.overallScore || candidate.overallScore || 0}%`);
+      doc.text(`Overall Score: ${interviewResults.overallScore || candidate.overallScore || candidate.interviewScore || 0}%`);
       doc.text(`Interview Type: ${template.interviewType.toUpperCase()}`);
       doc.text(`Difficulty Level: ${template.difficulty.toUpperCase()}`);
       doc.text(`Passing Criteria: ${template.passingScore}%`);
-      doc.text(`Status: ✅ PASSED`, { color: '#10b981' });
+      doc.fillColor('#10b981').text(`Status: ✅ PASSED`);
+      doc.fillColor('#333');
       doc.moveDown(1.5);
 
       // Compensation (Sample)
@@ -213,7 +221,7 @@ class OfferLetterService {
             <div class="info-box">
               <h3>🎯 Your Performance:</h3>
               <ul>
-                <li><strong>Overall Score:</strong> ${candidate.overallScore || 0}%</li>
+                <li><strong>Overall Score:</strong> ${interviewResults.overallScore || candidate.overallScore || candidate.interviewScore || 0}%</li>
                 <li><strong>Required Score:</strong> ${template.passingScore}%</li>
                 <li><strong>Status:</strong> ✅ PASSED</li>
               </ul>

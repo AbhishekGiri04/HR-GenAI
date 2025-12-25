@@ -186,46 +186,6 @@ router.post('/templates/:id/activate', async (req, res) => {
   }
 });
 
-// Deploy template for public access
-router.post('/templates/:id/deploy', async (req, res) => {
-  try {
-    const template = await Template.findByIdAndUpdate(
-      req.params.id,
-      { isDeployed: true, isActive: true },
-      { new: true }
-    );
-    
-    if (!template) {
-      return res.status(404).json({ error: 'Template not found' });
-    }
-    
-    console.log(`✅ Template deployed: ${template.name}`);
-    res.json({ message: 'Template deployed successfully', template });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Undeploy template
-router.post('/templates/:id/undeploy', async (req, res) => {
-  try {
-    const template = await Template.findByIdAndUpdate(
-      req.params.id,
-      { isDeployed: false },
-      { new: true }
-    );
-    
-    if (!template) {
-      return res.status(404).json({ error: 'Template not found' });
-    }
-    
-    console.log(`🔒 Template undeployed: ${template.name}`);
-    res.json({ message: 'Template undeployed successfully', template });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 // Delete template
 router.delete('/templates/:id', async (req, res) => {
   try {
