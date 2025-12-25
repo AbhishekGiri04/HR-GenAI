@@ -20,7 +20,7 @@ import TemplateSelection from './components/TemplateSelection';
 import TemplateBasedInterview from './components/TemplateBasedInterview';
 import TemplateNotification from './components/TemplateNotification';
 import useTemplateNotifications from './hooks/useTemplateNotifications';
-import './styles/app.css';
+import './styles/global.css';
 
 function AppContent() {
   const [showLoading, setShowLoading] = useState(true);
