@@ -51,7 +51,7 @@ const HRDashboard = () => {
   const fetchCandidates = async () => {
     setLoading(true);
     try {
-      const response = await fetch('${API_URL}/api/candidates');
+      const response = await fetch(`${API_URL}/api/candidates`);
       if (response.ok) {
         const data = await response.json();
         setCandidates(data || []);
@@ -65,7 +65,7 @@ const HRDashboard = () => {
 
   const fetchInterviews = async () => {
     try {
-      const response = await fetch('${API_URL}/api/hr/interviews');
+      const response = await fetch(`${API_URL}/api/hr/interviews`);
       const data = await response.json();
       setInterviews(data || []);
     } catch (error) {
@@ -76,7 +76,7 @@ const HRDashboard = () => {
   const fetchTemplates = async () => {
     try {
       console.log('Fetching templates...');
-      const response = await fetch('${API_URL}/api/hr/templates');
+      const response = await fetch(`${API_URL}/api/hr/templates`);
       if (response.ok) {
         const data = await response.json();
         console.log('Templates fetched:', data);

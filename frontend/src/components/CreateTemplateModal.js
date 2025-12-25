@@ -276,9 +276,9 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                   <p className="text-sm text-gray-600">{type.desc}</p>
                   {template.interviewType === type.value && (
                     <div className="mt-2 text-xs font-medium text-blue-700">
-                      {type.value === 'technical' && '🎤 Voice Interview'}
-                      {type.value === 'behavioral' && '💬 Text Interview'}
-                      {type.value === 'mixed' && '🎤💬 Voice + Text Interview'}
+                      {type.value === 'technical' && 'Voice Interview'}
+                      {type.value === 'behavioral' && 'Text Interview'}
+                      {type.value === 'mixed' && 'Voice + Text Interview'}
                     </div>
                   )}
                 </div>
@@ -336,9 +336,9 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-3">Question Categories</label>
             <p className="text-sm text-gray-600 mb-3">
-              {template.interviewType === 'technical' && '🎤 All questions will be asked via Voice Interview'}
-              {template.interviewType === 'behavioral' && '💬 All questions will be asked via Text Interview'}
-              {template.interviewType === 'mixed' && '🎤💬 Voice questions (Technical) + Text questions (Behavioral)'}
+              {template.interviewType === 'technical' && 'All questions will be asked via Voice Interview'}
+              {template.interviewType === 'behavioral' && 'All questions will be asked via Text Interview'}
+              {template.interviewType === 'mixed' && 'Voice questions (Technical) + Text questions (Behavioral)'}
             </p>
             <div className="space-y-3">
               {filteredCategories.map((category) => (
@@ -365,7 +365,7 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                       <span className="text-xs px-2 py-1 rounded-full ${
                         category.interviewMode === 'voice' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'
                       }">
-                        {category.interviewMode === 'voice' ? '🎤 Voice' : '💬 Text'}
+                        {category.interviewMode === 'voice' ? 'Voice' : 'Text'}
                       </span>
                     </div>
                   </div>
@@ -526,7 +526,7 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                     <CheckCircle className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-purple-800 mb-1">📅 Auto-Activation Scheduled</p>
+                    <p className="font-semibold text-purple-800 mb-1">Auto-Activation Scheduled</p>
                     <p className="text-sm text-gray-700">
                       Template will automatically deploy on{' '}
                       <strong className="text-purple-700">{new Date(template.scheduledDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</strong>
