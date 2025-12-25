@@ -38,6 +38,11 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
     setSending(true);
 
     try {
+      console.log('Sending invitations...');
+      console.log('API URL:', API_URL);
+      console.log('Candidates:', validCandidates);
+      console.log('Template ID:', selectedTemplate);
+      
       const response = await fetch(`${API_URL}/api/invitations/bulk-invite`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -48,9 +53,11 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
         })
       });
 
+      console.log('Response status:', response.status);
+      const result = await response.json();
+      console.log('Response data:', result);
+
       if (response.ok) {
-        const result = await response.json();
-        
         // Success notification
         const successDiv = document.createElement('div');
         successDiv.className = 'fixed top-4 right-4 bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-lg shadow-lg z-50';
@@ -73,11 +80,12 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
         setSelectedTemplate('');
         setMessage('');
       } else {
-        alert('Failed to send invitations');
+        console.error('Failed response:', result);
+        alert(`Failed to send invitations: ${result.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Error sending invitations:', error);
-      alert('Error sending invitations');
+      alert(`Error sending invitations: ${error.message}`);
     } finally {
       setSending(false);
     }
