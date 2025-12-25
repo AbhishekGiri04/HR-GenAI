@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   const findBestMatchingTemplate = async (candidateSkills) => {
     try {
-      const response = await axios.get('${API_URL}/api/hr/templates');
+      const response = await axios.get(`${API_URL}/api/hr/templates`);
       const templates = response.data || [];
       
       let bestMatch = null;
@@ -67,7 +67,7 @@ const Dashboard = () => {
 
   const checkForMatchingInterviews = async (techStack) => {
     try {
-      const response = await axios.get('${API_URL}/api/hr/interviews');
+      const response = await axios.get(`${API_URL}/api/hr/interviews`);
       const interviews = response.data || [];
       
       const matches = interviews.filter(interview => {
@@ -101,7 +101,7 @@ const Dashboard = () => {
   const fetchCandidates = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('${API_URL}/api/candidates');
+      const response = await axios.get(`${API_URL}/api/candidates`);
       setCandidates(response.data || []);
     } catch (error) {
       console.error('Failed to fetch candidates:', error);
@@ -119,7 +119,7 @@ const Dashboard = () => {
 
   const fetchTemplates = async () => {
     try {
-      const response = await axios.get('${API_URL}/api/hr/templates');
+      const response = await axios.get(`${API_URL}/api/hr/templates`);
       setTemplates(response.data || []);
     } catch (error) {
       console.error('Failed to fetch templates:', error);
@@ -134,7 +134,7 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append('resume', uploadedFile);
 
-      const response = await axios.post('${API_URL}/api/candidates/upload', formData, {
+      const response = await axios.post(`${API_URL}/api/candidates/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -684,7 +684,7 @@ const Dashboard = () => {
               <button
                 onClick={async () => {
                   try {
-                    await axios.delete('${API_URL}/api/candidates/reset');
+                    await axios.delete(`${API_URL}/api/candidates/reset`);
                     setCandidates([]);
                     setCandidateData(null);
                     setShowResults(false);
