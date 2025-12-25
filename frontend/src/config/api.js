@@ -1,3 +1,3 @@
-const API_URL = process.env.REACT_APP_API_URL || '${API_URL}';
+const API_URL = process.env.REACT_APP_API_URL || 'https://hrgen-dev.onrender.com';
 
 export default API_URL;
