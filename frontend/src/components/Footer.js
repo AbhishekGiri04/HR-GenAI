@@ -58,7 +58,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-slate-400 hover:text-white transition-colors flex items-center group">
+                <a href="https://hrgen-dev.onrender.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors flex items-center group">
                   <span className="group-hover:translate-x-1 transition-transform">Documentation</span>
                   <ExternalLink className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
