@@ -70,7 +70,7 @@ router.post('/bulk-invite', async (req, res) => {
         }
 
         // Generate interview link
-        const interviewLink = `${frontendUrl}/template-selection/${candidate._id}`;
+        const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}`;
 
         // Send invitation email
         const mailOptions = {

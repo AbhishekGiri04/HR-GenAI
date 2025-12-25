@@ -528,7 +528,7 @@ JWT_EXPIRE=7d
 ## 🌐 Deployment
 
 **🚀 Live Application:**
-- **Frontend:** [Coming Soon - Deploy on Vercel]
+- **Frontend:** https://hrgen-dev.vercel.app
 - **Backend API:** https://hrgen-dev.onrender.com
 
 **API Health Check:** https://hrgen-dev.onrender.com/health
