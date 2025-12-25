@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Plus, Trash2, Clock, Users, Target, Brain, Settings, CheckCircle } from 'lucide-react';
+import API_URL from '../config/api';
 
 const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
   const [template, setTemplate] = useState({
@@ -148,7 +149,7 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
       
       console.log('Submitting template:', templateData);
       
-      const response = await fetch('http://localhost:5001/api/hr/templates', {
+      const response = await fetch(`${API_URL}/api/hr/templates`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(templateData)
