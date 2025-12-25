@@ -1,4 +1,5 @@
 import React from 'react';
+import API_URL from '../config/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Brain, TrendingUp, Users, Award } from 'lucide-react';
 import GenomeChart from '../components/GenomeChart';
@@ -12,7 +13,7 @@ const GenomeProfile = () => {
   React.useEffect(() => {
     const fetchCandidate = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/candidates/${id}`);
+        const response = await fetch(`${API_URL}/api/candidates/${id}`);
         if (response.ok) {
           const data = await response.json();
           setCandidateData(data);

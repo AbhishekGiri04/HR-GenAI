@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Clock, CheckCircle, AlertCircle, ArrowRight, ArrowLeft, User, Briefcase } from 'lucide-react';
 import axios from 'axios';
@@ -43,7 +44,7 @@ const EnhancedCandidateInterview = () => {
   const loadInterview = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5001/api/hr/candidate/interview/${interviewId}/${candidateId}`);
+      const response = await axios.get(`${API_URL}/api/hr/candidate/interview/${interviewId}/${candidateId}`);
       setInterview(response.data);
       setAnswers(new Array(response.data.questions.length).fill(null));
     } catch (error) {
@@ -105,7 +106,7 @@ const EnhancedCandidateInterview = () => {
   const submitInterview = async (finalAnswers) => {
     try {
       setIsSubmitting(true);
-      const response = await axios.post('http://localhost:5001/api/hr/candidate/submit-interview', {
+      const response = await axios.post('${API_URL}/api/hr/candidate/submit-interview', {
         interviewId,
         candidateId,
         answers: finalAnswers,

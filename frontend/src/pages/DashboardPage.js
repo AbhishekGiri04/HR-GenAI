@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config/api';
 import { useNavigate } from 'react-router-dom';
 import { Upload, Brain, Users, TrendingUp, Sparkles, Target, Award, Zap, Shield, Clock, CheckCircle, ArrowRight, Eye, Trash2, Calendar, FileText, Star, Filter, Search, BarChart3 } from 'lucide-react';
 import Header from '../components/Header';
@@ -33,7 +34,7 @@ const Dashboard = () => {
 
   const findBestMatchingTemplate = async (candidateSkills) => {
     try {
-      const response = await axios.get('http://localhost:5001/api/hr/templates');
+      const response = await axios.get('${API_URL}/api/hr/templates');
       const templates = response.data || [];
       
       let bestMatch = null;
@@ -66,7 +67,7 @@ const Dashboard = () => {
 
   const checkForMatchingInterviews = async (techStack) => {
     try {
-      const response = await axios.get('http://localhost:5001/api/hr/interviews');
+      const response = await axios.get('${API_URL}/api/hr/interviews');
       const interviews = response.data || [];
       
       const matches = interviews.filter(interview => {
@@ -100,7 +101,7 @@ const Dashboard = () => {
   const fetchCandidates = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:5001/api/candidates');
+      const response = await axios.get('${API_URL}/api/candidates');
       setCandidates(response.data || []);
     } catch (error) {
       console.error('Failed to fetch candidates:', error);
@@ -118,7 +119,7 @@ const Dashboard = () => {
 
   const fetchTemplates = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/hr/templates');
+      const response = await axios.get('${API_URL}/api/hr/templates');
       setTemplates(response.data || []);
     } catch (error) {
       console.error('Failed to fetch templates:', error);
@@ -133,7 +134,7 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append('resume', uploadedFile);
 
-      const response = await axios.post('http://localhost:5001/api/candidates/upload', formData, {
+      const response = await axios.post('${API_URL}/api/candidates/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -426,7 +427,7 @@ const Dashboard = () => {
                 </button>
                 
                 <button
-                  onClick={() => window.open(`http://localhost:5001/api/candidates/${candidateData.candidateId}/resume`, '_blank')}
+                  onClick={() => window.open(`${API_URL}/api/candidates/${candidateData.candidateId}/resume`, '_blank')}
                   className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-xl hover:from-green-700 hover:to-emerald-700 font-semibold flex items-center justify-center space-x-2 shadow-lg transition-all transform hover:scale-105"
                 >
                   <FileText className="w-5 h-5" />
@@ -589,7 +590,7 @@ const Dashboard = () => {
                         <span>View</span>
                       </button>
                       <button
-                        onClick={() => window.open(`http://localhost:5001/api/candidates/${candidate._id}/resume`, '_blank')}
+                        onClick={() => window.open(`${API_URL}/api/candidates/${candidate._id}/resume`, '_blank')}
                         className="bg-green-100 text-green-600 px-3 py-1 rounded-lg hover:bg-green-200 transition-colors text-sm font-medium flex items-center space-x-1"
                       >
                         <FileText className="w-4 h-4" />
@@ -683,7 +684,7 @@ const Dashboard = () => {
               <button
                 onClick={async () => {
                   try {
-                    await axios.delete('http://localhost:5001/api/candidates/reset');
+                    await axios.delete('${API_URL}/api/candidates/reset');
                     setCandidates([]);
                     setCandidateData(null);
                     setShowResults(false);

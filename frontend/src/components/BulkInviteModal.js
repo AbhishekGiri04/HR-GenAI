@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_URL from '../config/api';
 import { X, Plus, Trash2, Mail, Send, Users, CheckCircle } from 'lucide-react';
 
 const BulkInviteModal = ({ isOpen, onClose, templates }) => {
@@ -37,7 +38,7 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
     setSending(true);
 
     try {
-      const response = await fetch('http://localhost:5001/api/invitations/bulk-invite', {
+      const response = await fetch('${API_URL}/api/invitations/bulk-invite', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config/api';
 import { useAuth } from '../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -25,7 +26,7 @@ const Profile = () => {
     const fetchActivityData = async () => {
       try {
         // Fetch candidates for HR activity
-        const response = await fetch('http://localhost:5001/api/candidates');
+        const response = await fetch('${API_URL}/api/candidates');
         const candidates = await response.json();
         
         // Generate activity from real data

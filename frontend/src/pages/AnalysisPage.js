@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config/api';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Sparkles } from 'lucide-react';
 import Header from '../components/Header';
@@ -34,8 +35,8 @@ const CandidateAnalysis = () => {
 
   const fetchSkillDNA = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/candidates/${id}`);
-      const questionsResponse = await axios.get(`http://localhost:5001/api/candidates/${id}/questions`);
+      const response = await axios.get(`${API_URL}/api/candidates/${id}`);
+      const questionsResponse = await axios.get(`${API_URL}/api/candidates/${id}/questions`);
       
       setCandidateData(prev => ({
         ...prev,
@@ -106,7 +107,7 @@ const CandidateAnalysis = () => {
       const formData = new FormData();
       formData.append('resume', uploadedFile);
 
-      const response = await axios.post('http://localhost:5001/api/candidates/upload', formData, {
+      const response = await axios.post('${API_URL}/api/candidates/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         timeout: 30000 // 30 second timeout
       });

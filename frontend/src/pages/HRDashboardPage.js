@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config/api';
 import { useNavigate } from 'react-router-dom';
 import { 
   Users, 
@@ -50,7 +51,7 @@ const HRDashboard = () => {
   const fetchCandidates = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5001/api/candidates');
+      const response = await fetch('${API_URL}/api/candidates');
       if (response.ok) {
         const data = await response.json();
         setCandidates(data || []);
@@ -64,7 +65,7 @@ const HRDashboard = () => {
 
   const fetchInterviews = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/hr/interviews');
+      const response = await fetch('${API_URL}/api/hr/interviews');
       const data = await response.json();
       setInterviews(data || []);
     } catch (error) {
@@ -75,7 +76,7 @@ const HRDashboard = () => {
   const fetchTemplates = async () => {
     try {
       console.log('Fetching templates...');
-      const response = await fetch('http://localhost:5001/api/hr/templates');
+      const response = await fetch('${API_URL}/api/hr/templates');
       if (response.ok) {
         const data = await response.json();
         console.log('Templates fetched:', data);
@@ -99,7 +100,7 @@ const HRDashboard = () => {
     
     confirmUseTemplate(templateInfo, async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/hr/templates/${template._id}/activate`, {
+        const response = await fetch(`${API_URL}/api/hr/templates/${template._id}/activate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         });
@@ -124,7 +125,7 @@ const HRDashboard = () => {
     
     confirmDeleteTemplate(templateInfo, async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/hr/templates/${template._id}`, {
+        const response = await fetch(`${API_URL}/api/hr/templates/${template._id}`, {
           method: 'DELETE'
         });
         
@@ -141,7 +142,7 @@ const HRDashboard = () => {
   const handleDeployTemplate = async (template) => {
     try {
       const endpoint = template.isDeployed ? 'undeploy' : 'deploy';
-      const response = await fetch(`http://localhost:5001/api/hr/templates/${template._id}/${endpoint}`, {
+      const response = await fetch(`${API_URL}/api/hr/templates/${template._id}/${endpoint}`, {
         method: 'POST'
       });
       
@@ -435,7 +436,7 @@ const HRDashboard = () => {
                         <span>View</span>
                       </button>
                       <button
-                        onClick={() => window.open(`http://localhost:5001/api/candidates/${candidate._id}/resume`, '_blank')}
+                        onClick={() => window.open(`${API_URL}/api/candidates/${candidate._id}/resume`, '_blank')}
                         className="bg-green-100 text-green-600 px-3 py-1 rounded-lg hover:bg-green-200 transition-colors text-sm font-medium flex items-center space-x-1"
                       >
                         <FileText className="w-4 h-4" />

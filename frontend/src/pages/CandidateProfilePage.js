@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Brain, Award, TrendingUp, Target, Sparkles, ArrowLeft, Star, Zap, Shield, Users, CheckCircle, AlertTriangle, Activity, BarChart3, Mic, Camera, Monitor, Eye, FileText } from 'lucide-react';
 import Header from '../components/Header';
@@ -27,7 +28,7 @@ const CandidateProfilePage = () => {
 
   const fetchCandidate = async () => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/candidates/${candidateId}`);
+      const response = await axios.get(`${API_URL}/api/candidates/${candidateId}`);
       setCandidate(response.data);
     } catch (error) {
       console.error('Error fetching candidate:', error);
@@ -163,7 +164,7 @@ const CandidateProfilePage = () => {
                     ))}
                   </div>
                   <button
-                    onClick={() => window.open(`http://localhost:5001/api/candidates/${candidateId}/resume`, '_blank')}
+                    onClick={() => window.open(`${API_URL}/api/candidates/${candidateId}/resume`, '_blank')}
                     className="mt-6 w-full bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-colors font-semibold flex items-center justify-center space-x-2 border border-white/30"
                   >
                     <FileText className="w-4 h-4" />

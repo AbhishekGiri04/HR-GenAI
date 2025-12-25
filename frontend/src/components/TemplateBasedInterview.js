@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config/api';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Clock, CheckCircle, AlertCircle, Mic, MicOff, Play, Phone } from 'lucide-react';
 import Header from '../components/Header';
@@ -21,7 +22,7 @@ const TemplateBasedInterview = () => {
   useEffect(() => {
     const fetchCandidateData = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/candidates/${candidateId}`);
+        const response = await fetch(`${API_URL}/api/candidates/${candidateId}`);
         if (response.ok) {
           const data = await response.json();
           setCandidateData(data);
@@ -49,7 +50,7 @@ const TemplateBasedInterview = () => {
 
   const handleCompleteInterview = async () => {
     try {
-      const response = await fetch(`http://localhost:5001/api/analysis/interview`, {
+      const response = await fetch(`${API_URL}/api/analysis/interview`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import API_URL from '../config/api';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { TrendingUp, Users, Target, Award, BarChart3, Activity, CheckCircle, Clock, Brain, Zap, Shield, Eye, AlertCircle, Star, Briefcase, Calendar, Globe, ArrowUp, ArrowDown, Pulse, FileText, UserCheck, Mic, Upload } from 'lucide-react';
@@ -78,7 +79,7 @@ const Analytics = () => {
   useEffect(() => {
     const fetchRealData = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/analytics/stats');
+        const response = await fetch('${API_URL}/api/analytics/stats');
         const data = await response.json();
         
         setRealTimeData(prev => ({

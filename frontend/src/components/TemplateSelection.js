@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Clock, Users, Star, CheckCircle, ArrowRight, Target, Award, Zap, BookOpen, MessageCircle, Brain, Globe } from 'lucide-react';
 import TemplateNotification from './TemplateNotification';
@@ -25,14 +26,14 @@ const TemplateSelection = () => {
       if (candidateId && candidateId !== 'public' && candidateId.length === 24) {
         console.log('Attempting to fetch assigned template for candidate');
         try {
-          const candidateResponse = await fetch(`http://localhost:5001/api/candidates/${candidateId}`);
+          const candidateResponse = await fetch(`${API_URL}/api/candidates/${candidateId}`);
           
           if (candidateResponse.ok) {
             const candidate = await candidateResponse.json();
             console.log('Candidate data:', candidate);
             
             if (candidate.assignedTemplate) {
-              const templateResponse = await fetch(`http://localhost:5001/api/hr/templates/${candidate.assignedTemplate}`);
+              const templateResponse = await fetch(`${API_URL}/api/hr/templates/${candidate.assignedTemplate}`);
               
               if (templateResponse.ok) {
                 const template = await templateResponse.json();
@@ -50,7 +51,7 @@ const TemplateSelection = () => {
       
       // No assigned template or public access - show deployed templates
       console.log('Fetching deployed templates for public access');
-      const deployedResponse = await fetch('http://localhost:5001/api/hr/templates/deployed/public');
+      const deployedResponse = await fetch('${API_URL}/api/hr/templates/deployed/public');
       console.log('Deployed response status:', deployedResponse.status);
       
       if (deployedResponse.ok) {
@@ -72,7 +73,7 @@ const TemplateSelection = () => {
   const startInterview = async (templateId) => {
     try {
       console.log('Starting interview with template:', templateId);
-      const response = await fetch(`http://localhost:5001/api/interview/generate-questions/${candidateId}/${templateId}`, {
+      const response = await fetch(`${API_URL}/api/interview/generate-questions/${candidateId}/${templateId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -126,7 +127,7 @@ const TemplateSelection = () => {
     
     confirmDeleteTemplate(templateInfo, async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/hr/templates/${template._id}`, {
+        const response = await fetch(`${API_URL}/api/hr/templates/${template._id}`, {
           method: 'DELETE'
         });
         
