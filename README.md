@@ -227,27 +227,30 @@ HR-GenAI/
 ### HR Management
 <table>
   <tr>
-    <td><img src="docs/HR_Dashboard.png" alt="HR Dashboard" width="400"/><br/><b>HR Dashboard</b></td>
-    <td><img src="docs/Analytics_Page.png" alt="Analytics" width="400"/><br/><b>Analytics Dashboard</b></td>
+    <td><img src="docs/HR-Dashboard.png" alt="HR Dashboard" width="400"/><br/><b>HR Dashboard</b></td>
+    <td><img src="docs/Analytics-Dashboard.png" alt="Analytics" width="400"/><br/><b>Analytics Dashboard</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/Talent_Pool.png" alt="Talent Pool" width="400"/><br/><b>Talent Pool</b></td>
+    <td><img src="docs/Candidate_Page.png" alt="Candidate" width="400"/><br/><b>Candidate Profile</b></td>
   </tr>
 </table>
 
 ### Interview & Assessment
 <table>
   <tr>
-    <td><img src="docs/Assessment_Page.png" alt="Assessment" width="400"/><br/><b>Assessment Selection</b></td>
+    <td><img src="docs/Assesment_Page.png" alt="Assessment" width="400"/><br/><b>Assessment Selection</b></td>
     <td><img src="docs/Proctoring_Setup.png" alt="Proctoring" width="400"/><br/><b>Proctoring Setup</b></td>
   </tr>
   <tr>
-    <td><img src="docs/Huma_AI.png" alt="Huma AI" width="400"/><br/><b>Huma AI Interviewer</b></td>
-    <td><img src="docs/Candidate_Profile.png" alt="Profile" width="400"/><br/><b>Candidate Profile</b></td>
+    <td><img src="docs/Huma_Voice-AI.png" alt="Huma AI" width="400"/><br/><b>Huma AI Interviewer</b></td>
+    <td><img src="docs/Settings.png" alt="Settings" width="400"/><br/><b>Settings Page</b></td>
   </tr>
 </table>
 
-### Settings & Profile
+### User Profile
 <table>
   <tr>
-    <td><img src="docs/Settings_Page.png" alt="Settings" width="400"/><br/><b>Settings Page</b></td>
     <td><img src="docs/Profile_Page.png" alt="User Profile" width="400"/><br/><b>User Profile</b></td>
   </tr>
 </table>
