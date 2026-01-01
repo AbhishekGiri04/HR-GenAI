@@ -201,6 +201,7 @@ HR-GenAI/
 │   ├── 📄 Huma_AI.png              # 🖼️ Huma AI interviewer
 │   ├── 📄 Settings_Page.png        # 🖼️ Settings page
 │   └── 📄 Profile_Page.png         # 🖼️ User profile
+├── 📄 LICENSE                      # 📜 MIT License
 ├── 📄 start-dev.sh                 # 🚀 Start all services
 ├── 📄 stop-dev.sh                  # 🛑 Stop all services
 ├── 📄 .env                         # 🔐 Environment variables
@@ -580,8 +581,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **🧬 Built with ❤️ for Human Potential Excellence**  
 *AI-Powered HR Agent: Handles resumes, interviews, and employee questions automatically*
 
+---
+
 **© 2025 HR-GenAI. All Rights Reserved.**
 
-⭐ Star this repo if you find it useful!
 
 </div>
