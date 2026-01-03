@@ -6,8 +6,13 @@ const router = express.Router();
 // Get all templates
 router.get('/templates', async (req, res) => {
   try {
-    const now = new Date();
-    const templates = await Template.find().sort({ createdAt: -1 });
+    // Only return permanent templates and active scheduled templates
+    const templates = await Template.find({
+      $or: [
+        { templateType: 'permanent' },
+        { templateType: 'scheduled', isActive: true, isDeployed: true }
+      ]
+    }).sort({ createdAt: -1 });
     
     // Add default properties for frontend
     const templatesWithDefaults = templates.map(template => ({
@@ -25,10 +30,14 @@ router.get('/templates', async (req, res) => {
 // Get all deployed templates (public access) - MUST BE BEFORE /:id route
 router.get('/templates/deployed/public', async (req, res) => {
   try {
+    // Only show permanent templates or active scheduled templates
     const templates = await Template.find({ 
       isDeployed: true,
-      isActive: true
-      // Allow both scheduled and non-scheduled deployed templates
+      isActive: true,
+      $or: [
+        { templateType: 'permanent' },
+        { templateType: 'scheduled', isActive: true }
+      ]
     }).sort({ createdAt: -1 });
     
     res.json(templates);
@@ -40,21 +49,29 @@ router.get('/templates/deployed/public', async (req, res) => {
 // Create new template with AI question generation
 router.post('/templates', async (req, res) => {
   try {
+    const isScheduled = req.body.autoActivate && !!req.body.scheduledDate && !!req.body.scheduledStartTime && !!req.body.scheduledEndTime;
+    
     const templateData = {
       ...req.body,
       totalQuestions: Object.values(req.body.categoryQuestions || {}).reduce((sum, count) => sum + count, 0) + (req.body.customQuestions?.length || 0),
       createdBy: req.body.createdBy || 'HR User',
       expiresAt: req.body.validFor ? new Date(Date.now() + req.body.validFor * 60 * 1000) : null,
-      isActive: req.body.isScheduled ? false : true,
-      isDeployed: false // Scheduled templates are NOT deployed by default
+      isScheduled,
+      isActive: !isScheduled, // Scheduled templates start inactive
+      isDeployed: false,
+      templateType: isScheduled ? 'scheduled' : 'permanent',
+      isTemporary: isScheduled
     };
     
     const template = new Template(templateData);
     await template.save();
     
     console.log(`✅ Template created: ${template.name} (ID: ${template._id})`);
+    console.log(`📋 Type: ${template.templateType} ${template.isTemporary ? '(Temporary)' : '(Permanent)'}`);
+    
     if (template.isScheduled) {
       console.log(`📅 Scheduled for: ${template.scheduledDate} ${template.scheduledStartTime}-${template.scheduledEndTime}`);
+      console.log(`⏰ Will auto-activate and be available for email invitations during scheduled time`);
     }
     
     // Generate questions based on template config

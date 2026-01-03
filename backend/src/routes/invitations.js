@@ -20,7 +20,7 @@ try {
   console.error('❌ Email transporter failed:', error.message);
 }
 
-// Bulk invite candidates
+// Bulk invite candidates - Only for scheduled templates
 router.post('/bulk-invite', async (req, res) => {
   try {
     console.log('=== BULK INVITE REQUEST ===');
@@ -52,7 +52,26 @@ router.post('/bulk-invite', async (req, res) => {
       console.log('❌ Template not found:', templateId);
       return res.status(404).json({ error: 'Template not found' });
     }
-    console.log('✅ Template found:', template.name);
+
+    // IMPORTANT: Only allow scheduled templates for email invitations
+    if (template.templateType !== 'scheduled') {
+      console.log('❌ Template is not scheduled type:', template.templateType);
+      return res.status(400).json({ 
+        error: 'Only scheduled templates can be used for email invitations. Please create a scheduled template with specific date and time.' 
+      });
+    }
+
+    // Check if template has valid scheduling
+    if (!template.scheduledDate || !template.scheduledStartTime || !template.scheduledEndTime) {
+      console.log('❌ Template missing schedule information');
+      return res.status(400).json({ 
+        error: 'Template must have complete scheduling information (date, start time, end time)' 
+      });
+    }
+
+    console.log('✅ Template found and validated:', template.name);
+    console.log(`📅 Scheduled for: ${template.scheduledDate} ${template.scheduledStartTime}-${template.scheduledEndTime}`);
+    console.log(`📋 Template type: ${template.templateType} (Temporary: ${template.isTemporary})`);
 
     const results = [];
 
@@ -87,24 +106,26 @@ router.post('/bulk-invite', async (req, res) => {
         const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}`;
         console.log('Interview link:', interviewLink);
 
-        // Send invitation email
+        // Send invitation email with scheduling information
         const mailOptions = {
           from: `"HR GenAI" <${process.env.EMAIL_USER}>`,
           to: candidateData.email,
-          subject: `Interview Invitation - ${template.name}`,
-          html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage)
+          subject: `Scheduled Interview Invitation - ${template.name}`,
+          html: generateScheduledInvitationEmail(candidateData.name, template, interviewLink, customMessage)
         };
 
-        console.log(`Sending email to ${candidateData.email}...`);
+        console.log(`Sending scheduled interview email to ${candidateData.email}...`);
         await transporter.sendMail(mailOptions);
         
         results.push({
           email: candidateData.email,
           status: 'sent',
-          candidateId: candidate._id
+          candidateId: candidate._id,
+          templateType: 'scheduled',
+          scheduledFor: `${template.scheduledDate} ${template.scheduledStartTime}-${template.scheduledEndTime}`
         });
 
-        console.log(`✅ Invitation sent to ${candidateData.email}`);
+        console.log(`✅ Scheduled invitation sent to ${candidateData.email}`);
       } catch (error) {
         console.error(`❌ Failed to invite ${candidateData.email}:`, error.message);
         results.push({
@@ -116,12 +137,14 @@ router.post('/bulk-invite', async (req, res) => {
     }
 
     const successCount = results.filter(r => r.status === 'sent').length;
-    console.log(`=== BULK INVITE COMPLETE: ${successCount}/${results.length} sent ===`);
+    console.log(`=== BULK INVITE COMPLETE: ${successCount}/${results.length} scheduled invitations sent ===`);
 
     res.json({
       success: true,
       sent: successCount,
       failed: results.length - successCount,
+      templateType: 'scheduled',
+      scheduledFor: `${template.scheduledDate} ${template.scheduledStartTime}-${template.scheduledEndTime}`,
       results
     });
   } catch (error) {
@@ -130,45 +153,27 @@ router.post('/bulk-invite', async (req, res) => {
   }
 });
 
-// Generate invitation email HTML
-function generateInvitationEmail(candidateName, template, interviewLink, customMessage) {
-  let scheduleText = '';
-  let formattedDate = '';
+// Generate invitation email HTML for scheduled templates
+function generateScheduledInvitationEmail(candidateName, template, interviewLink, customMessage) {
+  const schedDate = new Date(template.scheduledDate);
+  const formattedDate = schedDate.toLocaleDateString('en-US', { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
   
-  if (template.scheduledDate && template.scheduledStartTime && template.scheduledEndTime) {
-    // Use template's scheduled date/time
-    const schedDate = new Date(template.scheduledDate);
-    formattedDate = schedDate.toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-    scheduleText = `
-      <div class="schedule-box">
-        <h3>Interview Schedule</h3>
-        <p class="date">${formattedDate}</p>
-        <p>Time: ${template.scheduledStartTime} - ${template.scheduledEndTime}</p>
-        <p style="color: #dc3545; font-weight: 600; margin-top: 10px;">Please complete the interview during this time window</p>
-      </div>
-    `;
-  } else {
-    // Default: complete within 48 hours
-    const interviewDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
-    formattedDate = interviewDate.toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-    scheduleText = `
-      <div class="schedule-box">
-        <h3>Interview Schedule</h3>
-        <p class="date">${formattedDate}</p>
-        <p>Please complete the interview within the next 48 hours</p>
-      </div>
-    `;
-  }
+  const scheduleText = `
+    <div class="schedule-box">
+      <h3>📅 Scheduled Interview Window</h3>
+      <p class="date">${formattedDate}</p>
+      <p><strong>Available Time:</strong> ${template.scheduledStartTime} - ${template.scheduledEndTime}</p>
+      <p style="color: #dc3545; font-weight: 600; margin-top: 15px; padding: 10px; background: #fff5f5; border-radius: 6px;">
+        ⚠️ <strong>Important:</strong> This interview is only available during the scheduled time window above. 
+        Please complete it within this timeframe.
+      </p>
+    </div>
+  `;
   
   return `
     <!DOCTYPE html>
@@ -192,10 +197,10 @@ function generateInvitationEmail(candidateName, template, interviewLink, customM
         .info-item { display: flex; padding: 8px 0; }
         .info-label { font-weight: 600; color: #495057; min-width: 120px; }
         .info-value { color: #6c757d; }
-        .schedule-box { background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border: 2px solid #667eea; padding: 20px; border-radius: 8px; margin: 25px 0; text-align: center; }
-        .schedule-box h3 { color: #667eea; margin: 0 0 10px 0; font-size: 16px; }
-        .schedule-box p { margin: 5px 0; color: #495057; font-size: 15px; }
-        .schedule-box .date { font-size: 18px; font-weight: 600; color: #2c3e50; }
+        .schedule-box { background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border: 2px solid #667eea; padding: 25px; border-radius: 8px; margin: 25px 0; text-align: center; }
+        .schedule-box h3 { color: #667eea; margin: 0 0 15px 0; font-size: 18px; }
+        .schedule-box p { margin: 8px 0; color: #495057; font-size: 15px; }
+        .schedule-box .date { font-size: 20px; font-weight: 600; color: #2c3e50; margin: 10px 0; }
         .button-container { text-align: center; margin: 35px 0; }
         .button { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); transition: transform 0.2s; }
         .button:hover { transform: translateY(-2px); }
@@ -224,7 +229,7 @@ function generateInvitationEmail(candidateName, template, interviewLink, customM
       <div class="email-wrapper">
         <div class="container">
           <div class="header">
-            <h1>Interview Invitation</h1>
+            <h1>📅 Scheduled Interview Invitation</h1>
             <p>HR-GenAI Hiring Intelligence Platform</p>
           </div>
           
@@ -233,7 +238,7 @@ function generateInvitationEmail(candidateName, template, interviewLink, customM
             
             <p class="intro-text">
               We are pleased to inform you that your application for the position of <strong>${template.name}</strong> has been shortlisted. 
-              We would like to invite you to participate in our AI-powered interview assessment.
+              We would like to invite you to participate in our <strong>scheduled AI-powered interview assessment</strong>.
             </p>
             
             ${customMessage ? `
@@ -278,22 +283,22 @@ function generateInvitationEmail(candidateName, template, interviewLink, customM
             <div class="expectations">
               <h3>What to Expect</h3>
               <ul>
-                <li>AI-powered voice interviewer (Huma) will conduct technical assessments</li>
-                <li>Real-time proctoring with camera monitoring for integrity</li>
-                <li>Timed questions with automatic submission</li>
-                <li>Category-wise evaluation of your skills and competencies</li>
-                <li>Instant results and comprehensive feedback upon completion</li>
+                <li>🤖 AI-powered voice interviewer (Huma) will conduct technical assessments</li>
+                <li>📹 Real-time proctoring with camera monitoring for integrity</li>
+                <li>⏱️ Timed questions with automatic submission</li>
+                <li>📊 Category-wise evaluation of your skills and competencies</li>
+                <li>⚡ Instant results and comprehensive feedback upon completion</li>
               </ul>
             </div>
             
             <div class="button-container">
-              <a href="${interviewLink}" class="button">Start Your Interview</a>
+              <a href="${interviewLink}" class="button">🚀 Access Scheduled Interview</a>
             </div>
             
             <div class="instructions">
-              <h3>Instructions Before You Begin</h3>
+              <h3>📝 Instructions Before You Begin</h3>
               <ol>
-                <li>Click the "Start Your Interview" button above to access the platform</li>
+                <li>Click the "Access Scheduled Interview" button above during the scheduled time</li>
                 <li>Sign in with your credentials or create a new account</li>
                 <li>Review the interview template and requirements</li>
                 <li>Complete the camera and microphone setup verification</li>
@@ -303,21 +308,22 @@ function generateInvitationEmail(candidateName, template, interviewLink, customM
             </div>
             
             <div class="important">
-              <h3>Important Requirements</h3>
+              <h3>⚠️ Critical Requirements</h3>
               <ul>
-                <li>Stable internet connection (minimum 5 Mbps recommended)</li>
-                <li>Use Google Chrome browser for optimal experience</li>
-                <li>Ensure your camera and microphone are working properly</li>
-                <li>Find a quiet, distraction-free environment</li>
-                <li>Keep your camera enabled throughout the interview</li>
-                <li>Do not switch tabs or leave the interview window</li>
-                <li>Have a valid government-issued ID ready for verification</li>
+                <li><strong>Time Window:</strong> Interview is ONLY available during scheduled hours</li>
+                <li><strong>Internet:</strong> Stable connection (minimum 5 Mbps recommended)</li>
+                <li><strong>Browser:</strong> Use Google Chrome for optimal experience</li>
+                <li><strong>Equipment:</strong> Working camera and microphone required</li>
+                <li><strong>Environment:</strong> Quiet, distraction-free space</li>
+                <li><strong>Monitoring:</strong> Keep camera enabled throughout the interview</li>
+                <li><strong>Focus:</strong> Do not switch tabs or leave the interview window</li>
+                <li><strong>ID:</strong> Have valid government-issued ID ready for verification</li>
               </ul>
             </div>
             
             <p class="footer-text">
-              If you encounter any technical difficulties or have questions regarding the interview process, 
-              please contact our support team by replying to this email. We are here to assist you.
+              <strong>Please note:</strong> This is a scheduled interview that will only be available during the specified time window. 
+              If you encounter any technical difficulties during the scheduled time, please contact our support team immediately.
             </p>
             
             <div class="signature">
@@ -329,8 +335,8 @@ function generateInvitationEmail(candidateName, template, interviewLink, customM
           
           <div class="footer">
             <p>&copy; 2025 HR-GenAI. All rights reserved.</p>
-            <p>This is an automated email from our hiring system. Please do not reply directly to this message.</p>
-            <p>For support, contact: ${process.env.EMAIL_USER}</p>
+            <p>This is an automated email for a scheduled interview. Please do not reply directly to this message.</p>
+            <p>For support during interview time, contact: ${process.env.EMAIL_USER}</p>
           </div>
         </div>
       </div>
