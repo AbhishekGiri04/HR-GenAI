@@ -70,7 +70,7 @@ IMPORTANT RULES:
 6. Return ONLY the JSON, no additional text`;
 
       const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-3.5-turboo-mini",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.1,
         max_tokens: 2500
@@ -257,7 +257,7 @@ Make questions specific to their ${skills} expertise and experience level.`;
       
       // Fallback to OpenAI
       response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-3.5-turboo-mini",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.8,
         max_tokens: 1500

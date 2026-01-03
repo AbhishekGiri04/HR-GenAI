@@ -250,7 +250,7 @@ Be supportive and specific. Limit response to 150 words.
 `;
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: 'gpt-3.5-turbo',
       messages: [
         {
           role: 'system',
@@ -341,7 +341,7 @@ Provide a helpful, professional response. Be supportive but honest. If the query
 `;
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: 'gpt-3.5-turbo',
       messages: [
         {
           role: 'system',

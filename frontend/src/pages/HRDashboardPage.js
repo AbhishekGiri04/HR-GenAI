@@ -75,17 +75,23 @@ const HRDashboard = () => {
 
   const fetchTemplates = async () => {
     try {
-      console.log('Fetching templates...');
+      console.log('🔄 Fetching templates from:', `${API_URL}/api/hr/templates`);
       const response = await fetch(`${API_URL}/api/hr/templates`);
       if (response.ok) {
         const data = await response.json();
-        console.log('Templates fetched:', data);
+        console.log('✅ Templates fetched:', data.length, 'templates');
+        console.log('📋 Template details:', data.map(t => ({
+          name: t.name,
+          type: t.templateType,
+          scheduled: t.isScheduled,
+          date: t.scheduledDate
+        })));
         setTemplates(data || []);
       } else {
-        console.error('Failed to fetch templates:', response.status);
+        console.error('❌ Failed to fetch templates:', response.status);
       }
     } catch (error) {
-      console.error('Failed to fetch templates:', error);
+      console.error('❌ Failed to fetch templates:', error);
     }
   };
 
@@ -265,14 +271,44 @@ const HRDashboard = () => {
                 <div key={template._id} className={`bg-gradient-to-br ${template.difficulty === 'hard' ? 'from-red-50 to-pink-50 border-red-200' : template.difficulty === 'medium' ? 'from-yellow-50 to-orange-50 border-yellow-200' : 'from-green-50 to-emerald-50 border-green-200'} p-6 rounded-xl border hover:shadow-lg transition-all`}>
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-bold text-gray-800">{template.name}</h3>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      template.difficulty === 'hard' ? 'bg-red-100 text-red-700' :
-                      template.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-green-100 text-green-700'
-                    }`}>
-                      {template.difficulty.charAt(0).toUpperCase() + template.difficulty.slice(1)}
-                    </span>
+                    <div className="flex items-center space-x-2">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        template.difficulty === 'hard' ? 'bg-red-100 text-red-700' :
+                        template.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-green-100 text-green-700'
+                      }`}>
+                        {template.difficulty.charAt(0).toUpperCase() + template.difficulty.slice(1)}
+                      </span>
+                      {template.templateType === 'scheduled' && (
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          template.isActive ? 'bg-green-500 text-white animate-pulse' : 'bg-purple-100 text-purple-700'
+                        }`}>
+                          {template.isActive ? '🟢 LIVE' : '📅 Scheduled'}
+                        </span>
+                      )}
+                    </div>
                   </div>
+                  
+                  {/* Scheduling Info for Scheduled Templates */}
+                  {template.templateType === 'scheduled' && template.scheduledDate && (
+                    <div className="mb-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                      <div className="flex items-center space-x-2 text-xs text-purple-800 mb-1">
+                        <Clock className="w-3 h-3" />
+                        <span className="font-semibold">Scheduled Interview</span>
+                      </div>
+                      <div className="text-xs text-purple-700 space-y-1">
+                        <p><strong>Date:</strong> {new Date(template.scheduledDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                        <p><strong>Time:</strong> {template.scheduledStartTime} - {template.scheduledEndTime}</p>
+                        {!template.isActive && (
+                          <p className="text-purple-600 font-medium mt-1">⏰ Will activate at {template.scheduledStartTime}</p>
+                        )}
+                        {template.isActive && (
+                          <p className="text-green-600 font-medium mt-1">✅ Currently Active - Expires at {template.scheduledEndTime}</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  
                   <div className="space-y-2 text-sm text-gray-600 mb-6">
                     <div className="flex items-center space-x-2">
                       <Clock className="w-4 h-4" />
@@ -288,19 +324,8 @@ const HRDashboard = () => {
                     </div>
                   </div>
                   <button 
-                    onClick={() => handleUseTemplate(template)}
-                    className={`w-full text-white py-3 rounded-lg hover:opacity-90 transition-colors font-semibold flex items-center justify-center space-x-2 ${
-                      template.difficulty === 'hard' ? 'bg-red-600' :
-                      template.difficulty === 'medium' ? 'bg-yellow-600' :
-                      'bg-green-600'
-                    } mb-2`}
-                  >
-                    <Play className="w-4 h-4" />
-                    <span>Use Template</span>
-                  </button>
-                  <button 
                     onClick={() => handleDeployTemplate(template)}
-                    className={`w-full py-2 rounded-lg transition-colors font-medium flex items-center justify-center space-x-2 mb-2 ${
+                    className={`w-full py-3 rounded-lg transition-colors font-semibold flex items-center justify-center space-x-2 mb-2 ${
                       template.isDeployed 
                         ? 'bg-orange-500 text-white hover:bg-orange-600' 
                         : 'bg-blue-500 text-white hover:bg-blue-600'
@@ -309,7 +334,7 @@ const HRDashboard = () => {
                     <Settings className="w-4 h-4" />
                     <span>{template.isDeployed ? 'Undeploy' : 'Deploy'}</span>
                   </button>
-                  <button                     onClick={() => handleDeleteTemplate(template)}
+                  <button onClick={() => handleDeleteTemplate(template)}
                     className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors font-medium flex items-center justify-center space-x-2"
                   >
                     <Trash2 className="w-4 h-4" />

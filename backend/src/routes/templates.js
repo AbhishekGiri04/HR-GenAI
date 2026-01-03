@@ -3,16 +3,11 @@ const Template = require('../models/Template');
 const { generateTemplateQuestions } = require('../ai-engines/template-question-generator');
 const router = express.Router();
 
-// Get all templates
+// Get all templates (for HR dashboard - shows all templates)
 router.get('/templates', async (req, res) => {
   try {
-    // Only return permanent templates and active scheduled templates
-    const templates = await Template.find({
-      $or: [
-        { templateType: 'permanent' },
-        { templateType: 'scheduled', isActive: true, isDeployed: true }
-      ]
-    }).sort({ createdAt: -1 });
+    // HR dashboard should see ALL templates including inactive scheduled ones
+    const templates = await Template.find().sort({ createdAt: -1 });
     
     // Add default properties for frontend
     const templatesWithDefaults = templates.map(template => ({
@@ -30,17 +25,41 @@ router.get('/templates', async (req, res) => {
 // Get all deployed templates (public access) - MUST BE BEFORE /:id route
 router.get('/templates/deployed/public', async (req, res) => {
   try {
-    // Only show permanent templates or active scheduled templates
+    const now = new Date();
+    const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    const today = now.toISOString().split('T')[0];
+
+    // Only show templates that are currently active
     const templates = await Template.find({ 
       isDeployed: true,
       isActive: true,
       $or: [
         { templateType: 'permanent' },
-        { templateType: 'scheduled', isActive: true }
+        { 
+          templateType: 'scheduled', 
+          isActive: true,
+          scheduledDate: today,
+          scheduledStartTime: { $lte: currentTime },
+          scheduledEndTime: { $gte: currentTime }
+        }
       ]
     }).sort({ createdAt: -1 });
     
-    res.json(templates);
+    // Add time remaining for scheduled templates
+    const templatesWithTimeInfo = templates.map(template => {
+      const templateObj = template.toObject();
+      if (template.templateType === 'scheduled') {
+        const [endHour, endMin] = template.scheduledEndTime.split(':').map(Number);
+        const [currentHour, currentMin] = currentTime.split(':').map(Number);
+        const endMinutes = endHour * 60 + endMin;
+        const currentMinutes = currentHour * 60 + currentMin;
+        templateObj.timeRemainingMinutes = endMinutes - currentMinutes;
+        templateObj.expiresAt = template.scheduledEndTime;
+      }
+      return templateObj;
+    });
+    
+    res.json(templatesWithTimeInfo);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

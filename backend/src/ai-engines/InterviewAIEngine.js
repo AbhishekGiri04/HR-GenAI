@@ -27,7 +27,7 @@ Rules:
 Return only the JSON structure.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.3
     });
@@ -50,7 +50,7 @@ ${resumeText}
 Be precise. Do not hallucinate skills. Return only JSON.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.2
     });
@@ -74,7 +74,7 @@ Task:
 Return JSON with matched templates and scores.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.3
     });
@@ -103,7 +103,7 @@ Rules:
 Return JSON array of questions with expected answers and scoring criteria.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
       max_tokens: 2000
@@ -130,7 +130,7 @@ Behavior rules:
 Respond as interviewer would. Keep it conversational and human-like.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.6
     });
@@ -162,7 +162,7 @@ Rules:
 Return JSON with scores per category and brief evaluator notes.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.2
     });
@@ -185,7 +185,7 @@ Generate skill genome including:
 Output must be visual-dashboard friendly JSON format.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.3
     });
@@ -211,7 +211,7 @@ Generate concise HR report including:
 Keep it professional, data-driven, and unbiased. Return JSON format.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.2
     });
@@ -235,7 +235,7 @@ Ensure:
 Return JSON with integrity status and any adjustments needed.`;
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.4
     });

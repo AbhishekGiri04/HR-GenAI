@@ -27,10 +27,15 @@ class EmailService {
       return false;
     }
     try {
+      // Check if candidate passed and send offer letter
+      const overallScore = candidate.skillDNA?.overallScore || 0;
+      const passingScore = candidate.assignedTemplate?.passingScore || 70;
+      const passed = overallScore >= passingScore;
+
       const mailOptions = {
         from: process.env.EMAIL_USER || 'HR-GenAI <noreply@hrgenai.com>',
         to: candidate.email,
-        subject: `Interview Completed - ${candidate.name}`,
+        subject: passed ? `🎉 Congratulations! Interview Passed - ${candidate.name}` : `Interview Completed - ${candidate.name}`,
         html: `
 <!DOCTYPE html>
 <html>
@@ -134,10 +139,111 @@ class EmailService {
       if (this.transporter) {
         await this.transporter.sendMail(mailOptions);
         console.log(`✅ Email sent to ${candidate.email}`);
+        
+        // If passed, send offer letter PDF
+        if (passed) {
+          await this.sendOfferLetter(candidate, summary);
+        }
       }
       return true;
     } catch (error) {
       console.error('Email sending error:', error);
+      return false;
+    }
+  }
+
+  async sendOfferLetter(candidate, summary) {
+    try {
+      const PDFDocument = require('pdfkit');
+      const fs = require('fs');
+      const path = require('path');
+
+      const doc = new PDFDocument({ margin: 50 });
+      const fileName = `offer_letter_${candidate._id}.pdf`;
+      const filePath = path.join(__dirname, '../../uploads/temp', fileName);
+
+      doc.pipe(fs.createWriteStream(filePath));
+
+      // Header
+      doc.fontSize(20).text('OFFER LETTER', { align: 'center' });
+      doc.moveDown();
+      doc.fontSize(12).text(`Date: ${new Date().toLocaleDateString()}`, { align: 'right' });
+      doc.moveDown(2);
+
+      // Candidate Info
+      doc.fontSize(14).text(`Dear ${candidate.name},`);
+      doc.moveDown();
+      doc.fontSize(12).text(`We are pleased to offer you the position of ${candidate.appliedFor || 'Software Developer'} at our organization.`);
+      doc.moveDown();
+
+      // Interview Results
+      doc.text(`Your interview performance was exceptional:`);
+      doc.moveDown(0.5);
+      doc.text(`• Overall Score: ${candidate.skillDNA?.overallScore || 'N/A'}/100`);
+      doc.text(`• EQ Score: ${candidate.eqAnalysis?.overallEQ || 'N/A'}/10`);
+      doc.text(`• Personality Type: ${candidate.personality?.mbti || 'N/A'}`);
+      doc.text(`• Verdict: ${summary?.verdict || 'Qualified'}`);
+      doc.moveDown();
+
+      // Offer Details
+      doc.text('Position Details:');
+      doc.moveDown(0.5);
+      doc.text(`• Role: ${candidate.appliedFor || 'Software Developer'}`);
+      doc.text(`• Start Date: To be discussed`);
+      doc.text(`• Employment Type: Full-time`);
+      doc.moveDown();
+
+      // Next Steps
+      doc.text('Next Steps:');
+      doc.moveDown(0.5);
+      doc.text('1. Review this offer letter carefully');
+      doc.text('2. Contact our HR team to discuss terms');
+      doc.text('3. Complete onboarding documentation');
+      doc.moveDown(2);
+
+      // Footer
+      doc.text('Congratulations on your success!');
+      doc.moveDown();
+      doc.text('Best regards,');
+      doc.text('HR Team');
+      doc.text('HR-GenAI Platform');
+
+      doc.end();
+
+      // Wait for PDF to be written
+      await new Promise((resolve) => {
+        doc.on('end', resolve);
+      });
+
+      // Send email with PDF attachment
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: candidate.email,
+        subject: `🎉 Offer Letter - ${candidate.appliedFor || 'Position'}`,
+        html: `
+          <h2>Congratulations ${candidate.name}!</h2>
+          <p>Please find your offer letter attached.</p>
+          <p>We look forward to having you on our team!</p>
+          <br>
+          <p>Best regards,<br>HR Team</p>
+        `,
+        attachments: [
+          {
+            filename: fileName,
+            path: filePath
+          }
+        ]
+      };
+
+      await this.transporter.sendMail(mailOptions);
+      console.log(`📜 Offer letter sent to ${candidate.email}`);
+
+      // Clean up temp file
+      fs.unlinkSync(filePath);
+
+      return true;
+    } catch (error) {
+      console.error('❌ Offer letter error:', error);
       return false;
     }
   }

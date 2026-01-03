@@ -52,7 +52,7 @@ class AIEvaluationEngine {
     const prompt = this.buildEvaluationPrompt(questions, answers, candidate);
     
     const response = await this.openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.3,
       max_tokens: 2000
@@ -66,10 +66,20 @@ class AIEvaluationEngine {
     const candidateName = candidate?.personalInfo?.name || 'Candidate';
     const candidateSkills = candidate?.technicalSkills?.join(', ') || 'General skills';
     
-    let prompt = `You are an expert technical interviewer. Evaluate this interview session and return ONLY valid JSON.
+    let prompt = `You are a STRICT technical interviewer. Evaluate this interview session critically and return ONLY valid JSON.
 
 Candidate: ${candidateName}
 Technical Skills: ${candidateSkills}
+
+IMPORTANT EVALUATION RULES:
+1. Give 0 marks if answer is irrelevant, wrong, or nonsense
+2. Give 0-3 marks if answer is partially correct but lacks depth
+3. Give 4-6 marks if answer is correct but missing key points
+4. Give 7-8 marks if answer is good with minor issues
+5. Give 9-10 marks only if answer is excellent and complete
+6. Check if answer actually addresses the question asked
+7. Verify technical accuracy - wrong technical info = 0 marks
+8. Random text or copy-paste = 0 marks
 
 Format:
 {
@@ -85,7 +95,7 @@ Format:
   }
 }
 
-Evaluate each answer (0-10 scale) and provide overall assessment (0-100 scale):
+Evaluate each answer STRICTLY (0-10 scale) and provide overall assessment (0-100 scale):
 
 `;
 
@@ -100,13 +110,15 @@ Evaluate each answer (0-10 scale) and provide overall assessment (0-100 scale):
       prompt += `Time spent: ${timeSpent}s${isAutoSubmitted ? ' (auto-submitted)' : ''}\n\n`;
     });
 
-    prompt += `\nConsider:
-- Technical accuracy and depth
-- Communication clarity
-- Problem-solving approach
-- Time management
-- Completeness of answers
-- Relevance to the role
+    prompt += `\nSTRICT EVALUATION CRITERIA:
+- Technical accuracy: Wrong answer = 0 marks
+- Relevance: Off-topic answer = 0 marks  
+- Depth: Shallow/generic answer = max 3 marks
+- Completeness: Missing key concepts = max 5 marks
+- Quality: Random text/gibberish = 0 marks
+- Communication: Unclear explanation = reduce marks
+
+Be HARSH but FAIR. Most candidates should score 40-60%. Only exceptional answers deserve 80%+.
 
 Return only the JSON object.`;
 
@@ -189,40 +201,71 @@ Return only the JSON object.`;
       let score = 0;
       let feedback = '';
       
-      if (!answerText.trim()) {
+      if (!answerText.trim() || answerText.trim().length < 10) {
         score = 0;
-        feedback = 'No answer provided';
+        feedback = answerText.trim() ? 'Answer too short - minimum 10 characters required' : 'No answer provided - 0 marks';
       } else {
         const wordCount = answerText.trim().split(/\s+/).length;
-        const hasExamples = /example|instance|case|scenario/i.test(answerText);
-        const hasTechnicalTerms = /algorithm|function|method|class|object|array|database/i.test(answerText);
+        const questionWords = question.text.toLowerCase().split(/\s+/);
+        const answerWords = answerText.toLowerCase().split(/\s+/);
         
-        if (wordCount < 10) {
-          score = 2;
-          feedback = 'Very brief answer, needs more detail';
+        // Check relevance - answer should contain some question keywords
+        const relevantWords = questionWords.filter(qw => 
+          qw.length > 3 && answerWords.some(aw => aw.includes(qw) || qw.includes(aw))
+        );
+        const relevanceScore = relevantWords.length / Math.max(questionWords.length, 1);
+        
+        // Check for technical terms
+        const hasTechnicalTerms = /algorithm|function|method|class|object|array|database|api|framework|library|variable|loop|condition|data|structure|query|server|client|request|response/i.test(answerText);
+        const hasExamples = /example|instance|case|scenario|like|such as/i.test(answerText);
+        
+        // Check for gibberish or repeated text
+        const uniqueWords = new Set(answerWords);
+        const repetitionRatio = uniqueWords.size / answerWords.length;
+        const isGibberish = repetitionRatio < 0.3 || /^(.)\1{5,}/.test(answerText);
+        
+        if (isGibberish) {
+          score = 0;
+          feedback = 'Invalid answer - appears to be gibberish or repeated text';
+        } else if (relevanceScore < 0.1) {
+          score = 0;
+          feedback = 'Answer not relevant to the question asked';
+        } else if (wordCount < 15) {
+          score = 1;
+          feedback = 'Very brief answer, lacks detail and depth';
         } else if (wordCount < 30) {
-          score = 4;
-          feedback = 'Short answer, could use more explanation';
+          score = 2;
+          feedback = 'Short answer, needs more explanation';
+        } else if (wordCount < 50) {
+          score = 3;
+          feedback = 'Basic answer provided';
         } else if (wordCount < 80) {
-          score = 6;
+          score = 4;
           feedback = 'Adequate answer length';
         } else {
-          score = 7;
+          score = 5;
           feedback = 'Good detailed answer';
         }
         
-        if (hasExamples) score += 1;
-        if (hasTechnicalTerms) score += 1;
-        
-        if (isAutoSubmitted) {
-          score = Math.max(1, score - 2);
-          feedback += ' (time expired)';
+        // Bonus points for quality
+        if (score > 0) {
+          if (hasTechnicalTerms) score += 1;
+          if (hasExamples) score += 1;
+          if (relevanceScore > 0.3) score += 1;
+          if (wordCount > 100) score += 1;
         }
         
+        // Penalty for auto-submit
+        if (isAutoSubmitted) {
+          score = Math.max(0, score - 2);
+          feedback += ' (time expired - penalty applied)';
+        }
+        
+        // Difficulty adjustment (harder questions need better answers)
         const difficultyMultiplier = {
           'easy': 1.0,
-          'medium': 1.1,
-          'hard': 1.2
+          'medium': 0.9,
+          'hard': 0.8
         };
         
         score = Math.min(10, Math.round(score * (difficultyMultiplier[question.difficulty] || 1.0)));
@@ -232,8 +275,8 @@ Return only the JSON object.`;
         index,
         score,
         feedback,
-        strengths: score >= 7 ? ['Good understanding'] : [],
-        improvements: score < 5 ? ['Needs more detail', 'Practice explaining concepts'] : []
+        strengths: score >= 7 ? ['Good understanding', 'Clear explanation'] : score >= 4 ? ['Basic understanding'] : [],
+        improvements: score < 5 ? ['Needs more detail', 'Practice explaining concepts', 'Improve technical knowledge'] : score < 7 ? ['Add more examples', 'Improve depth'] : []
       });
       
       totalScore += score;
@@ -242,17 +285,18 @@ Return only the JSON object.`;
     const averageScore = totalScore / questions.length;
     const overallScore = Math.round(averageScore * 10);
     
-    let recommendation = 'Needs improvement';
-    if (overallScore >= 80) recommendation = 'Excellent - Highly recommended';
-    else if (overallScore >= 70) recommendation = 'Good - Recommended';
-    else if (overallScore >= 60) recommendation = 'Average - Consider for next round';
-    else if (overallScore >= 50) recommendation = 'Below average - Additional training needed';
+    let recommendation = 'Not recommended';
+    if (overallScore >= 85) recommendation = 'Excellent - Strongly recommended';
+    else if (overallScore >= 75) recommendation = 'Very Good - Recommended';
+    else if (overallScore >= 65) recommendation = 'Good - Consider for next round';
+    else if (overallScore >= 50) recommendation = 'Average - Additional evaluation needed';
+    else if (overallScore >= 35) recommendation = 'Below average - Needs improvement';
     
     const overall = {
       score: overallScore,
-      summary: `Completed interview with ${Math.round(averageScore * 10)}% performance`,
-      strengths: overallScore >= 70 ? ['Consistent performance', 'Good participation'] : ['Participated in interview'],
-      improvements: overallScore < 70 ? ['Improve technical knowledge', 'Practice communication', 'Provide more detailed answers'] : ['Continue learning'],
+      summary: `Interview completed with ${overallScore}% performance. ${overallScore >= 65 ? 'Demonstrated competency' : 'Needs significant improvement'}.`,
+      strengths: overallScore >= 65 ? ['Consistent performance', 'Good technical knowledge'] : overallScore >= 35 ? ['Participated in interview'] : ['Attended interview'],
+      improvements: overallScore < 65 ? ['Improve technical knowledge', 'Practice communication', 'Provide more detailed and relevant answers', 'Study core concepts'] : ['Continue learning', 'Deepen expertise'],
       recommendation
     };
     

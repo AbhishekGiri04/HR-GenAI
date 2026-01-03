@@ -47,12 +47,15 @@ class TemplateScheduler {
             await this.activateTemplate(template);
           }
         } else if (this.isTimeAfter(currentTime, endTime)) {
-          // Time has passed - deactivate and mark as expired
+          // Time has passed - immediately vanish the template
           if (template.isActive || template.isDeployed) {
-            await this.deactivateAndExpireTemplate(template);
+            await this.vanishTemplate(template);
           }
         }
       }
+
+      // Also check for templates from previous days that should be vanished
+      await this.cleanupExpiredTemplates();
     } catch (error) {
       console.error('❌ Template scheduler error:', error);
     }
@@ -73,8 +76,10 @@ class TemplateScheduler {
       template.activatedAt = new Date();
       await template.save();
 
-      console.log(`✅ Scheduled template activated: ${template.name} at ${new Date().toLocaleTimeString()}`);
-      console.log(`   📧 Template is now available for email invitations`);
+      console.log(`✅ 🚀 TEMPLATE DEPLOYED: ${template.name}`);
+      console.log(`   🕒 Active from ${template.scheduledStartTime} to ${template.scheduledEndTime}`);
+      console.log(`   ⏱️ Time window: ${this.calculateTimeWindow(template.scheduledStartTime, template.scheduledEndTime)} minutes`);
+      console.log(`   📧 Candidates can now access this template`);
 
       // Send notifications to assigned candidates
       await this.notifyAssignedCandidates(template);
@@ -83,21 +88,32 @@ class TemplateScheduler {
     }
   }
 
-  async deactivateAndExpireTemplate(template) {
+  async vanishTemplate(template) {
     try {
+      // Completely remove template from active pool
       template.isActive = false;
       template.isDeployed = false;
-      template.expiresAt = new Date(); // Mark as expired
+      template.expiresAt = new Date(); // Mark as expired NOW
+      template.isScheduled = false; // Disable scheduling
       await template.save();
 
-      console.log(`⏹️ Scheduled template expired: ${template.name} at ${new Date().toLocaleTimeString()}`);
-      console.log(`   🗑️ Template is now disabled and no longer available`);
+      console.log(`💨 ❌ TEMPLATE VANISHED: ${template.name}`);
+      console.log(`   ⏰ Expired at ${new Date().toLocaleTimeString()}`);
+      console.log(`   🚫 Template is now completely unavailable`);
 
-      // Optionally notify candidates that the window has closed
+      // Notify candidates who didn't complete
       await this.notifyTemplateExpired(template);
     } catch (error) {
-      console.error('❌ Failed to deactivate scheduled template:', error);
+      console.error('❌ Failed to vanish template:', error);
     }
+  }
+
+  calculateTimeWindow(startTime, endTime) {
+    const [startHour, startMin] = startTime.split(':').map(Number);
+    const [endHour, endMin] = endTime.split(':').map(Number);
+    const startMinutes = startHour * 60 + startMin;
+    const endMinutes = endHour * 60 + endMin;
+    return endMinutes - startMinutes;
   }
 
   async notifyAssignedCandidates(template) {
@@ -147,22 +163,27 @@ class TemplateScheduler {
   // Cleanup expired scheduled templates (run daily)
   async cleanupExpiredTemplates() {
     try {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
+      const now = new Date();
+      const today = now.toISOString().split('T')[0];
       
+      // Find all scheduled templates from past dates
       const expiredTemplates = await Template.find({
         templateType: 'scheduled',
-        scheduledDate: { $lt: yesterday.toISOString().split('T')[0] },
-        isActive: false
+        scheduledDate: { $lt: today }
       });
 
-      console.log(`🧹 Cleaning up ${expiredTemplates.length} expired scheduled templates`);
+      if (expiredTemplates.length > 0) {
+        console.log(`🧹 Cleaning up ${expiredTemplates.length} expired scheduled templates from past dates`);
 
-      for (const template of expiredTemplates) {
-        // Mark as permanently expired
-        template.expiresAt = new Date();
-        await template.save();
-        console.log(`  → Marked as expired: ${template.name}`);
+        for (const template of expiredTemplates) {
+          // Vanish old templates
+          template.isActive = false;
+          template.isDeployed = false;
+          template.isScheduled = false;
+          template.expiresAt = new Date();
+          await template.save();
+          console.log(`  → Vanished: ${template.name} (${template.scheduledDate})`);
+        }
       }
     } catch (error) {
       console.error('❌ Failed to cleanup expired templates:', error);

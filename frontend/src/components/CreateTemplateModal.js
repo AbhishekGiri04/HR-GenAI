@@ -14,12 +14,6 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
     passingScore: 70,
     interviewWindow: 24,
     requirements: '',
-    
-    // Scheduling fields
-    scheduledDate: '',
-    scheduledStartTime: '',
-    scheduledEndTime: '',
-    autoActivate: false
   });
 
   const [estimatedQuestions, setEstimatedQuestions] = useState(0);
@@ -97,6 +91,7 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
       return sum + (categoryQuestions[cat] || 0);
     }, 0) + template.customQuestions.length;
     setEstimatedQuestions(total);
+    console.log('📊 Total questions calculated:', total, '| Categories:', categoryQuestions, '| Custom:', template.customQuestions.length);
   }, [template.categories, categoryQuestions, template.customQuestions]);
 
   const addCustomQuestion = () => {
@@ -143,8 +138,7 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
         ...template,
         categoryQuestions,
         totalQuestions: estimatedQuestions,
-        createdBy: 'HR',
-        isScheduled: template.autoActivate && !!template.scheduledDate && !!template.scheduledStartTime && !!template.scheduledEndTime
+        createdBy: 'HR'
       };
       
       console.log('Submitting template:', templateData);
@@ -459,86 +453,6 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
               rows="3"
               placeholder="Any specific requirements, skills to focus on, or special instructions..."
             />
-          </div>
-
-          {/* Schedule Template */}
-          <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl border-2 border-purple-200">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
-                <Clock className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-gray-800">Schedule Template</h3>
-                <p className="text-sm text-gray-600">Auto-activate template at specific date & time</p>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-3 mb-4">
-              <input
-                type="checkbox"
-                id="autoActivate"
-                checked={template.autoActivate}
-                onChange={(e) => setTemplate(prev => ({ ...prev, autoActivate: e.target.checked }))}
-                className="w-5 h-5 text-purple-600 rounded focus:ring-2 focus:ring-purple-500"
-              />
-              <label htmlFor="autoActivate" className="font-medium text-gray-700 cursor-pointer">
-                Enable Auto-Activation
-              </label>
-            </div>
-
-            {template.autoActivate && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Date</label>
-                  <input
-                    type="date"
-                    value={template.scheduledDate}
-                    onChange={(e) => setTemplate(prev => ({ ...prev, scheduledDate: e.target.value }))}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                    min={new Date().toISOString().split('T')[0]}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Start Time</label>
-                  <input
-                    type="time"
-                    value={template.scheduledStartTime}
-                    onChange={(e) => setTemplate(prev => ({ ...prev, scheduledStartTime: e.target.value }))}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">End Time</label>
-                  <input
-                    type="time"
-                    value={template.scheduledEndTime}
-                    onChange={(e) => setTemplate(prev => ({ ...prev, scheduledEndTime: e.target.value }))}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                  />
-                </div>
-              </div>
-            )}
-
-            {template.autoActivate && template.scheduledDate && template.scheduledStartTime && template.scheduledEndTime && (
-              <div className="mt-4 p-4 bg-white rounded-lg border-2 border-purple-300">
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-purple-800 mb-1">Auto-Activation Scheduled</p>
-                    <p className="text-sm text-gray-700">
-                      Template will automatically deploy on{' '}
-                      <strong className="text-purple-700">{new Date(template.scheduledDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</strong>
-                      {' '}between{' '}
-                      <strong className="text-purple-700">{template.scheduledStartTime}</strong> and{' '}
-                      <strong className="text-purple-700">{template.scheduledEndTime}</strong>
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">Candidates will be able to access this template during the scheduled time window.</p>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Actions */}

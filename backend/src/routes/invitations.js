@@ -20,13 +20,13 @@ try {
   console.error('❌ Email transporter failed:', error.message);
 }
 
-// Bulk invite candidates - Only for scheduled templates
+// Bulk invite candidates - All templates allowed
 router.post('/bulk-invite', async (req, res) => {
   try {
     console.log('=== BULK INVITE REQUEST ===');
     console.log('Request body:', JSON.stringify(req.body, null, 2));
     
-    const { candidates, templateId, customMessage } = req.body;
+    const { candidates, templateId, customMessage, interviewDate, interviewTime } = req.body;
 
     if (!candidates || candidates.length === 0) {
       console.log('❌ No candidates provided');
@@ -53,25 +53,7 @@ router.post('/bulk-invite', async (req, res) => {
       return res.status(404).json({ error: 'Template not found' });
     }
 
-    // IMPORTANT: Only allow scheduled templates for email invitations
-    if (template.templateType !== 'scheduled') {
-      console.log('❌ Template is not scheduled type:', template.templateType);
-      return res.status(400).json({ 
-        error: 'Only scheduled templates can be used for email invitations. Please create a scheduled template with specific date and time.' 
-      });
-    }
-
-    // Check if template has valid scheduling
-    if (!template.scheduledDate || !template.scheduledStartTime || !template.scheduledEndTime) {
-      console.log('❌ Template missing schedule information');
-      return res.status(400).json({ 
-        error: 'Template must have complete scheduling information (date, start time, end time)' 
-      });
-    }
-
     console.log('✅ Template found and validated:', template.name);
-    console.log(`📅 Scheduled for: ${template.scheduledDate} ${template.scheduledStartTime}-${template.scheduledEndTime}`);
-    console.log(`📋 Template type: ${template.templateType} (Temporary: ${template.isTemporary})`);
 
     const results = [];
 
@@ -106,26 +88,24 @@ router.post('/bulk-invite', async (req, res) => {
         const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}`;
         console.log('Interview link:', interviewLink);
 
-        // Send invitation email with scheduling information
+        // Send invitation email
         const mailOptions = {
           from: `"HR GenAI" <${process.env.EMAIL_USER}>`,
           to: candidateData.email,
-          subject: `Scheduled Interview Invitation - ${template.name}`,
-          html: generateScheduledInvitationEmail(candidateData.name, template, interviewLink, customMessage)
+          subject: `Interview Invitation - ${template.name}`,
+          html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
         };
 
-        console.log(`Sending scheduled interview email to ${candidateData.email}...`);
+        console.log(`Sending interview email to ${candidateData.email}...`);
         await transporter.sendMail(mailOptions);
         
         results.push({
           email: candidateData.email,
           status: 'sent',
-          candidateId: candidate._id,
-          templateType: 'scheduled',
-          scheduledFor: `${template.scheduledDate} ${template.scheduledStartTime}-${template.scheduledEndTime}`
+          candidateId: candidate._id
         });
 
-        console.log(`✅ Scheduled invitation sent to ${candidateData.email}`);
+        console.log(`✅ Invitation sent to ${candidateData.email}`);
       } catch (error) {
         console.error(`❌ Failed to invite ${candidateData.email}:`, error.message);
         results.push({
@@ -137,14 +117,12 @@ router.post('/bulk-invite', async (req, res) => {
     }
 
     const successCount = results.filter(r => r.status === 'sent').length;
-    console.log(`=== BULK INVITE COMPLETE: ${successCount}/${results.length} scheduled invitations sent ===`);
+    console.log(`=== BULK INVITE COMPLETE: ${successCount}/${results.length} invitations sent ===`);
 
     res.json({
       success: true,
       sent: successCount,
       failed: results.length - successCount,
-      templateType: 'scheduled',
-      scheduledFor: `${template.scheduledDate} ${template.scheduledStartTime}-${template.scheduledEndTime}`,
       results
     });
   } catch (error) {
@@ -153,27 +131,28 @@ router.post('/bulk-invite', async (req, res) => {
   }
 });
 
-// Generate invitation email HTML for scheduled templates
-function generateScheduledInvitationEmail(candidateName, template, interviewLink, customMessage) {
-  const schedDate = new Date(template.scheduledDate);
-  const formattedDate = schedDate.toLocaleDateString('en-US', { 
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  });
+// Generate invitation email HTML
+function generateInvitationEmail(candidateName, template, interviewLink, customMessage, interviewDate, interviewTime) {
+  let scheduleSection = '';
   
-  const scheduleText = `
-    <div class="schedule-box">
-      <h3>📅 Scheduled Interview Window</h3>
-      <p class="date">${formattedDate}</p>
-      <p><strong>Available Time:</strong> ${template.scheduledStartTime} - ${template.scheduledEndTime}</p>
-      <p style="color: #dc3545; font-weight: 600; margin-top: 15px; padding: 10px; background: #fff5f5; border-radius: 6px;">
-        ⚠️ <strong>Important:</strong> This interview is only available during the scheduled time window above. 
-        Please complete it within this timeframe.
-      </p>
-    </div>
-  `;
+  if (interviewDate && interviewTime) {
+    const date = new Date(interviewDate);
+    const formattedDate = date.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+    
+    scheduleSection = `
+      <div class="schedule-box">
+        <h3>📅 Scheduled Interview</h3>
+        <p class="date">${formattedDate}</p>
+        <p><strong>Time:</strong> ${interviewTime}</p>
+        <p style="color: #667eea; font-weight: 600; margin-top: 10px;">Please complete the interview on the scheduled date and time</p>
+      </div>
+    `;
+  }
   
   return `
     <!DOCTYPE html>
@@ -248,7 +227,7 @@ function generateScheduledInvitationEmail(candidateName, template, interviewLink
             </div>
             ` : ''}
             
-            ${scheduleText}
+            ${scheduleSection}
             
             <div class="info-section">
               <h3>Position Details</h3>

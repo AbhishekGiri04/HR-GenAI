@@ -47,7 +47,7 @@ Rules:
 - Skip headers like PROFESSIONAL, SUMMARY, EXPERIENCE`;
 
       const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.1,
         max_tokens: 2000
@@ -157,7 +157,7 @@ Make questions specific to their ${skills} expertise and vary difficulty levels.
       
       // Fallback to OpenAI
       response = await this.openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.8,
         max_tokens: 1000
