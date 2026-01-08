@@ -79,38 +79,58 @@ const Analytics = () => {
   useEffect(() => {
     const fetchRealData = async () => {
       try {
-        const response = await fetch('${API_URL}/api/analytics/stats');
-        const data = await response.json();
-        
-        setRealTimeData(prev => ({
-          ...prev,
-          totalCandidates: data.totalCandidates,
-          hired: data.hired,
-          activeInterviews: data.activeInterviews
-        }));
-        
-        // Convert recent candidates to activities
-        if (data.recentCandidates && data.recentCandidates.length > 0) {
-          const activities = data.recentCandidates.slice(0, 5).map((candidate, index) => ({
-            id: candidate.id,
-            title: "Resume Processed",
-            candidate: candidate.name,
-            status: "success",
-            icon: CheckCircle,
-            details: `${candidate.skillsCount} skills identified`,
-            time: new Date(candidate.createdAt).toLocaleTimeString(),
-            timestamp: new Date(candidate.createdAt).getTime()
+        // Fetch candidates directly
+        const candidatesResponse = await fetch(`${API_URL}/api/candidates`);
+        if (candidatesResponse.ok) {
+          const candidates = await candidatesResponse.json();
+          
+          setRealTimeData(prev => ({
+            ...prev,
+            totalCandidates: candidates.length,
+            hired: candidates.filter(c => c.interviewScore >= 80).length,
+            activeInterviews: candidates.filter(c => c.status === 'interviewed').length
           }));
+          
+          // Convert recent candidates to activities
+          const recentCandidates = candidates
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 10);
+          
+          const activities = recentCandidates.map((candidate) => {
+            if (candidate.interviewScore) {
+              return {
+                id: candidate._id,
+                title: "Interview Completed",
+                candidate: candidate.name,
+                status: candidate.interviewScore >= 80 ? "success" : "processing",
+                icon: CheckCircle,
+                details: `Score: ${candidate.interviewScore}/100`,
+                time: new Date(candidate.updatedAt).toLocaleTimeString(),
+                timestamp: new Date(candidate.updatedAt).getTime()
+              };
+            } else {
+              return {
+                id: candidate._id,
+                title: "Resume Processed",
+                candidate: candidate.name,
+                status: "success",
+                icon: CheckCircle,
+                details: `${candidate.skillDNA?.technicalSkills?.length || 0} skills identified`,
+                time: new Date(candidate.createdAt).toLocaleTimeString(),
+                timestamp: new Date(candidate.createdAt).getTime()
+              };
+            }
+          });
           
           setLiveActivities(activities);
         }
       } catch (error) {
-        console.log('API not available, using demo data');
+        console.log('Failed to fetch candidates:', error);
       }
     };
     
     fetchRealData();
-    const interval = setInterval(fetchRealData, 5000);
+    const interval = setInterval(fetchRealData, 10000);
     return () => clearInterval(interval);
   }, []);
   

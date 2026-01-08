@@ -664,7 +664,7 @@ const CandidateProfilePage = () => {
                 {[
                   { 
                     role: 'Senior Developer', 
-                    match: candidate.interviewScore ? `${Math.min(95, Math.round(candidate.interviewScore + 10))}%` : 'N/A', 
+                    match: candidate.interviewScore ? `${Math.min(95, Math.round(candidate.interviewScore + 10))}%` : `${Math.min(95, Math.round((candidate.skillDNA?.overallScore || 75) + 10))}%`, 
                     icon: '💻', 
                     gradient: 'from-blue-500/40 to-cyan-500/40', 
                     border: 'border-blue-300/50 hover:border-blue-200', 
@@ -680,7 +680,7 @@ const CandidateProfilePage = () => {
                   },
                   { 
                     role: 'Technical Architect', 
-                    match: candidate.interviewScore ? `${Math.min(95, Math.round(candidate.interviewScore + 7))}%` : 'N/A', 
+                    match: candidate.interviewScore ? `${Math.min(95, Math.round(candidate.interviewScore + 7))}%` : `${Math.min(95, Math.round((candidate.skillDNA?.overallScore || 75) + 7))}%`, 
                     icon: '⚙️', 
                     gradient: 'from-orange-500/40 to-red-500/40', 
                     border: 'border-orange-300/50 hover:border-orange-200', 
