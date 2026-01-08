@@ -8,14 +8,20 @@ require('dotenv').config();
 // Email transporter with proper error handling
 let transporter = null;
 try {
-  transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-  console.log('✅ Email transporter initialized');
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.log('❌ Email credentials not set in environment variables');
+    console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');
+    console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'Set (hidden)' : 'Not set');
+  } else {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+    console.log('✅ Email transporter initialized for:', process.env.EMAIL_USER);
+  }
 } catch (error) {
   console.error('❌ Email transporter failed:', error.message);
 }
