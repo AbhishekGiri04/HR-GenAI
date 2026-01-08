@@ -109,18 +109,28 @@ const TemplateBasedInterview = () => {
           position: template?.name || 'Interview'
         }}
         onComplete={async (answers) => {
-          // Save template info to candidate
+          console.log('📝 Interview completed with', answers.length, 'answers');
+          
+          // Save interview responses and template info
           try {
-            await fetch(`${API_URL}/api/candidates/${candidateId}`, {
+            const response = await fetch(`${API_URL}/api/candidates/${candidateId}`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 appliedFor: template?.name,
-                templateId: template?._id
+                templateId: template?._id,
+                interviewResponses: answers,
+                status: 'interviewed'
               })
             });
+            
+            if (response.ok) {
+              console.log('✅ Interview responses saved successfully');
+            } else {
+              console.error('❌ Failed to save responses:', response.status);
+            }
           } catch (error) {
-            console.error('Failed to save template info:', error);
+            console.error('Failed to save interview data:', error);
           }
           
           setInterviewPhase('completed');
