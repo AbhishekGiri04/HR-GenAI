@@ -106,17 +106,20 @@ router.post('/bulk-invite', async (req, res) => {
         };
 
         console.log(`Sending interview email to ${candidateData.email}...`);
-        await transporter.sendMail(mailOptions);
+        const emailResult = await transporter.sendMail(mailOptions);
+        console.log(`✅ Email sent successfully:`, emailResult.messageId);
         
         results.push({
           email: candidateData.email,
           status: 'sent',
-          candidateId: candidate._id
+          candidateId: candidate._id,
+          messageId: emailResult.messageId
         });
 
         console.log(`✅ Invitation sent to ${candidateData.email}`);
       } catch (error) {
         console.error(`❌ Failed to invite ${candidateData.email}:`, error.message);
+        console.error('Full error:', error);
         results.push({
           email: candidateData.email,
           status: 'failed',
