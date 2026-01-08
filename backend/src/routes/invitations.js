@@ -55,9 +55,18 @@ router.post('/bulk-invite', async (req, res) => {
 
     console.log('✅ Template found and validated:', template.name);
 
-    const results = [];
+    // Send immediate response and process emails in background
+    res.json({
+      success: true,
+      message: 'Invitations are being sent',
+      totalCandidates: candidates.length
+    });
 
-    for (const candidateData of candidates) {
+    // Process emails asynchronously
+    (async () => {
+      const results = [];
+
+      for (const candidateData of candidates) {
       try {
         console.log(`Processing candidate: ${candidateData.email}`);
         
@@ -118,13 +127,8 @@ router.post('/bulk-invite', async (req, res) => {
 
     const successCount = results.filter(r => r.status === 'sent').length;
     console.log(`=== BULK INVITE COMPLETE: ${successCount}/${results.length} invitations sent ===`);
-
-    res.json({
-      success: true,
-      sent: successCount,
-      failed: results.length - successCount,
-      results
-    });
+    })().catch(err => console.error('Background email processing error:', err));
+    
   } catch (error) {
     console.error('❌ Bulk invite error:', error);
     res.status(500).json({ error: 'Failed to send invitations: ' + error.message });
