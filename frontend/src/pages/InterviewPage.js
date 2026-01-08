@@ -6,12 +6,14 @@ import InterviewManager from '../components/InterviewManager';
 import AICopilot from '../components/AICopilot';
 import TemplateBasedInterview from '../components/TemplateBasedInterview';
 import Header from '../components/Header';
+import { useAuth } from '../contexts/authContext';
 
 const ComprehensiveInterview = () => {
   const { candidateId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { template, questions, aiGenerated } = location.state || {};
+  const { currentUser } = useAuth();
   
   const [candidateData, setCandidateData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -123,7 +125,7 @@ const ComprehensiveInterview = () => {
               </h1>
               {candidateData && (
                 <p className="text-gray-600">
-                  Candidate: {candidateData.name} | Position: {candidateData.position}
+                  Candidate: {currentUser?.displayName || currentUser?.email || 'User'} | Position: {candidateData?.appliedFor || 'Position'}
                 </p>
               )}
             </div>
