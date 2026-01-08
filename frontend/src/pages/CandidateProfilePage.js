@@ -61,8 +61,8 @@ const CandidateProfilePage = () => {
     );
   }
 
-  const cleanTalentScore = candidate.hiringProbability?.score || 87;
-  const growthLikelihood = candidate.hiringProbability?.predictions?.willStay6Months || 94;
+  const cleanTalentScore = candidate.interviewScore || candidate.overallScore || 0;
+  const growthLikelihood = candidate.hiringProbability?.predictions?.willStay6Months || 0;
   const retentionPrediction = 100 - (candidate.hiringProbability?.predictions?.burnoutRisk || 9);
 
   return (
@@ -280,10 +280,10 @@ const CandidateProfilePage = () => {
                   <Award className="w-8 h-8 text-white" />
                 </div>
                 <div className="text-right">
-                  <span className="text-5xl font-black text-orange-400">{candidate.skillDNA?.overallScore || 85}</span>
+                  <span className="text-5xl font-black text-orange-400">{candidate.interviewScore || candidate.overallScore || 'N/A'}</span>
                   <div className="flex justify-end mt-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`w-4 h-4 ${i < Math.floor((candidate.skillDNA?.overallScore || 85)/20) ? 'text-orange-400 fill-current' : 'text-slate-600'}`} />
+                      <Star key={i} className={`w-4 h-4 ${i < Math.floor((candidate.interviewScore || candidate.overallScore || 0)/20) ? 'text-orange-400 fill-current' : 'text-slate-600'}`} />
                     ))}
                   </div>
                 </div>
@@ -422,7 +422,7 @@ const CandidateProfilePage = () => {
             <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-2xl p-6 border border-blue-500/20">
               <GenomeChart 
                 skillDNA={{
-                  overall_skill_score: candidate.skillDNA?.overallScore || 85,
+                  overall_skill_score: candidate.interviewScore || candidate.overallScore || 0,
                   adaptability_score: 8,
                   learning_velocity: 9
                 }}
@@ -658,7 +658,7 @@ const CandidateProfilePage = () => {
                 {[
                   { 
                     role: 'Senior Developer', 
-                    match: `${Math.min(95, Math.round((candidate.skillDNA?.overallScore || 85) + 10))}%`, 
+                    match: candidate.interviewScore ? `${Math.min(95, Math.round(candidate.interviewScore + 10))}%` : 'N/A', 
                     icon: '💻', 
                     gradient: 'from-blue-500/40 to-cyan-500/40', 
                     border: 'border-blue-300/50 hover:border-blue-200', 
@@ -674,7 +674,7 @@ const CandidateProfilePage = () => {
                   },
                   { 
                     role: 'Technical Architect', 
-                    match: `${Math.min(95, Math.round((candidate.skillDNA?.overallScore || 85) + 7))}%`, 
+                    match: candidate.interviewScore ? `${Math.min(95, Math.round(candidate.interviewScore + 7))}%` : 'N/A', 
                     icon: '⚙️', 
                     gradient: 'from-orange-500/40 to-red-500/40', 
                     border: 'border-orange-300/50 hover:border-orange-200', 
