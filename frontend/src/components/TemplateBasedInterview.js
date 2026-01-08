@@ -108,7 +108,21 @@ const TemplateBasedInterview = () => {
           skillDNA: candidateData?.skillDNA,
           position: template?.name || 'Interview'
         }}
-        onComplete={(answers) => {
+        onComplete={async (answers) => {
+          // Save template info to candidate
+          try {
+            await fetch(`${API_URL}/api/candidates/${candidateId}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                appliedFor: template?.name,
+                templateId: template?._id
+              })
+            });
+          } catch (error) {
+            console.error('Failed to save template info:', error);
+          }
+          
           setInterviewPhase('completed');
           setTimeout(() => {
             navigate(`/genome/${candidateId}`);

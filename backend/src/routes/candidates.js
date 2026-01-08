@@ -30,6 +30,7 @@ router.get('/:id/questions', candidateController.getQuestions);
 router.get('/:id', candidateController.getCandidate);
 router.get('/', candidateController.getAllCandidates);
 router.put('/:id', candidateController.updateCandidate);
+router.patch('/:id', candidateController.updateCandidate);
 router.delete('/:id', candidateController.deleteCandidate);
 
 // Error handling middleware for multer

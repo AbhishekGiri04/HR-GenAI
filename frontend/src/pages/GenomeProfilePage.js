@@ -69,7 +69,7 @@ const GenomeProfile = () => {
           <div className="mt-4">
             <h2 className="text-2xl font-semibold">{candidateData.name}</h2>
             <p className="text-gray-300">{candidateData.email}</p>
-            <p className="text-gray-300">Applied for: {candidateData.position || candidateData.template?.name || candidateData.appliedPosition || 'Not specified'}</p>
+            <p className="text-gray-300">Applied for: {candidateData.appliedFor || candidateData.position || candidateData.template?.name || candidateData.appliedPosition || 'Not specified'}</p>
           </div>
         </div>
 
