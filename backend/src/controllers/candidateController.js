@@ -44,7 +44,7 @@ exports.uploadResume = async (req, res) => {
         resumeText = fs.readFileSync(file.path, 'utf-8');
       }
       
-      skillDNA = await skillDNAEngine.extractSkillDNA(resumeText);
+      skillDNA = await skillDNAEngine.extractSkillDNA(resumeText, file.originalname);
       console.log('✅ Enhanced extraction successful for:', skillDNA.personalInfo?.name);
       
       // Broadcast skills extraction activity

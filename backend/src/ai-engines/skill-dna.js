@@ -6,9 +6,10 @@ const openai = new OpenAI({
 });
 
 class SkillDNAEngine {
-  async extractSkillDNA(resumeText) {
+  async extractSkillDNA(resumeText, filename = '') {
     try {
       console.log('🤖 Starting GPT-4 extraction with text length:', resumeText.length);
+      console.log('📄 Filename:', filename);
       
       if (!resumeText || resumeText.trim().length < 50) {
         console.log('❌ Resume text too short or empty');
@@ -75,7 +76,7 @@ Rules:
       
       if (nameIsInvalid) {
         console.log('⚠️ Invalid name:', parsed.personalInfo?.name, '- trying fallback');
-        const fallback = this.fallbackExtraction(resumeText);
+        const fallback = this.fallbackExtraction(resumeText, filename);
         parsed.personalInfo.name = fallback.personalInfo.name;
       }
       
@@ -85,14 +86,14 @@ Rules:
       
       if (locationIsInvalid) {
         console.log('⚠️ Invalid location:', parsed.personalInfo?.location, '- trying fallback');
-        const fallback = this.fallbackExtraction(resumeText);
+        const fallback = this.fallbackExtraction(resumeText, filename);
         parsed.personalInfo.location = fallback.personalInfo.location;
       }
       
       // Ensure we have at least some technical skills
       if (!parsed.technicalSkills || parsed.technicalSkills.length === 0) {
         console.log('⚠️ No technical skills found, using fallback');
-        const fallback = this.fallbackExtraction(resumeText);
+        const fallback = this.fallbackExtraction(resumeText, filename);
         parsed.technicalSkills = fallback.technicalSkills;
         parsed.overallScore = fallback.overallScore;
         parsed.learningVelocity = fallback.learningVelocity;
@@ -101,7 +102,7 @@ Rules:
       return parsed;
     } catch (error) {
       console.error('❌ Skill DNA extraction error:', error.message);
-      return this.fallbackExtraction(resumeText);
+      return this.fallbackExtraction(resumeText, filename);
     }
   }
 
@@ -192,7 +193,7 @@ Make questions specific to their ${skills} expertise and vary difficulty levels.
     }
   }
 
-  fallbackExtraction(resumeText) {
+  fallbackExtraction(resumeText, filename = '') {
     console.log('🔄 Using fallback extraction method');
     
     const text = resumeText.toLowerCase();
@@ -208,6 +209,25 @@ Make questions specific to their ${skills} expertise and vary difficulty levels.
     
     // Extract name - multiple strategies
     let name = "";
+    
+    // Strategy 0: Extract from filename (e.g., AtharvGangwarResume.pdf -> Atharv Gangwar)
+    if (filename) {
+      const cleanFilename = filename.replace(/\.pdf|\.docx|\.doc/gi, '')
+                                   .replace(/resume|cv|curriculum|vitae/gi, '')
+                                   .trim();
+      
+      // Split camelCase or PascalCase (e.g., AtharvGangwar -> Atharv Gangwar)
+      const nameFromFile = cleanFilename.replace(/([a-z])([A-Z])/g, '$1 $2')
+                                       .replace(/[_\-]/g, ' ')
+                                       .trim();
+      
+      if (nameFromFile.length >= 3 && nameFromFile.length <= 50 && 
+          nameFromFile.match(/^[A-Za-z\s]+$/) &&
+          nameFromFile.split(' ').length >= 2) {
+        name = nameFromFile;
+        console.log('✅ Name extracted from filename:', name);
+      }
+    }
     
     // Strategy 1: Look for name patterns
     const namePatterns = [
