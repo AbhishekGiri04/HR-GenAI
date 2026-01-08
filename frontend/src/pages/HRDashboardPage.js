@@ -402,9 +402,13 @@ const HRDashboard = () => {
             <div className="space-y-4">
               {candidates
                 .filter(candidate => {
+                  // Only show candidates who completed interview
+                  const hasInterviewScore = candidate.interviewScore || (candidate.interviewResponses && candidate.interviewResponses.length > 0);
+                  if (!hasInterviewScore) return false;
+                  
                   const matchesSearch = candidate.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                                       candidate.email?.toLowerCase().includes(searchTerm.toLowerCase());
-                  const score = candidate.skillDNA?.overallScore || 0;
+                  const score = candidate.interviewScore || 0;
                   const matchesFilter = filterScore === 'all' ||
                                       (filterScore === 'high' && score >= 90) ||
                                       (filterScore === 'medium' && score >= 70 && score < 90) ||
@@ -412,7 +416,7 @@ const HRDashboard = () => {
                   return matchesSearch && matchesFilter;
                 })
                 .slice(0, 5).map((candidate) => {
-                const score = candidate.interviewScore || candidate.overallScore || 0;
+                const score = candidate.interviewScore || 0;
                 const skills = candidate.skillDNA?.technicalSkills || candidate.skills || [];
                 const grade = getGrade(score);
                 
@@ -443,7 +447,7 @@ const HRDashboard = () => {
                     <div className="flex items-center space-x-4">
                       <div className="text-center">
                         <div className="text-lg font-bold text-blue-600">
-                          {candidate.interviewScore || candidate.overallScore || 'Pending'}
+                          {candidate.interviewScore || 'N/A'}
                         </div>
                         <div className="text-xs text-gray-500">Score</div>
                       </div>

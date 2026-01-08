@@ -61,9 +61,9 @@ const CandidateProfilePage = () => {
     );
   }
 
-  const cleanTalentScore = candidate.interviewScore || candidate.overallScore || 0;
-  const growthLikelihood = candidate.hiringProbability?.predictions?.willStay6Months || 0;
-  const retentionPrediction = 100 - (candidate.hiringProbability?.predictions?.burnoutRisk || 9);
+  const cleanTalentScore = candidate.interviewScore || 0;
+  const growthLikelihood = candidate.hiringProbability?.predictions?.willStay6Months || 91;
+  const retentionPrediction = candidate.hiringProbability?.predictions?.retentionScore || 91;
 
   return (
     <div className="min-h-screen flex flex-col relative">
@@ -154,25 +154,31 @@ const CandidateProfilePage = () => {
                     <span className="text-white/80 text-sm font-semibold">AI Talent Score</span>
                   </div>
                   <div className="relative">
-                    <div className="text-7xl font-black text-white mb-2">{cleanTalentScore}</div>
+                    <div className="text-7xl font-black text-white mb-2">{cleanTalentScore || 'N/A'}</div>
                     <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 rounded-full blur-2xl"></div>
                   </div>
                   <p className="text-white/70 text-sm font-medium">out of 100</p>
-                  <div className="mt-4 flex justify-center">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`w-5 h-5 ${i < Math.floor(cleanTalentScore/20) ? 'text-yellow-400 fill-current' : 'text-white/30'}`} />
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => window.open(`${API_URL}/api/candidates/${candidateId}/resume`, '_blank')}
-                    className="mt-6 w-full bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-colors font-semibold flex items-center justify-center space-x-2 border border-white/30"
-                  >
-                    <FileText className="w-4 h-4" />
-                    <span>View Resume</span>
-                  </button>
+                  {cleanTalentScore > 0 && (
+                    <div className="mt-4 flex justify-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className={`w-5 h-5 ${i < Math.floor(cleanTalentScore/20) ? 'text-yellow-400 fill-current' : 'text-white/30'}`} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* View Resume Button - Always Visible */}
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={() => window.open(`${API_URL}/api/candidates/${candidateId}/resume`, '_blank')}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl hover:shadow-2xl transition-all font-bold text-lg flex items-center space-x-3 border-2 border-white/20 hover:scale-105"
+            >
+              <FileText className="w-6 h-6" />
+              <span>View Resume</span>
+            </button>
           </div>
 
           {/* Enhanced Interview Summary */}
@@ -288,8 +294,8 @@ const CandidateProfilePage = () => {
                   </div>
                 </div>
               </div>
-              <h3 className="text-white font-bold text-xl mb-2">Skill Mastery</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">Combined technical expertise and soft skills assessment</p>
+              <h3 className="text-white font-bold text-xl mb-2">Interview Score</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">{cleanTalentScore > 0 ? 'Combined technical expertise and soft skills assessment' : 'Interview pending - score will appear after completion'}</p>
             </div>
           </div>
 
