@@ -175,3 +175,52 @@ exports.getAnalysis = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch analysis' });
   }
 };
+
+
+exports.evaluateInterview = async (req, res) => {
+  try {
+    const { candidateId, templateId, answers } = req.body;
+    console.log('🎯 Evaluating interview for candidate:', candidateId);
+    
+    const candidate = await Candidate.findById(candidateId);
+    if (!candidate) {
+      return res.status(404).json({ error: 'Candidate not found' });
+    }
+    
+    const AIEvaluationEngine = require('../ai-engines/ai-evaluation-engine');
+    const evaluationEngine = new AIEvaluationEngine();
+    
+    // Prepare session data
+    const session = {
+      questions: answers.map(a => ({ question: a.question, type: a.type })),
+      answers: answers.map(a => a.answer),
+      candidate: {
+        name: candidate.name,
+        skills: candidate.skillDNA?.technicalSkills || []
+      }
+    };
+    
+    // Evaluate
+    const evaluation = await evaluationEngine.evaluateSession(session);
+    console.log('✅ Evaluation complete, score:', evaluation.overallScore);
+    
+    // Update candidate with score
+    candidate.interviewScore = evaluation.overallScore;
+    candidate.interviewSummary = {
+      verdict: evaluation.verdict,
+      summary: evaluation.summary,
+      strengths: evaluation.strengths,
+      weaknesses: evaluation.weaknesses
+    };
+    await candidate.save();
+    
+    res.json({ 
+      success: true, 
+      score: evaluation.overallScore,
+      verdict: evaluation.verdict 
+    });
+  } catch (error) {
+    console.error('❌ Evaluation error:', error);
+    res.status(500).json({ error: 'Evaluation failed' });
+  }
+};

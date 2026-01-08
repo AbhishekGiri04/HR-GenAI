@@ -111,9 +111,10 @@ const TemplateBasedInterview = () => {
         onComplete={async (answers) => {
           console.log('📝 Interview completed with', answers.length, 'answers');
           
-          // Save interview responses and template info
+          // Save interview responses and evaluate
           try {
-            const response = await fetch(`${API_URL}/api/candidates/${candidateId}`, {
+            // First save responses
+            const saveResponse = await fetch(`${API_URL}/api/candidates/${candidateId}`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -125,13 +126,27 @@ const TemplateBasedInterview = () => {
               })
             });
             
-            if (response.ok) {
-              console.log('✅ Interview responses saved successfully');
-            } else {
-              console.error('❌ Failed to save responses:', response.status);
+            if (saveResponse.ok) {
+              console.log('✅ Interview responses saved');
+              
+              // Then evaluate and calculate score
+              const evalResponse = await fetch(`${API_URL}/api/analysis/evaluate-interview`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  candidateId,
+                  templateId: template?._id,
+                  answers
+                })
+              });
+              
+              if (evalResponse.ok) {
+                const evalResult = await evalResponse.json();
+                console.log('✅ Interview evaluated, score:', evalResult.score);
+              }
             }
           } catch (error) {
-            console.error('Failed to save interview data:', error);
+            console.error('Failed to save/evaluate interview:', error);
           }
           
           setInterviewPhase('completed');
