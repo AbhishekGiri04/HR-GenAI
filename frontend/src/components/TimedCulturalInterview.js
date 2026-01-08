@@ -115,8 +115,12 @@ const TimedCulturalInterview = ({ questions, candidateInfo, onComplete, template
   ];
 
   const interviewQuestions = interviewPhase === 'text' 
-    ? (questions?.filter(q => q.category === 'behavioral' || q.category === 'cultural-fit') || culturalQuestions)
-    : (questions?.filter(q => q.category === 'technical' || q.category === 'problem-solving') || voiceQuestions);
+    ? (questions?.filter(q => q.category === 'behavioral' || q.category === 'cultural-fit' || q.category === 'leadership') || culturalQuestions)
+    : (questions?.filter(q => q.category === 'technical' || q.category === 'problem-solving' || q.category === 'communication') || voiceQuestions);
+  
+  console.log('📊 Interview Phase:', interviewPhase);
+  console.log('📝 Total Questions:', interviewQuestions.length);
+  console.log('🎯 Questions:', interviewQuestions.map(q => ({ question: q.question, category: q.category, type: q.type })));
   const totalQuestions = interviewQuestions.length;
   const progress = Math.round(((currentQuestion + 1) / totalQuestions) * 100);
 
@@ -232,8 +236,9 @@ const TimedCulturalInterview = ({ questions, candidateInfo, onComplete, template
       setTimeRemaining(interviewQuestions[currentQuestion + 1]?.timeLimit || 300);
     } else {
       if (interviewPhase === 'text' && template?.interviewType === 'mixed') {
-        const voiceQs = questions?.filter(q => q.category === 'technical' || q.category === 'problem-solving') || voiceQuestions;
+        const voiceQs = questions?.filter(q => q.category === 'technical' || q.category === 'problem-solving' || q.category === 'communication') || voiceQuestions;
         if (voiceQs.length > 0) {
+          console.log('🔄 Switching to voice phase with', voiceQs.length, 'questions');
           setInterviewPhase('voice');
           setCurrentQuestion(0);
           setCurrentAnswer('');

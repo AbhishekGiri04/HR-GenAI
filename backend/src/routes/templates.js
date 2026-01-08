@@ -25,11 +25,11 @@ router.get('/templates', async (req, res) => {
 // Get all deployed templates (public access) - MUST BE BEFORE /:id route
 router.get('/templates/deployed/public', async (req, res) => {
   try {
+    const { candidateId } = req.query;
     const now = new Date();
     const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
     const today = now.toISOString().split('T')[0];
 
-    // Only show templates that are currently active
     const templates = await Template.find({ 
       isDeployed: true,
       isActive: true,
@@ -45,9 +45,30 @@ router.get('/templates/deployed/public', async (req, res) => {
       ]
     }).sort({ createdAt: -1 });
     
-    // Add time remaining for scheduled templates
+    // Calculate skill match if candidateId provided
+    let candidateSkills = [];
+    if (candidateId) {
+      const Candidate = require('../models/Candidate');
+      const candidate = await Candidate.findById(candidateId);
+      if (candidate && candidate.skillDNA && candidate.skillDNA.technicalSkills) {
+        candidateSkills = candidate.skillDNA.technicalSkills.map(s => s.toLowerCase());
+      }
+    }
+    
     const templatesWithTimeInfo = templates.map(template => {
       const templateObj = template.toObject();
+      
+      // Calculate skill match percentage
+      if (candidateSkills.length > 0 && template.techStack && template.techStack.length > 0) {
+        const templateSkills = template.techStack.map(s => s.toLowerCase());
+        const matchingSkills = candidateSkills.filter(cs => 
+          templateSkills.some(ts => ts.includes(cs) || cs.includes(ts))
+        );
+        templateObj.matchScore = Math.round((matchingSkills.length / templateSkills.length) * 100);
+      } else {
+        templateObj.matchScore = 0;
+      }
+      
       if (template.templateType === 'scheduled') {
         const [endHour, endMin] = template.scheduledEndTime.split(':').map(Number);
         const [currentHour, currentMin] = currentTime.split(':').map(Number);

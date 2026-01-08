@@ -51,7 +51,7 @@ const TemplateSelection = () => {
       
       // No assigned template or public access - show deployed templates
       console.log('Fetching deployed templates for public access');
-      const deployedResponse = await fetch(`${API_URL}/api/hr/templates/deployed/public`);
+      const deployedResponse = await fetch(`${API_URL}/api/hr/templates/deployed/public?candidateId=${candidateId}`);
       console.log('Deployed response status:', deployedResponse.status);
       
       if (deployedResponse.ok) {
