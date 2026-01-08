@@ -412,7 +412,7 @@ const HRDashboard = () => {
                   return matchesSearch && matchesFilter;
                 })
                 .slice(0, 5).map((candidate) => {
-                const score = candidate.skillDNA?.overallScore || candidate.interviewScore || 0;
+                const score = candidate.interviewScore || candidate.overallScore || 0;
                 const skills = candidate.skillDNA?.technicalSkills || candidate.skills || [];
                 const grade = getGrade(score);
                 
@@ -443,7 +443,7 @@ const HRDashboard = () => {
                     <div className="flex items-center space-x-4">
                       <div className="text-center">
                         <div className="text-lg font-bold text-blue-600">
-                          {candidate.skillDNA?.overallScore || 'Pending'}
+                          {candidate.interviewScore || candidate.overallScore || 'Pending'}
                         </div>
                         <div className="text-xs text-gray-500">Score</div>
                       </div>

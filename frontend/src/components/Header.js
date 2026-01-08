@@ -68,20 +68,6 @@ const Header = () => {
             {userRole === 'hr' && (
               <>
                 <Link
-                  to="/analysis"
-                  className={`relative flex items-center space-x-2 px-6 py-3 rounded-2xl font-bold transition-all duration-300 group ${
-                    isActive('/analysis') 
-                      ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg' 
-                      : 'text-slate-300 hover:bg-slate-700/50 hover:text-white'
-                  }`}
-                >
-                  <Users className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-                  <span>Talent Pool</span>
-                  {isActive('/analysis') && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl blur-lg opacity-30"></div>
-                  )}
-                </Link>
-                <Link
                   to="/analytics"
                   className={`relative flex items-center space-x-2 px-6 py-3 rounded-2xl font-bold transition-all duration-300 group ${
                     isActive('/analytics') 
