@@ -170,9 +170,24 @@ exports.getAllCandidates = async (req, res) => {
 
 exports.updateCandidate = async (req, res) => {
   try {
+    const updateData = { ...req.body };
+    
+    // Handle $addToSet for completedTemplates
+    if (req.body.$addToSet && req.body.$addToSet.completedTemplates) {
+      const candidate = await Candidate.findById(req.params.id);
+      if (candidate) {
+        const completedTemplates = candidate.completedTemplates || [];
+        if (!completedTemplates.includes(req.body.$addToSet.completedTemplates)) {
+          completedTemplates.push(req.body.$addToSet.completedTemplates);
+        }
+        updateData.completedTemplates = completedTemplates;
+      }
+      delete updateData.$addToSet;
+    }
+    
     const candidate = await Candidate.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true }
     );
     res.json(candidate);

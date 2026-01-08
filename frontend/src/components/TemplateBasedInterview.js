@@ -120,7 +120,8 @@ const TemplateBasedInterview = () => {
                 appliedFor: template?.name,
                 templateId: template?._id,
                 interviewResponses: answers,
-                status: 'interviewed'
+                status: 'interviewed',
+                $addToSet: { completedTemplates: template?._id }
               })
             });
             

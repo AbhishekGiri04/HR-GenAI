@@ -13,6 +13,8 @@ const candidateSchema = new mongoose.Schema({
   location: String,
   resumePath: String,
   appliedFor: String,
+  templateId: String,
+  completedTemplates: [String],
   skillDNA: {
     personalInfo: {
       name: String,

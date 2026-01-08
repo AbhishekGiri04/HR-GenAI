@@ -58,7 +58,32 @@ const TemplateSelection = () => {
         const deployedTemplates = await deployedResponse.json();
         console.log('Deployed templates received:', deployedTemplates);
         console.log('Number of templates:', deployedTemplates.length);
-        setTemplates(deployedTemplates);
+        
+        // Filter out templates already completed by this candidate
+        if (candidateId && candidateId !== 'public' && candidateId.length === 24) {
+          try {
+            const candidateResponse = await fetch(`${API_URL}/api/candidates/${candidateId}`);
+            if (candidateResponse.ok) {
+              const candidate = await candidateResponse.json();
+              const completedTemplateIds = candidate.completedTemplates || [];
+              
+              const availableTemplates = deployedTemplates.filter(t => 
+                !completedTemplateIds.includes(t._id)
+              );
+              
+              console.log('Completed templates:', completedTemplateIds);
+              console.log('Available templates:', availableTemplates.length);
+              setTemplates(availableTemplates);
+            } else {
+              setTemplates(deployedTemplates);
+            }
+          } catch (err) {
+            console.log('Error filtering templates:', err);
+            setTemplates(deployedTemplates);
+          }
+        } else {
+          setTemplates(deployedTemplates);
+        }
       } else {
         console.error('Failed to fetch deployed templates:', deployedResponse.status);
       }
