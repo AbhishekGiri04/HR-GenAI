@@ -181,14 +181,14 @@ exports.evaluateInterview = async (req, res) => {
   try {
     const { candidateId, templateId, answers } = req.body;
     console.log('🎯 Evaluating interview for candidate:', candidateId);
+    console.log('📝 Answers count:', answers?.length);
     
     const candidate = await Candidate.findById(candidateId);
     if (!candidate) {
       return res.status(404).json({ error: 'Candidate not found' });
     }
     
-    const AIEvaluationEngine = require('../ai-engines/ai-evaluation-engine');
-    const evaluationEngine = new AIEvaluationEngine();
+    const evaluationEngine = require('../ai-engines/ai-evaluation-engine');
     
     // Prepare session data
     const session = {
@@ -200,6 +200,7 @@ exports.evaluateInterview = async (req, res) => {
       }
     };
     
+    console.log('🤖 Starting AI evaluation...');
     // Evaluate
     const evaluation = await evaluationEngine.evaluateSession(session);
     console.log('✅ Evaluation complete, score:', evaluation.overallScore);
@@ -214,13 +215,16 @@ exports.evaluateInterview = async (req, res) => {
     };
     await candidate.save();
     
+    console.log('✅ Score saved to database');
+    
     res.json({ 
       success: true, 
       score: evaluation.overallScore,
       verdict: evaluation.verdict 
     });
   } catch (error) {
-    console.error('❌ Evaluation error:', error);
-    res.status(500).json({ error: 'Evaluation failed' });
+    console.error('❌ Evaluation error:', error.message);
+    console.error('Stack:', error.stack);
+    res.status(500).json({ error: 'Evaluation failed: ' + error.message });
   }
 };
