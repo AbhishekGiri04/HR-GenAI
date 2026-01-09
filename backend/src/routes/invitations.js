@@ -19,16 +19,29 @@ const nodemailer = require('nodemailer');
 let gmailTransporter = null;
 if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
   gmailTransporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
     },
-    connectionTimeout: 10000,
-    greetingTimeout: 5000,
-    socketTimeout: 10000
+    connectionTimeout: 60000,
+    greetingTimeout: 30000,
+    socketTimeout: 60000
   });
-  console.log('✅ Gmail SMTP fallback initialized');
+  
+  // Test connection immediately
+  gmailTransporter.verify((error, success) => {
+    if (error) {
+      console.log('❌ Gmail SMTP failed:', error.message);
+      gmailTransporter = null;
+    } else {
+      console.log('✅ Gmail SMTP ready');
+    }
+  });
+} else {
+  console.log('❌ Gmail credentials missing');
 }
 
 // Bulk invite candidates
@@ -81,7 +94,6 @@ router.post('/bulk-invite', async (req, res) => {
             });
             await candidate.save();
           } else {
-            // Only update template info, don't change status
             await Candidate.findByIdAndUpdate(candidate._id, {
               appliedFor: template.name,
               assignedTemplate: templateId,
@@ -90,22 +102,22 @@ router.post('/bulk-invite', async (req, res) => {
           }
 
           const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}?fromEmail=true`;
-
-          console.log(`Sending email to ${candidateData.email}...`);
+          console.log(`📧 Sending email to ${candidateData.email}...`);
           
           let emailResult;
           
           if (gmailTransporter) {
-            // Use Gmail (preferred for unrestricted sending)
+            console.log('📧 Using Gmail SMTP...');
             const info = await gmailTransporter.sendMail({
-              from: process.env.EMAIL_USER,
+              from: `"HR GenAI" <${process.env.EMAIL_USER}>`,
               to: candidateData.email,
               subject: `Interview Invitation - ${template.name}`,
               html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
             });
             emailResult = { id: info.messageId, service: 'Gmail' };
+            console.log(`✅ Gmail sent: ${info.messageId}`);
           } else if (resend) {
-            // Use Resend (domain verification required)
+            console.log('📧 Using Resend...');
             const { data, error } = await resend.emails.send({
               from: 'HR GenAI <onboarding@resend.dev>',
               to: candidateData.email,
@@ -113,12 +125,14 @@ router.post('/bulk-invite', async (req, res) => {
               html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
             });
             
-            if (error) throw new Error(error.message);
+            if (error) throw new Error(`Resend error: ${error.message}`);
             emailResult = { id: data.id, service: 'Resend' };
+            console.log(`✅ Resend sent: ${data.id}`);
+          } else {
+            throw new Error('No email service available');
           }
           
-          console.log(`✅ Email sent to ${candidateData.email} via ${emailResult.service}, ID: ${emailResult.id}`);
-          
+          console.log(`✅ Email sent to ${candidateData.email} via ${emailResult.service}`);
           results.push({ email: candidateData.email, status: 'sent', emailId: emailResult.id, service: emailResult.service });
         } catch (error) {
           console.error(`❌ Failed ${candidateData.email}:`, error.message);
