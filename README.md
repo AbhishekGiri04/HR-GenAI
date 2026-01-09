@@ -25,14 +25,7 @@
 
 <br/>
 
-**The hiring industry is fundamentally broken.** Traditional recruitment processes are plagued with inefficiencies that cost companies millions while missing top talent:
-
-• **Manual Resume Screening** - HR teams spend 40+ hours per hire reading resumes manually, leading to overwhelmed staff and missed opportunities
-• **Unconscious Bias** - 90% of hiring decisions are influenced by human bias, systematically excluding diverse talent and limiting innovation
-• **False Information Crisis** - 85% of resumes contain inaccurate information, making it impossible to trust candidate qualifications
-• **Slow Decision Making** - 45+ day hiring cycles result in losing top candidates to faster competitors
-• **Poor Cultural Fit Assessment** - Surface-level interviews ignore personality and cultural alignment, leading to 33% turnover within 6 months
-• **High Cost of Bad Hires** - Each wrong hire costs 30% of annual salary ($18,000 for a $60K role), multiplying losses across organizations
+The hiring industry is fundamentally broken. Traditional recruitment processes are plagued with inefficiencies that cost companies millions while missing top talent. HR teams spend 40+ hours per hire reading resumes manually, leading to overwhelmed staff and missed opportunities. With 90% of hiring decisions influenced by unconscious bias, diverse talent is systematically excluded, limiting innovation. The crisis deepens with 85% of resumes containing inaccurate information, making it impossible to trust candidate qualifications. Slow 45+ day hiring cycles result in losing top candidates to faster competitors, while surface-level interviews ignore personality and cultural alignment, leading to 33% turnover within 6 months. Each wrong hire costs 30% of annual salary ($18,000 for a $60K role), multiplying losses across organizations.
 
 ---
 
@@ -54,7 +47,6 @@
 
 ---
 
-## ✨ Key Features
 
 <div align="center">
   <img src="docs/Features.png" alt="Key Features" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
