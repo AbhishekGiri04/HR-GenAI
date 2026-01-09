@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Template = require('../models/Template');
 const { generateInterviewTemplate } = require('../ai-engines/smartMessageGenerator');
-const emailService = require('../services/emailService');
+const { Resend } = require('resend');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * POST /api/auto-hire
@@ -61,8 +63,18 @@ Good luck! 🚀
 HR Team
     `.trim();
 
-    await emailService.sendEmail(email, `Interview Invitation - ${jobRole}`, emailBody);
-    console.log(`✅ Email sent to ${email}`);
+    // Step 3: Send Email using Resend
+    try {
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL || 'HR GenAI <onboarding@resend.dev>',
+        to: email,
+        subject: `Interview Invitation - ${jobRole}`,
+        text: emailBody
+      });
+      console.log(`✅ Email sent to ${email}`);
+    } catch (emailError) {
+      console.log(`⚠️ Email failed: ${emailError.message}`);
+    }
 
     res.json({
       success: true,
