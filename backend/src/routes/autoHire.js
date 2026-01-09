@@ -38,29 +38,41 @@ router.post('/auto-hire', async (req, res) => {
     await template.save();
     console.log(`✅ Template created & deployed: ${template._id}`);
 
-    // Step 3: Send Email
-    const dashboardLink = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard`;
-    
-    const emailBody = `
+    // Step 3: Send Email using Resend
+    const inviteMessage = `
 Dear Candidate,
 
 You've been invited to interview for the ${jobRole} position!
 
-Our AI interviewer "Huma" will conduct a ${templateData.duration}-minute interview.
+🤖 AI Interview Details:
+Our intelligent interviewer "Huma" will conduct a personalized ${templateData.duration}-minute interview.
 
 📋 Interview Topics:
 ${templateData.categories.map(cat => `• ${cat}`).join('\n')}
 
-🔗 Start Interview: ${dashboardLink}
+📅 Interview Information:
+• Duration: ${templateData.duration} minutes
+• Difficulty: ${templateData.difficulty.charAt(0).toUpperCase() + templateData.difficulty.slice(1)}
+• Passing Score: ${templateData.passingScore}%
 
-Steps:
-1. Upload your resume
-2. Huma will analyze and conduct interview
-3. Results will be sent automatically
+🎯 Interview Link: ${dashboardLink}
+
+📝 Steps to Complete:
+1. Click the link above
+2. Upload your resume
+3. Huma will analyze your profile
+4. Complete the AI-powered interview
+5. Results will be sent automatically
+
+Please ensure:
+✓ Stable internet connection
+✓ Working microphone and camera (for voice questions)
+✓ Quiet environment
 
 Good luck! 🚀
 
-HR Team
+Best regards,
+HR Team - Powered by Huma AI
     `.trim();
 
     // Step 3: Send Email using Resend
@@ -68,8 +80,8 @@ HR Team
       await resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL || 'HR GenAI <onboarding@resend.dev>',
         to: email,
-        subject: `Interview Invitation - ${jobRole}`,
-        text: emailBody
+        subject: `🎯 Interview Invitation - ${jobRole} Position`,
+        text: inviteMessage
       });
       console.log(`✅ Email sent to ${email}`);
     } catch (emailError) {

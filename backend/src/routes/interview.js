@@ -59,6 +59,37 @@ router.post('/generate-questions/:candidateId/:templateId', async (req, res) => 
     ).length;
     const skillMatchPercentage = templateSkills.length > 0 ? (skillMatchCount / templateSkills.length) * 100 : 0;
     
+    // Use template's pre-defined questions if available
+    if (template.questions && template.questions.length > 0) {
+      console.log(`✅ Using ${template.questions.length} pre-defined questions from template`);
+      
+      const finalQuestions = template.questions.map((q, index) => ({
+        id: index + 1,
+        category: q.category,
+        question: q.question,
+        difficulty: q.difficulty || template.difficulty,
+        points: q.points || 10,
+        type: q.category === 'Technical Skills' ? 'voice' : 'text',
+        expectedAnswer: q.expectedAnswer
+      }));
+
+      return res.json({
+        questions: finalQuestions,
+        template,
+        candidate: {
+          id: candidate._id,
+          name: candidate.name,
+          skills: candidateSkills,
+          requiredSkills: templateSkills,
+          skillMatch: skillMatchPercentage
+        },
+        skillMatchPercentage,
+        uniqueId: `${candidateId}_${templateId}_${Date.now()}`
+      });
+    }
+
+    // Fallback: Generate questions dynamically
+    console.log('⚠️ No pre-defined questions, generating dynamically...');
     const questions = [];
     let questionId = 1;
     
