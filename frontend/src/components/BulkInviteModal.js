@@ -72,7 +72,7 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
             </svg>
             <div>
               <h4 class="font-semibold">Invitations Sent Successfully</h4>
-              <p class="text-sm">${result.sent} candidates invited for interview</p>
+              <p class="text-sm">${result.totalCandidates || validCandidates.length} candidates invited for interview</p>
             </div>
           </div>
         `;
