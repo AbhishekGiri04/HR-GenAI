@@ -90,6 +90,7 @@ router.post('/bulk-invite', async (req, res) => {
           });
           
           console.log(`✅ Email sent to ${candidateData.email}, ID: ${emailResult.messageId}`);
+          console.log('Response:', emailResult.response);
           
           results.push({ email: candidateData.email, status: 'sent', messageId: emailResult.messageId });
         } catch (error) {
