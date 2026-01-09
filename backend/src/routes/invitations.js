@@ -1,17 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 const Candidate = require('../models/Candidate');
 const Template = require('../models/Template');
 require('dotenv').config();
 
-// Initialize Resend
-let resend = null;
-if (process.env.RESEND_API_KEY) {
-  resend = new Resend(process.env.RESEND_API_KEY);
-  console.log('✅ Resend email service initialized');
+// Initialize Gmail transporter
+let transporter = null;
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  transporter = nodemailer.createTransporter({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+  console.log('✅ Gmail email service initialized');
 } else {
-  console.log('❌ RESEND_API_KEY not set');
+  console.log('❌ EMAIL_USER or EMAIL_PASS not set');
 }
 
 // Bulk invite candidates
@@ -28,8 +34,8 @@ router.post('/bulk-invite', async (req, res) => {
       return res.status(400).json({ error: 'Template ID required' });
     }
     
-    if (!resend) {
-      return res.status(500).json({ error: 'Email service not configured. Please set RESEND_API_KEY' });
+    if (!transporter) {
+      return res.status(500).json({ error: 'Email service not configured' });
     }
 
     const template = await Template.findById(templateId);
@@ -76,16 +82,16 @@ router.post('/bulk-invite', async (req, res) => {
 
           console.log(`Sending email to ${candidateData.email}...`);
           
-          const emailResult = await resend.emails.send({
-            from: 'HR GenAI <onboarding@resend.dev>',
+          const emailResult = await transporter.sendMail({
+            from: `HR GenAI <${process.env.EMAIL_USER}>`,
             to: candidateData.email,
             subject: `Interview Invitation - ${template.name}`,
             html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
           });
           
-          console.log(`✅ Email sent to ${candidateData.email}, ID: ${emailResult.id}`);
+          console.log(`✅ Email sent to ${candidateData.email}, ID: ${emailResult.messageId}`);
           
-          results.push({ email: candidateData.email, status: 'sent' });
+          results.push({ email: candidateData.email, status: 'sent', messageId: emailResult.messageId });
         } catch (error) {
           console.error(`❌ Failed ${candidateData.email}:`, error.message);
           results.push({ email: candidateData.email, status: 'failed', error: error.message });
