@@ -64,10 +64,12 @@ router.post('/bulk-invite', async (req, res) => {
             });
             await candidate.save();
           } else {
-            candidate.appliedFor = template.name;
-            candidate.assignedTemplate = templateId;
-            candidate.invitedAt = new Date();
-            await candidate.save();
+            // Only update template info, don't change status
+            await Candidate.findByIdAndUpdate(candidate._id, {
+              appliedFor: template.name,
+              assignedTemplate: templateId,
+              invitedAt: new Date()
+            });
           }
 
           const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}`;
