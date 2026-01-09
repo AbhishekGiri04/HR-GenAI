@@ -1,45 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const Candidate = require('../models/Candidate');
 const Template = require('../models/Template');
 require('dotenv').config();
 
-// Email transporter with proper error handling
-let transporter = null;
-try {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.log('❌ Email credentials not set in environment variables');
-    console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');
-    console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'Set (hidden)' : 'Not set');
-  } else {
-    transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      },
-      tls: {
-        rejectUnauthorized: false
-      },
-      timeout: 10000,
-      connectionTimeout: 10000
-    });
-    console.log('✅ Email transporter initialized for:', process.env.EMAIL_USER);
-    
-    // Verify connection
-    transporter.verify((error, success) => {
-      if (error) {
-        console.error('❌ Email verification failed:', error.message);
-      } else {
-        console.log('✅ Email server connection verified');
-      }
-    });
-  }
-} catch (error) {
-  console.error('❌ Email transporter failed:', error.message);
+// Initialize Resend
+let resend = null;
+if (process.env.RESEND_API_KEY) {
+  resend = new Resend(process.env.RESEND_API_KEY);
+  console.log('✅ Resend email service initialized');
+} else {
+  console.log('❌ RESEND_API_KEY not set');
 }
 
 // Bulk invite candidates - All templates allowed
@@ -60,11 +32,9 @@ router.post('/bulk-invite', async (req, res) => {
       return res.status(400).json({ error: 'Template ID required' });
     }
     
-    if (!transporter) {
-      console.log('❌ Email transporter not configured');
-      console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');
-      console.log('EMAIL_PASS:', process.env.EMAIL_PASS ? 'Set' : 'Not set');
-      return res.status(500).json({ error: 'Email service not configured. Please check EMAIL_USER and EMAIL_PASS in .env file' });
+    if (!resend) {
+      console.log('❌ Resend not configured');
+      return res.status(500).json({ error: 'Email service not configured. Please set RESEND_API_KEY' });
     }
 
     // Get template details
@@ -89,6 +59,69 @@ router.post('/bulk-invite', async (req, res) => {
       const results = [];
 
       for (const candidateData of candidates) {
+        try {
+          console.log(`Processing candidate: ${candidateData.email}`);
+          
+          // Create or update candidate
+          let candidate = await Candidate.findOne({ email: candidateData.email });
+          
+          if (!candidate) {
+            candidate = new Candidate({
+              name: candidateData.name,
+              email: candidateData.email,
+              appliedFor: template.name,
+              assignedTemplate: templateId,
+              interviewStatus: 'invited',
+              invitedAt: new Date()
+            });
+            await candidate.save();
+            console.log('✅ New candidate created:', candidate._id);
+          } else {
+            candidate.appliedFor = template.name;
+            candidate.assignedTemplate = templateId;
+            candidate.interviewStatus = 'invited';
+            candidate.invitedAt = new Date();
+            await candidate.save();
+            console.log('✅ Existing candidate updated:', candidate._id);
+          }
+
+          // Generate interview link
+          const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}`;
+          console.log('Interview link:', interviewLink);
+
+          // Send email via Resend
+          console.log(`Sending interview email to ${candidateData.email}...`);
+          
+          const emailResult = await resend.emails.send({
+            from: 'HR GenAI <onboarding@resend.dev>',
+            to: candidateData.email,
+            subject: `Interview Invitation - ${template.name}`,
+            html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
+          });
+          
+          console.log(`✅ Email sent successfully to ${candidateData.email}`);
+          console.log(`   Email ID: ${emailResult.id}`);
+          
+          results.push({
+            email: candidateData.email,
+            status: 'sent',
+            candidateId: candidate._id,
+            emailId: emailResult.id
+          });
+
+        } catch (error) {
+          console.error(`❌ Failed to invite ${candidateData.email}:`, error.message);
+          results.push({
+            email: candidateData.email,
+            status: 'failed',
+            error: error.message
+          });
+        }
+      }
+
+      const successCount = results.filter(r => r.status === 'sent').length;
+      console.log(`=== BULK INVITE COMPLETE: ${successCount}/${results.length} invitations sent ===`);
+    })().catch(err => console.error('Background email processing error:', err));
       try {
         console.log(`Processing candidate: ${candidateData.email}`);
         
@@ -140,26 +173,17 @@ router.post('/bulk-invite', async (req, res) => {
           messageId: emailResult.messageId
         });
 
-        console.log(`✅ Invitation sent to ${candidateData.email}`);
-      } catch (error) {
-        console.error(`❌ Failed to invite ${candidateData.email}:`, error.message);
-        console.error('Error code:', error.code);
-        console.error('Error response:', error.response);
-        results.push({
-          email: candidateData.email,
-          status: 'failed',
-          error: error.message
-        });
-      }
-    }
-
-    const successCount = results.filter(r => r.status === 'sent').length;
-    console.log(`=== BULK INVITE COMPLETE: ${successCount}/${results.length} invitations sent ===`);
-    })().catch(err => console.error('Background email processing error:', err));
+    // Send response with links
+    res.json({
+      success: true,
+      message: 'Interview links generated successfully',
+      totalCandidates: candidates.length,
+      invitations: invitationResults
+    });
     
   } catch (error) {
     console.error('❌ Bulk invite error:', error);
-    res.status(500).json({ error: 'Failed to send invitations: ' + error.message });
+    res.status(500).json({ error: 'Failed to generate links: ' + error.message });
   }
 });
 
