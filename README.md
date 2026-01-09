@@ -591,6 +591,8 @@ npm run dev
 
 </div>
 
+---
+
 <div align="center">
 
 ## 📄 License
