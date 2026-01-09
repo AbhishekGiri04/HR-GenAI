@@ -1,5 +1,8 @@
-<h1 align="center">🧬 HR-GenAI</h1>
-<h3 align="center">AI-Powered Hiring Intelligence Platform for Modern HR Teams 🚀</h3>
+<h1 align="center">🧬 HR-GenAI - AI-Powered Hiring Intelligence Platform for Modern HR Teams 🚀</h1>
+
+<p align="center">
+  🎯 A comprehensive AI-powered hiring platform that transforms recruitment through intelligent resume analysis, voice interviews, and Digital DNA profiling with 95% accuracy.
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/AI_Powered-GPT--4-667EEA?style=for-the-badge&logo=openai&logoColor=white"/>
@@ -10,17 +13,9 @@
   <img src="https://img.shields.io/badge/Accuracy-95%25-10b981?style=for-the-badge"/>
 </p>
 
-<p align="center">
-  <b>Real-time AI-powered candidate evaluation with voice interviews and Digital DNA profiling</b>
-</p>
-
-<p align="center">
-  🎯 <b>95% Accuracy</b> using GPT-4 & Gemini | ⚡ <b>3.2 seconds</b> resume analysis | 🎤 <b>Voice AI</b> interviewer
-</p>
-
 ---
 
-## 📖 Problem Statement
+## Problem Statement
 
 <div align="center">
   <img src="docs/Problem Statements.jpeg" alt="Problem Statement" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
@@ -28,32 +23,18 @@
 
 <br/>
 
-### Critical Challenges in Current Hiring Systems
+**Key Issues:**
 
-<div align="center">
-
-| 🚨 Challenge | 📊 Impact | 💔 Real-World Consequence |
-|-------------|----------|---------------------------|
-| **Manual Resume Screening** | 40+ hours per hire | HR teams overwhelmed, talent missed |
-| **Unconscious Bias** | 90% of hiring decisions | Diverse talent excluded unfairly |
-| **Time-Consuming Process** | 45+ day hiring cycles | Top candidates lost to competitors |
-| **False Information** | 85% resumes contain lies | Wrong hires, performance issues |
-| **No Standardization** | Inconsistent evaluation | Unfair comparisons, legal risks |
-| **Limited Insights** | Surface-level assessment | Cultural fit ignored, retention issues |
-
-</div>
-
-### Why This Matters
-
-- 🔴 **Talent Loss**: Best candidates lost due to slow, biased processes
-- 🔴 **Cost Impact**: Bad hires cost 30% of first-year salary
-- 🔴 **Retention Crisis**: 33% quit within 6 months due to poor fit assessment
-- 🔴 **Bias Issues**: Diverse talent excluded by unconscious bias
-- 🔴 **Efficiency**: HR teams spend 80% time on manual screening
+• **Manual Screening**: 40+ hours per hire, overwhelming HR teams  
+• **Unconscious Bias**: 90% of decisions affected, excluding diverse talent  
+• **Slow Process**: 45+ day cycles losing top candidates  
+• **False Information**: 85% resumes contain lies  
+• **No Standards**: Inconsistent evaluation creating legal risks  
+• **Limited Insights**: Surface assessment ignoring cultural fit
 
 ---
 
-## 💡 Our Solution
+## Our Solution
 
 <div align="center">
   <img src="docs/Solution.jpeg" alt="Our Solution" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
@@ -61,33 +42,16 @@
 
 <br/>
 
-**HR-GenAI** revolutionizes hiring with AI-powered intelligence and voice interview technology:
+**Key Features:**
 
-<div align="center">
-
-### 🎯 Core Capabilities
-
-| Feature | Traditional | HR-GenAI | Improvement |
-|---------|------------|----------|-------------|
-| **Resume Analysis** | 2+ hours manual | 3.2 seconds AI | **99.9% faster** |
-| **Interview Process** | 1-2 hours human | 15-20 min AI | **75% time saved** |
-| **Accuracy** | 40-60% | 95% | **58% better** |
-| **Bias Elimination** | High human bias | 100% objective | **Completely unbiased** |
-| **Candidate Insights** | Basic assessment | Digital DNA profile | **Revolutionary depth** |
-| **Scalability** | Limited by humans | Unlimited AI | **Infinite scale** |
-
-</div>
-
-### ✅ What We Deliver
-
-- ⚡ **3.2 seconds** resume analysis with 95% accuracy
-- 🎤 **AI Voice Interviewer (Huma)** conducts natural conversations
-- 🧬 **Digital DNA Profiling** with MBTI, OCEAN traits, EQ analysis
-- 🛡️ **Anti-Cheating System** with real-time proctoring
-- 📊 **Predictive Analytics** for performance and retention
-- 📧 **Automated Email Reports** with detailed candidate evaluation
-- 🎯 **Template System** for reusable interview processes
-- 📈 **Analytics Dashboard** with hiring insights
+• **3.2 seconds** resume analysis with 95% accuracy  
+• **AI Voice Interviewer (Huma)** conducts natural conversations  
+• **Digital DNA Profiling** with MBTI, OCEAN traits, EQ analysis  
+• **Anti-Cheating System** with real-time proctoring  
+• **Predictive Analytics** for performance and retention  
+• **Automated Email Reports** with detailed candidate evaluation  
+• **Template System** for reusable interview processes  
+• **Analytics Dashboard** with hiring insights
 
 ---
 
@@ -184,40 +148,31 @@ HR-GenAI/
 
 ---
 
-## ⚙️ System Architecture
+## System Architecture
 
 <div align="center">
 
 <img src="docs/System Architecture & DFD.png" alt="System Architecture & DFD" width="800"/>
 
-### 🏗️ Architecture Overview
+### Architecture Overview
 <img src="docs/Architecture.png" alt="Architecture Diagram" width="600"/>
 
-**HR-GenAI follows a modern microservices architecture with AI-powered components:**
+**Modern microservices architecture:**
 
-- **Frontend Layer**: React.js with responsive UI components
-- **API Gateway**: Express.js handling all client requests
-- **AI Engine**: GPT-4 & Gemini for intelligent processing
-- **Database Layer**: MongoDB for scalable data storage
-- **Authentication**: Firebase for secure user management
-- **Real-time Communication**: WebSocket for live updates
+• **Frontend**: React.js with responsive UI  
+• **Backend**: Express.js API gateway  
+• **AI Engine**: GPT-4 & Gemini processing  
+• **Database**: MongoDB for data storage  
+• **Auth**: Firebase user management
 
-### 📊 Data Flow Diagram
+### Data Flow
 <img src="docs/DFD.png" alt="Data Flow Diagram" width="600"/>
 
-**Complete data flow from candidate onboarding to final evaluation:**
+**Process Flow:**
 
-1. **Resume Processing**: PDF/DOC → AI Analysis → Structured Data
-2. **Interview Orchestration**: Template Selection → Dynamic Questions → Voice/Text Responses
-3. **Real-time Analysis**: Voice Emotion → Personality Traits → Performance Scoring
-4. **Result Generation**: DNA Profile → Predictive Analytics → Email Reports
-
-### 🔄 How It Works
-
-1. **📄 Upload Resume** → AI extracts candidate info with 95% accuracy
-2. **🎤 AI Interview** → Huma conducts personalized voice interviews
-3. **🧬 DNA Analysis** → Creates comprehensive personality & skill profile
-4. **📊 Results** → Automated email reports with hiring recommendations
+1. **Resume Upload** → AI Analysis → Candidate Profile  
+2. **AI Interview** → Voice Analysis → Personality Traits  
+3. **DNA Profiling** → Performance Prediction → Email Reports
 
 </div>
 
@@ -627,101 +582,18 @@ curl -X POST http://localhost:5001/api/invitations/bulk-invite \
 
 ---
 
-## ⚡ Performance Metrics
+## Performance Metrics
 
-<div align="center">
+**Key Performance:**
 
-### 📊 System Performance
-
-<table>
-<thead>
-<tr>
-<th>🎯 Metric</th>
-<th>📈 Value</th>
-<th>🏆 Benchmark</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><b>Resume Analysis Accuracy</b></td>
-<td><b>95%</b></td>
-<td>Industry avg: 60-70%</td>
-</tr>
-<tr>
-<td><b>Processing Time</b></td>
-<td><b>3.2 seconds</b></td>
-<td>Traditional: 2+ hours</td>
-</tr>
-<tr>
-<td><b>Interview Completion Rate</b></td>
-<td><b>94.2%</b></td>
-<td>Traditional: 75-80%</td>
-</tr>
-<tr>
-<td><b>Bias Elimination</b></td>
-<td><b>100% objective</b></td>
-<td>Human interviews: 90% biased</td>
-</tr>
-<tr>
-<td><b>Retention Prediction</b></td>
-<td><b>91.5% accuracy</b></td>
-<td>Traditional: 40-50%</td>
-</tr>
-<tr>
-<td><b>Time Savings</b></td>
-<td><b>10x faster</b></td>
-<td>45 days → 4.5 days hiring cycle</td>
-</tr>
-<tr>
-<td><b>Cost Reduction</b></td>
-<td><b>70% savings</b></td>
-<td>$4,000 → $1,200 per hire</td>
-</tr>
-<tr>
-<td><b>Candidate Experience</b></td>
-<td><b>4.8/5 rating</b></td>
-<td>Traditional: 3.2/5</td>
-</tr>
-<tr>
-<td><b>Scalability</b></td>
-<td><b>Unlimited</b></td>
-<td>Limited by human capacity</td>
-</tr>
-<tr>
-<td><b>Availability</b></td>
-<td><b>24/7</b></td>
-<td>Business hours only</td>
-</tr>
-</tbody>
-</table>
-
----
-
-### 🎯 Accuracy Breakdown by Feature
-
-| Feature | Precision | Recall | F1-Score |
-|---------|-----------|--------|----------|
-| **Resume Extraction** | 95% | 94% | 94.5% |
-| **Skill Identification** | 92% | 90% | 91% |
-| **Experience Analysis** | 89% | 87% | 88% |
-| **Personality Detection** | 88% | 86% | 87% |
-| **EQ Assessment** | 85% | 83% | 84% |
-| **Performance Prediction** | 91% | 89% | 90% |
-
----
-
-### 🚀 Feature Adoption
-
-| Feature | Usage Rate | Satisfaction |
-|---------|------------|--------------|
-| AI Resume Analysis | 98% | 4.9/5 |
-| Voice Interview (Huma) | 87% | 4.7/5 |
-| Digital DNA Profiling | 92% | 4.8/5 |
-| Anti-Cheating System | 95% | 4.6/5 |
-| Email Reports | 89% | 4.5/5 |
-| Template System | 78% | 4.4/5 |
-
-</div>
+• **95% Accuracy** - Resume analysis precision  
+• **3.2 seconds** - Processing time vs 2+ hours traditional  
+• **94.2% Success** - Interview completion rate  
+• **100% Objective** - Eliminates human bias  
+• **91.5% Retention** - 6-month prediction accuracy  
+• **10x Faster** - 45 days → 4.5 days hiring cycle  
+• **70% Cost Savings** - $4,000 → $1,200 per hire  
+• **4.8/5 Rating** - Candidate experience vs 3.2/5 traditional
 
 ---
 
