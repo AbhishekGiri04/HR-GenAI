@@ -6,15 +6,15 @@ const Template = require('../models/Template');
 require('dotenv').config();
 
 // Initialize Gmail transporter
-let transporter = null;
+const transporter = nodemailer.createTransporter({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
 if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-  transporter = nodemailer.createTransporter({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
   console.log('✅ Gmail email service initialized');
 } else {
   console.log('❌ EMAIL_USER or EMAIL_PASS not set');
@@ -34,7 +34,7 @@ router.post('/bulk-invite', async (req, res) => {
       return res.status(400).json({ error: 'Template ID required' });
     }
     
-    if (!transporter) {
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       return res.status(500).json({ error: 'Email service not configured' });
     }
 
