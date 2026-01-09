@@ -90,7 +90,7 @@ const LoadingScreen = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10 max-w-2xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-3 mb-10 max-w-2xl mx-auto">
           <div className="bg-blue-500/10 backdrop-blur-xl rounded-full px-4 py-3 border border-blue-500/30 flex items-center justify-center space-x-2">
             <Brain className="w-5 h-5 text-blue-400" />
             <span className="text-gray-300 text-sm font-semibold">Voice Interviewer</span>
@@ -106,14 +106,6 @@ const LoadingScreen = () => {
           <div className="bg-green-500/10 backdrop-blur-xl rounded-full px-4 py-3 border border-green-500/30 flex items-center justify-center space-x-2">
             <Shield className="w-5 h-5 text-green-400" />
             <span className="text-gray-300 text-sm font-semibold">Anti-Cheating</span>
-          </div>
-          <div className="bg-orange-500/10 backdrop-blur-xl rounded-full px-4 py-3 border border-orange-500/30 flex items-center justify-center space-x-2">
-            <TrendingUp className="w-5 h-5 text-orange-400" />
-            <span className="text-gray-300 text-sm font-semibold">MBTI Detection</span>
-          </div>
-          <div className="bg-indigo-500/10 backdrop-blur-xl rounded-full px-4 py-3 border border-indigo-500/30 flex items-center justify-center space-x-2">
-            <Sparkles className="w-5 h-5 text-indigo-400" />
-            <span className="text-gray-300 text-sm font-semibold">EQ Analysis</span>
           </div>
         </div>
 
