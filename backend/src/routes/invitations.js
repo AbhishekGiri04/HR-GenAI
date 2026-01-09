@@ -92,8 +92,17 @@ router.post('/bulk-invite', async (req, res) => {
           
           let emailResult;
           
-          if (resend) {
-            // Use Resend (preferred)
+          if (gmailTransporter) {
+            // Use Gmail (preferred for unrestricted sending)
+            const info = await gmailTransporter.sendMail({
+              from: process.env.EMAIL_USER,
+              to: candidateData.email,
+              subject: `Interview Invitation - ${template.name}`,
+              html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
+            });
+            emailResult = { id: info.messageId, service: 'Gmail' };
+          } else if (resend) {
+            // Use Resend (domain verification required)
             const { data, error } = await resend.emails.send({
               from: 'HR GenAI <onboarding@resend.dev>',
               to: candidateData.email,
@@ -103,15 +112,6 @@ router.post('/bulk-invite', async (req, res) => {
             
             if (error) throw new Error(error.message);
             emailResult = { id: data.id, service: 'Resend' };
-          } else if (gmailTransporter) {
-            // Use Gmail fallback
-            const info = await gmailTransporter.sendMail({
-              from: process.env.EMAIL_USER,
-              to: candidateData.email,
-              subject: `Interview Invitation - ${template.name}`,
-              html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
-            });
-            emailResult = { id: info.messageId, service: 'Gmail' };
           }
           
           console.log(`✅ Email sent to ${candidateData.email} via ${emailResult.service}, ID: ${emailResult.id}`);
