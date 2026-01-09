@@ -207,8 +207,8 @@ const Dashboard = () => {
                       <Target className="w-7 h-7" />
                     </div>
                     <div className="text-center">
-                      <p className="text-3xl font-black mb-1">97%</p>
-                      <p className="text-sm text-blue-200 font-semibold">Prediction Accuracy</p>
+                      <p className="text-3xl font-black mb-1">95%</p>
+                      <p className="text-sm text-blue-200 font-semibold">Resume Accuracy</p>
                     </div>
                   </div>
                   <div className="group flex flex-col items-center text-white hover:scale-105 transition-transform">
@@ -216,8 +216,8 @@ const Dashboard = () => {
                       <Zap className="w-7 h-7" />
                     </div>
                     <div className="text-center">
-                      <p className="text-3xl font-black mb-1">2 min</p>
-                      <p className="text-sm text-blue-200 font-semibold">Complete Assessment</p>
+                      <p className="text-3xl font-black mb-1">10x</p>
+                      <p className="text-sm text-blue-200 font-semibold">Faster Hiring</p>
                     </div>
                   </div>
                   <div className="group flex flex-col items-center text-white hover:scale-105 transition-transform">
@@ -225,8 +225,8 @@ const Dashboard = () => {
                       <Shield className="w-7 h-7" />
                     </div>
                     <div className="text-center">
-                      <p className="text-3xl font-black mb-1">85%</p>
-                      <p className="text-sm text-blue-200 font-semibold">Time Reduction</p>
+                      <p className="text-3xl font-black mb-1">100%</p>
+                      <p className="text-sm text-blue-200 font-semibold">Bias-Free</p>
                     </div>
                   </div>
                 </div>
@@ -640,7 +640,7 @@ const Dashboard = () => {
               </div>
               <h3 className="text-2xl font-bold mb-3">Voice AI Interviews</h3>
               <p className="text-purple-100 leading-relaxed">
-                Huma AI conducts natural voice interviews with real-time speech recognition and personality analysis
+                Huma AI conducts natural voice interviews with real-time speech recognition and intelligent response evaluation
               </p>
             </div>
             
@@ -650,7 +650,7 @@ const Dashboard = () => {
               </div>
               <h3 className="text-2xl font-bold mb-3">Predictive Analytics</h3>
               <p className="text-emerald-100 leading-relaxed">
-                Machine learning algorithms predict candidate performance and 6-month retention with 94% accuracy
+                AI-powered evaluation system analyzes responses and provides comprehensive performance insights with detailed feedback
               </p>
             </div>
           </div>

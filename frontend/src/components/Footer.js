@@ -43,11 +43,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/analysis" className="text-slate-400 hover:text-white transition-colors flex items-center group">
-                  <span className="group-hover:translate-x-1 transition-transform">Candidates</span>
-                </Link>
-              </li>
-              <li>
                 <Link to="/analytics" className="text-slate-400 hover:text-white transition-colors flex items-center group">
                   <span className="group-hover:translate-x-1 transition-transform">Reports</span>
                 </Link>

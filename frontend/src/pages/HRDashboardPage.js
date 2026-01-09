@@ -223,7 +223,7 @@ const HRDashboard = () => {
                   <Award className="w-7 h-7 text-white" />
                 </div>
               </div>
-              <p className="text-4xl font-black text-white mb-2">5</p>
+              <p className="text-4xl font-black text-white mb-2">{candidates.filter(c => c.interviewCompleted).length}</p>
               <p className="text-emerald-100 text-sm font-semibold">Completed</p>
             </div>
 
@@ -233,7 +233,11 @@ const HRDashboard = () => {
                   <TrendingUp className="w-7 h-7 text-white" />
                 </div>
               </div>
-              <p className="text-4xl font-black text-white mb-2">89%</p>
+              <p className="text-4xl font-black text-white mb-2">
+                {candidates.filter(c => c.interviewCompleted).length > 0 
+                  ? Math.round((candidates.filter(c => c.interviewScore >= 70).length / candidates.filter(c => c.interviewCompleted).length) * 100)
+                  : 0}%
+              </p>
               <p className="text-purple-100 text-sm font-semibold">Pass Rate</p>
             </div>
           </div>
