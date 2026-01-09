@@ -1,9 +1,13 @@
 <div align="center">
 
+<img src="docs/HRGenAI.png" alt="HR-GenAI Logo" width="200" style="margin-bottom: 20px;"/>
+
 <h1>🧬 HR-GenAI - AI-Powered Hiring Intelligence Platform for Modern HR Teams </h1>
 
-<p style="font-size: 1.2em; color: #64748b; max-width: 800px; margin: 20px auto; line-height: 1.6;">
-  🎯 A comprehensive AI-powered hiring platform that transforms recruitment through intelligent resume analysis, voice interviews, and Digital DNA profiling with <strong>95% accuracy</strong>.
+<h3 style="color: #2563eb; font-weight: 600; margin: 15px 0;">HR-GenAI - AI-powered hiring intelligence platform</h3>
+
+<p style="font-size: 1.2em; color: #1e40af; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 20px; border-radius: 12px; max-width: 800px; margin: 20px auto; line-height: 1.6; border-left: 4px solid #2563eb;">
+  🎯 A comprehensive AI-powered hiring platform that transforms recruitment through intelligent resume analysis, voice interviews, and Digital DNA profiling with <strong style="color: #1d4ed8;">95% accuracy</strong>.
 </p>
 
 <p align="center">
@@ -71,51 +75,52 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 ## 📁 Project Directory Structure
 
-```
+```bash
 HR-GenAI/
-├── 📂 frontend/                     # 🎨 React frontend (Port 3000)
-│   ├── 📂 src/
-│   │   ├── 📂 components/           # 🧩 Reusable UI components
-│   │   ├── 📂 pages/                # 📄 Application pages
-│   │   ├── 📂 services/             # 🔧 API services
-│   │   ├── 📄 App.jsx               # 🚀 Main application
-│   │   └── 📄 main.jsx              # ⚡ Entry point
-│   ├── 📄 package.json              # 📦 Frontend dependencies
-│   └── 📄 .env.example              # 🔧 Environment template
-├── 📂 backend/                      # 🔧 Node.js backend (Port 5001)
-│   ├── 📂 src/
-│   │   ├── 📂 controllers/          # 🎮 Request handlers
-│   │   ├── 📂 models/               # 💾 Database models
-│   │   ├── 📂 routes/               # 🛣️ API routes
-│   │   ├── 📂 services/             # 📧 Business logic
-│   │   ├── 📂 middleware/           # 🔒 Authentication & validation
-│   │   └── 📄 server.js             # 🚀 Main server file
-│   ├── 📄 package.json              # 📦 Backend dependencies
-│   └── 📄 .env.example              # 🔧 Environment template
-├── 📂 docs/                         # 📸 Documentation & Screenshots
-│   ├── 📄 HR-Dashboard.png          # 🖼️ Main dashboard
-│   ├── 📄 Home_Page.png             # 🖼️ Home page
-│   ├── 📄 Loading_Page.png          # 🖼️ Loading screen
-│   ├── 📄 SignIn_Page.png           # 🖼️ Sign in page
-│   ├── 📄 SignUp_Page.png           # 🖼️ Sign up page
-│   ├── 📄 Candidate_Page.png        # 🖼️ Candidate profile
-│   ├── 📄 Assesment_Page.png        # 🖼️ Assessment selection
-│   ├── 📄 Huma_Voice-AI.png         # 🖼️ AI interviewer
-│   ├── 📄 Analytics-Dashboard.png   # 🖼️ Analytics dashboard
-│   ├── 📄 Proctoring_Setup.png      # 🖼️ Proctoring setup
-│   ├── 📄 Settings.png              # 🖼️ Settings page
-│   ├── 📄 Profile_Page.png          # 🖼️ User profile
-│   ├── 📄 Problem Statements.jpeg  # 🖼️ Problem statement
-│   ├── 📄 Solution.jpeg             # 🖼️ Solution overview
-│   ├── 📄 Architecture.png          # 🖼️ System architecture
-│   ├── 📄 DFD.png                   # 🖼️ Data flow diagram
-│   └── 📄 System Architecture & DFD.png # 🖼️ Complete architecture
-├── 📄 README.md                     # 📖 Project documentation
-├── 📄 LICENSE                       # ⚖️ MIT License
-├── 📄 .env.example                  # 🔧 Environment template
-├── 📄 .gitignore                    # 🚫 Git ignore patterns
-├── 📄 start-dev.sh                  # 🚀 Development script
-└── 📄 stop-dev.sh                   # 🛑 Stop script
+├── frontend/                        # React frontend (Port 3000)
+│   ├── src/
+│   │   ├── components/              # Reusable UI components
+│   │   ├── pages/                   # Application pages
+│   │   ├── services/                # API services
+│   │   ├── App.jsx                  # Main application
+│   │   └── main.jsx                 # Entry point
+│   ├── package.json                 # Frontend dependencies
+│   └── .env.example                 # Environment template
+├── backend/                         # Node.js backend (Port 5001)
+│   ├── src/
+│   │   ├── controllers/             # Request handlers
+│   │   ├── models/                  # Database models
+│   │   ├── routes/                  # API routes
+│   │   ├── services/                # Business logic
+│   │   ├── middleware/              # Authentication & validation
+│   │   └── server.js                # Main server file
+│   ├── package.json                 # Backend dependencies
+│   └── .env.example                 # Environment template
+├── docs/                            # Documentation & Screenshots
+│   ├── HR-Dashboard.png             # Main dashboard
+│   ├── Home_Page.png                # Home page
+│   ├── Loading_Page.png             # Loading screen
+│   ├── SignIn_Page.png              # Sign in page
+│   ├── SignUp_Page.png              # Sign up page
+│   ├── Candidate_Page.png           # Candidate profile
+│   ├── Assesment_Page.png           # Assessment selection
+│   ├── Huma_Voice-AI.png            # AI interviewer
+│   ├── Analytics-Dashboard.png      # Analytics dashboard
+│   ├── Proctoring_Setup.png         # Proctoring setup
+│   ├── Settings.png                 # Settings page
+│   ├── Profile_Page.png             # User profile
+│   ├── Problem Statements.jpeg     # Problem statement
+│   ├── Solution.jpeg                # Solution overview
+│   ├── Architecture.png             # System architecture
+│   ├── DFD.png                      # Data flow diagram
+│   ├── HRGenAI.png                  # Project logo
+│   └── System Architecture & DFD.png # Complete architecture
+├── README.md                        # Project documentation
+├── LICENSE                          # MIT License
+├── .env.example                     # Environment template
+├── .gitignore                       # Git ignore patterns
+├── start-dev.sh                     # Development script
+└── stop-dev.sh                      # Stop script
 ```
 
 ---
@@ -136,7 +141,7 @@ HR-GenAI/
 <td><img src="docs/Analytics-Dashboard.png" width="100%"/><br/><b>Analytics Dashboard</b></td>
 </tr>
 <tr>
-<td><img src="docs/Candidate_Page.png" width="100%"/><br/><b>Candidate Profile</b></td>
+<td><img src="docs/Candidate_Page.png" width="100%"/><br/><b>Candidate Dashboard</b></td>
 <td><img src="docs/Assesment_Page.png" width="100%"/><br/><b>Assessment Selection</b></td>
 </tr>
 <tr>
@@ -156,18 +161,18 @@ HR-GenAI/
 <img src="docs/System Architecture & DFD.png" alt="System Architecture & DFD" width="800"/>
 
 ### Architecture Overview
-<img src="docs/Architecture.png" alt="Architecture Diagram" width="600"/>
+<img src="docs/Architecture.png" alt="Architecture Diagram" width="100%"/>
 
 ### Data Flow
 
 ```mermaid
 graph TD
-    A[👤 HR Manager] -->|Resume Upload| B[📄 Resume Processor<br/>GPT-4 Analysis]
-    B -->|Extracted Data| C[💾 Candidate Database]
-    B -->|Profile Info| D[🎤 Huma AI Interviewer]
-    D -->|Voice Data| E[🧠 AI Analysis Engine<br/>Personality + EQ]
-    E -->|Results| F[📊 Digital DNA Generator]
-    F -->|Final Report| G[📧 Email Service]
+    A[HR Manager] -->|Resume Upload| B[Resume Processor<br/>GPT-4 Analysis]
+    B -->|Extracted Data| C[Candidate Database]
+    B -->|Profile Info| D[Huma AI Interviewer]
+    D -->|Voice Data| E[AI Analysis Engine<br/>Personality + EQ]
+    E -->|Results| F[Digital DNA Generator]
+    F -->|Final Report| G[Email Service]
     
     style A fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#000
     style B fill:#FFF9C4,stroke:#FFC107,stroke-width:2px,color:#000
@@ -577,20 +582,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+<div align="center">
+
 ### 🧬 Built with ❤️ for Human Potential Excellence
 
-**HR-GenAI** - AI-Powered Hiring Intelligence Platform
+<h2 style="color: #2563eb; margin: 20px 0;">HR-GenAI - AI-Powered Hiring Intelligence Platform</h2>
 
-*Transforming hiring from chaos to clarity with AI voice interviews, Digital DNA profiling, and 95% accurate candidate evaluation*
-
-</div>
+<p style="font-size: 1.1em; color: #1e40af; max-width: 600px; margin: 15px auto; line-height: 1.6;">
+<em>Transforming hiring from chaos to clarity with AI voice interviews, Digital DNA profiling, and 95% accurate candidate evaluation</em>
+</p>
 
 ---
 
-<div align="center">
+<p style="color: #64748b; margin: 20px 0;">
+<strong>© 2026 HR-GenAI Team | All Rights Reserved</strong>
+</p>
 
-**© 2026 HR-GenAI Team | All Rights Reserved**
-
-*Empowering HR teams with intelligent hiring decisions*
+<p style="color: #2563eb; font-weight: 600;">
+<em>Empowering HR teams with intelligent hiring decisions</em>
+</p>
 
 </div>
