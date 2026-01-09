@@ -171,27 +171,29 @@ exports.getAllCandidates = async (req, res) => {
 exports.updateCandidate = async (req, res) => {
   try {
     const updateData = { ...req.body };
+    let updateOperation = {};
     
     // Handle $addToSet for completedTemplates
     if (req.body.$addToSet && req.body.$addToSet.completedTemplates) {
-      const candidate = await Candidate.findById(req.params.id);
-      if (candidate) {
-        const completedTemplates = candidate.completedTemplates || [];
-        if (!completedTemplates.includes(req.body.$addToSet.completedTemplates)) {
-          completedTemplates.push(req.body.$addToSet.completedTemplates);
-        }
-        updateData.completedTemplates = completedTemplates;
-      }
+      updateOperation = {
+        $set: updateData,
+        $addToSet: { completedTemplates: req.body.$addToSet.completedTemplates }
+      };
       delete updateData.$addToSet;
+    } else {
+      updateOperation = { $set: updateData };
     }
     
     const candidate = await Candidate.findByIdAndUpdate(
       req.params.id,
-      updateData,
+      updateOperation,
       { new: true }
     );
+    
+    console.log('✅ Candidate updated:', candidate._id, 'Completed templates:', candidate.completedTemplates);
     res.json(candidate);
   } catch (error) {
+    console.error('❌ Update failed:', error);
     res.status(500).json({ error: 'Update failed' });
   }
 };
