@@ -226,18 +226,16 @@ async function generateInterviewTemplate(jobRole) {
 
   const questions = [
     ...technicalQuestions.map((q, i) => ({
-      id: i + 1,
       question: q,
       category: 'Technical Skills',
-      type: 'voice',
+      expectedAnswer: 'Detailed technical explanation expected',
       points: 15,
       difficulty: 'medium'
     })),
     ...behavioralQuestions.map((q, i) => ({
-      id: technicalQuestions.length + i + 1,
       question: q,
       category: 'Behavioral',
-      type: 'text',
+      expectedAnswer: 'Behavioral response with examples',
       points: 10,
       difficulty: 'medium'
     }))
