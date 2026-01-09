@@ -60,14 +60,12 @@ router.post('/bulk-invite', async (req, res) => {
               email: candidateData.email,
               appliedFor: template.name,
               assignedTemplate: templateId,
-              interviewStatus: 'invited',
               invitedAt: new Date()
             });
             await candidate.save();
           } else {
             candidate.appliedFor = template.name;
             candidate.assignedTemplate = templateId;
-            candidate.interviewStatus = 'invited';
             candidate.invitedAt = new Date();
             await candidate.save();
           }
