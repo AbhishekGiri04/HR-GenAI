@@ -2,9 +2,9 @@
 
 <img src="docs/HRGenAI.jpeg" alt="HR-GenAI Logo" width="100%" style="margin-bottom: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
 
-<h1>💡 HR-GenAI - AI-Powered Hiring Intelligence Platform</h1>
+<h1>💡 HR-GenAI — AI-Powered Hiring Intelligence Platform</h1>
 
-<p style="color: #2563eb; margin: 15px 0; font-size: 1.1em;">A revolutionary AI-powered hiring intelligence platform that transforms recruitment by combining intelligent resume analysis, AI-driven voice interviews, and proprietary Digital DNA Profiling to deliver up to 95% accuracy in candidate evaluation—enabling faster, fairer, and data-driven hiring decisions at scale.</p>
+<p style="color: #2563eb; margin: 15px 0; font-size: 1.1em;">🚀 A revolutionary AI-powered hiring intelligence platform that transforms recruitment by combining intelligent resume analysis, AI-driven voice interviews, and proprietary Digital DNA Profiling to deliver up to 95% accuracy in candidate evaluation—enabling faster, fairer, and data-driven hiring decisions at scale.</p>
 
 <p style="font-size: 1.2em; color: #1e40af; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 20px; border-radius: 12px; max-width: 800px; margin: 20px auto; line-height: 1.6; border-left: 4px solid #2563eb;">
 </p>
@@ -17,8 +17,6 @@
   <img src="https://img.shields.io/badge/MongoDB-4EA94B-FFEAA7?style=for-the-badge&logo=mongodb&logoColor=white"/>
   <img src="https://img.shields.io/badge/Accuracy-95%25-A29BFE?style=for-the-badge"/>
 </p>
-
-<img src="docs/CodeCatalyst.jpg" alt="Code Catalyst" width="100%" style="margin: 20px 0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
 
 </div>
 
@@ -74,105 +72,119 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Directory Structure
 
 ```
 HR-GenAI/
-├── frontend/                   # React Frontend (Port 3000)
-│   ├── public/
-│   │   └── index.html
-│   ├── src/
-│   │   ├── components/         # UI components
-│   │   │   ├── AIAgent.js
-│   │   │   ├── Header.js
-│   │   │   ├── Footer.js
-│   │   │   ├── ResumeUpload.js
-│   │   │   ├── VoiceInterviewBox.js
-│   │   │   ├── GenomeChart.js
-│   │   │   ├── TemplateSelection.js
-│   │   │   └── ...
-│   │   ├── pages/              # Application pages
-│   │   │   ├── LoadingPage.js
-│   │   │   ├── SignInPage.js
-│   │   │   ├── SignUpPage.js
-│   │   │   ├── DashboardPage.js
-│   │   │   ├── HRDashboardPage.js
-│   │   │   ├── InterviewPage.js
-│   │   │   ├── AnalyticsPage.js
-│   │   │   ├── GenomeProfilePage.js
-│   │   │   └── ...
-│   │   ├── services/           # API services
-│   │   │   └── websocketService.js
-│   │   ├── contexts/           # React contexts
-│   │   │   └── authContext.js
-│   │   ├── firebase/           # Firebase config
-│   │   │   └── firebaseConfig.js
-│   │   ├── hooks/              # Custom hooks
-│   │   ├── styles/             # CSS files
-│   │   ├── App.js              # Main app
-│   │   └── index.js            # Entry point
-│   ├── package.json
-│   ├── tailwind.config.js
-│   └── .env.example
-├── backend/                    # Node.js Backend (Port 5001)
-│   ├── src/
-│   │   ├── ai-engines/         # AI processing engines
-│   │   │   ├── InterviewAIEngine.js
-│   │   │   ├── ai-evaluation-engine.js
-│   │   │   ├── intelligent-question-generator.js
-│   │   │   ├── voice-emotion-analyzer.js
-│   │   │   └── skill-dna.js
-│   │   ├── controllers/        # Business logic
-│   │   │   ├── candidateController.js
-│   │   │   └── genomeController.js
-│   │   ├── models/             # Database models
-│   │   │   ├── Candidate.js
-│   │   │   ├── Interview.js
-│   │   │   ├── Template.js
-│   │   │   └── GenomeProfile.js
-│   │   ├── routes/             # API routes
-│   │   │   ├── candidates.js
-│   │   │   ├── interview.js
-│   │   │   ├── templates.js
-│   │   │   ├── analytics.js
-│   │   │   ├── genome.js
-│   │   │   └── ...
-│   │   ├── services/           # External services
-│   │   │   ├── emailService.js
-│   │   │   ├── websocketService.js
-│   │   │   └── templateScheduler.js
-│   │   ├── config/             # Configuration
-│   │   │   └── database.js
-│   │   ├── scripts/            # Utility scripts
-│   │   │   └── seedTemplates.js
-│   │   └── server.js           # Main server
-│   ├── uploads/                # File uploads
-│   │   ├── documents/
-│   │   └── temp/
-│   ├── package.json
-│   └── .env.example
-├── docs/                       # Documentation & Assets
-│   ├── API_DOCUMENTATION.md
-│   ├── HRGenAI.jpeg
-│   ├── CodeCatalyst.jpg
-│   ├── ProblemStatements.png
-│   ├── Solutions.png
-│   ├── Features.png
-│   ├── Architecture.png
-│   ├── System_Architecture.png
-│   ├── Loading_Page.png
-│   ├── Home_Page.png
-│   ├── SignIn_Page.png
-│   ├── HR-Dashboard.png
-│   ├── Analytics-Dashboard.png
-│   ├── Huma_Voice-AI.png
-│   └── ...
-├── start-dev.sh                # Start development
-├── stop-dev.sh                 # Stop development
-├── vercel.json                 # Vercel config
-├── LICENSE
-├── .gitignore
-└── README.md
+├── 📂 frontend/                        #  React Frontend Application (Port 3000)
+│   ├── 📂 public/
+│   │   └── 📄 index.html              #  Main HTML template
+│   ├── 📂 src/
+│   │   ├── 📂 components/              #  Reusable UI components
+│   │   │   ├── 📄 AIAgent.js           #  AI assistant component
+│   │   │   ├── 📄 Header.js            #  Navigation header
+│   │   │   ├── 📄 Footer.js            #  Page footer
+│   │   │   ├── 📄 ResumeUpload.js      #  Resume upload interface
+│   │   │   ├── 📄 VoiceInterviewBox.js #  Voice interview UI
+│   │   │   ├── 📄 GenomeChart.js       #  DNA profile visualization
+│   │   │   ├── 📄 TemplateSelection.js #  Interview template selector
+│   │   │   ├── 📄 BulkInviteModal.js   #  Bulk invitation modal
+│   │   │   └── 📄 CreateTemplateModal.js #  Template creation
+│   │   ├── 📂 pages/                   #  Application pages
+│   │   │   ├── 📄 LoadingPage.js       #  Loading screen
+│   │   │   ├── 📄 SignInPage.js        #  User authentication
+│   │   │   ├── 📄 SignUpPage.js        #  User registration
+│   │   │   ├── 📄 DashboardPage.js     #  Main dashboard
+│   │   │   ├── 📄 HRDashboardPage.js   #  HR management panel
+│   │   │   ├── 📄 InterviewPage.js     #  Interview interface
+│   │   │   ├── 📄 AnalyticsPage.js     #  Analytics dashboard
+│   │   │   ├── 📄 GenomeProfilePage.js #  DNA profile page
+│   │   │   └── 📄 SettingsPage.js      #  User settings
+│   │   ├── 📂 services/                #  API services
+│   │   │   └── 📄 websocketService.js  #  WebSocket connections
+│   │   ├── 📂 contexts/                #  React contexts
+│   │   │   └── 📄 authContext.js       #  Authentication context
+│   │   ├── 📂 firebase/                #  Firebase configuration
+│   │   │   └── 📄 firebaseConfig.js    #  Firebase setup
+│   │   ├── 📂 hooks/                   #  Custom React hooks
+│   │   │   └── 📄 useTemplateNotifications.js
+│   │   ├── 📂 config/                  #  Configuration files
+│   │   │   └── 📄 api.js               #  API endpoints
+│   │   ├── 📂 styles/                  #  CSS files
+│   │   │   └── 📄 main.css
+│   │   ├── 📄 App.js                   #  Main application
+│   │   └── 📄 index.js                 #  Entry point
+│   ├── 📄 package.json                 #  Frontend dependencies
+│   ├── 📄 tailwind.config.js           #  Tailwind CSS config
+│   └── 📄 .env.example                 #  Environment template
+├── 📂 backend/                         #  Node.js Backend Server (Port 5001)
+│   ├── 📂 src/
+│   │   ├── 📂 ai-engines/              #  AI processing engines
+│   │   │   ├── 📄 InterviewAIEngine.js #  Interview AI logic
+│   │   │   ├── 📄 ai-evaluation-engine.js #  Evaluation algorithms
+│   │   │   ├── 📄 intelligent-question-generator.js #  Dynamic questions
+│   │   │   ├── 📄 voice-emotion-analyzer.js #  Voice analysis
+│   │   │   ├── 📄 skill-dna.js         #  Skill profiling
+│   │   │   └── 📄 template-question-generator.js
+│   │   ├── 📂 controllers/             #  Business logic
+│   │   │   ├── 📄 candidateController.js #  Candidate management
+│   │   │   └── 📄 genomeController.js  #  DNA profile logic
+│   │   ├── 📂 models/                  #  Database models
+│   │   │   ├── 📄 Candidate.js         #  Candidate schema
+│   │   │   ├── 📄 Interview.js         #  Interview schema
+│   │   │   ├── 📄 Template.js          #  Template schema
+│   │   │   └── 📄 GenomeProfile.js     #  DNA profile schema
+│   │   ├── 📂 routes/                  #  API routes
+│   │   │   ├── 📄 candidates.js        #  Candidate endpoints
+│   │   │   ├── 📄 interview.js         #  Interview endpoints
+│   │   │   ├── 📄 templates.js         #  Template endpoints
+│   │   │   ├── 📄 analytics.js         #  Analytics endpoints
+│   │   │   ├── 📄 genome.js            #  DNA profile endpoints
+│   │   │   ├── 📄 invitations.js       #  Email invitations
+│   │   │   ├── 📄 hrInterview.js       #  HR interview routes
+│   │   │   └── 📄 aiCompletion.js      #  AI completion API
+│   │   ├── 📂 services/                #  External services
+│   │   │   ├── 📄 emailService.js      #  Email notifications
+│   │   │   ├── 📄 websocketService.js  #  Real-time communication
+│   │   │   └── 📄 templateScheduler.js #  Template scheduling
+│   │   ├── 📂 config/                  #  Configuration
+│   │   │   └── 📄 database.js          #  Database connection
+│   │   ├── 📂 scripts/                 #  Utility scripts
+│   │   │   └── 📄 seedTemplates.js     #  Database seeding
+│   │   └── 📄 server.js                #  Main server
+│   ├── 📂 uploads/                     #  File uploads
+│   │   ├── 📂 documents/               #  Resume documents
+│   │   └── 📂 temp/                    #  Temporary files
+│   ├── 📄 package.json                 #  Backend dependencies
+│   └── 📄 .env.example                 #  Environment template
+├── 📂 docs/                            #  Documentation & Assets
+│   ├── 📄 API_DOCUMENTATION.md         #  Complete API reference
+│   ├── 📄 HRGenAI.jpeg                 #  Project logo
+│   ├── 📄 CodeCatalyst.jpg             #  Team photo
+│   ├── 📄 ProblemStatements.png        #  Problem overview
+│   ├── 📄 Solutions.png                #  Solution overview
+│   ├── 📄 Features.png                 #  Features overview
+│   ├── 📄 Architecture.png             #  Architecture diagram
+│   ├── 📄 System_Architecture.png      #  System architecture
+│   ├── 📄 Loading_Page.png             #  Loading screen
+│   ├── 📄 Home_Page.png                #  Home page
+│   ├── 📄 SignIn_Page.png              #  Sign in page
+│   ├── 📄 SignUp_Page.png              #  Sign up page
+│   ├── 📄 HR-Dashboard.png             #  HR dashboard
+│   ├── 📄 Analytics-Dashboard.png      #  Analytics dashboard
+│   ├── 📄 Candidate_Page.png           #  Candidate page
+│   ├── 📄 Assesment_Page.png           #  Assessment page
+│   ├── 📄 Huma_Voice-AI.png            #  Voice AI interface
+│   ├── 📄 Proctoring_Setup.png         #  Proctoring setup
+│   ├── 📄 Settings.png                 #  Settings page
+│   ├── 📄 Profile_Page.png             #  Profile page
+│   └── 📄 ...                          #  Team member photos
+├── 📄 start-dev.sh                     #  Start development servers
+├── 📄 stop-dev.sh                      #  Stop development servers
+├── 📄 vercel.json                      #  Vercel deployment config
+├── 📄 LICENSE                          #  MIT License
+├── 📄 .gitignore                       #  Git ignore patterns
+└── 📄 README.md                        #  Project documentation
 ```
 
 ---
@@ -507,6 +519,8 @@ npm run dev
 
 ---
 
+<img src="docs/CodeCatalyst.jpg" alt="Code Catalyst" width="100%" style="margin: 20px 0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
+
 <div align="center">
 
 ## 👥 Team
@@ -515,53 +529,38 @@ npm run dev
 <tr>
 <td align="center">
   <img src="docs/AbhishekGiri.jpg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #2563eb;"/><br/>
-  <b>🧑🏻💻 Abhishek Giri</b><br/>
+  <b>💻 Abhishek Giri</b><br/>
   <em>Team Lead & Full-stack Developer</em><br/>
-  <a href="https://github.com/abhishekgiri04">GitHub</a> | <a href="https://linkedin.com/in/abhishek-giri04">LinkedIn</a>
+  <a href="https://github.com/abhishekgiri04">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
+  <a href="https://linkedin.com/in/abhishek-giri04">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+  </a>
 </td>
 <td align="center">
   <img src="docs/MuskanSharma.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #e91e63;"/><br/>
-  <b>👩🏻💻 Muskan Sharma</b><br/>
+  <b>💻 Muskan Sharma</b><br/>
   <em>Frontend Developer</em><br/>
-  <a href="https://github.com/MuskanSharma2006">GitHub</a>
+  <a href="https://github.com/MuskanSharma2006">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
 </td>
 <td align="center">
   <img src="docs/KashishSharma.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #4caf50;"/><br/>
-  <b>👩🏻💻 Kashish Sharma</b><br/>
+  <b>💻 Kashish Sharma</b><br/>
   <em>Backend Developer</em><br/>
-  <a href="https://github.com/KashishSharma11">GitHub</a>
+  <a href="https://github.com/KashishSharma11">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
 </td>
 <td align="center">
   <img src="docs/SidhKhurana.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #ff9800;"/><br/>
-  <b>🧑🏻💻 Sidh Khurana</b><br/>
+  <b>💻 Sidh Khurana</b><br/>
   <em>AI/ML Engineer</em><br/>
-  <a href="https://github.com/Sidh1818">GitHub</a>
-</td>
-</tr>
-</table>
-
-</div>
-
-<div align="center">
-
-<table>
-<tr>
-<td align="center">
-  <b>🧑🏻‍💻 Abhishek Giri</b><br/>
-  <em>Team Lead & Full-stack Developer</em><br/>
-  <a href="https://github.com/abhishekgiri04">GitHub</a> | <a href="https://linkedin.com/in/abhishek-giri04">LinkedIn</a>
-</td>
-<td align="center">
-  <b>👩🏻‍💻 Muskan Sharma</b><br/>
-  <em>Frontend Developer</em>
-</td>
-<td align="center">
-  <b>👩🏻‍💻 Kashish Sharma</b><br/>
-  <em>Backend Developer</em>
-</td>
-<td align="center">
-  <b>🧑🏻‍💻 Sidh Khurana</b><br/>
-  <em>AI/ML Engineer</em>
+  <a href="https://github.com/Sidh1818">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
 </td>
 </tr>
 </table>
@@ -570,68 +569,29 @@ npm run dev
 
 ---
 
-<div align="center">
 
-<img src="docs/System_Architecture.png" alt="System Architecture & DFD" width="800"/>
+## 📞 Contact
 
-### Architecture Overview
-<img src="docs/Architecture.png" alt="Architecture Diagram" width="100%"/>
-
-### Data Flow
-
-```mermaid
-graph TD
-    A[HR Manager] -->|Resume Upload| B[Resume Processor<br/>GPT-4 Analysis]
-    B -->|Extracted Data| C[Candidate Database]
-    B -->|Profile Info| D[Huma AI Interviewer]
-    D -->|Voice Data| E[AI Analysis Engine<br/>Personality + EQ]
-    E -->|Results| F[Digital DNA Generator]
-    F -->|Final Report| G[Email Service]
-    
-    style A fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#000
-    style B fill:#FFF9C4,stroke:#FFC107,stroke-width:2px,color:#000
-    style C fill:#E0F2F1,stroke:#009688,stroke-width:2px,color:#000
-    style D fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#000
-    style E fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px,color:#000
-    style F fill:#FFCCBC,stroke:#FF5722,stroke-width:2px,color:#000
-    style G fill:#FCE4EC,stroke:#E91E63,stroke-width:2px,color:#000
-```
-
-</div>
-
----
+> 💬 *Got questions or need assistance with HR-GenAI Platform?*  
+> We're here to help with technical support and guidance!
 
 <div align="center">
 
-<img src="docs/CodeCatalyst.jpg" alt="Code Catalyst" width="100%" style="margin: 20px 0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
+**👤 Abhishek Giri** - Team Lead & Project Coordinator
 
-</div>
-
----
-
-<div align="center">
-
-## 👥 Team
-
-<div align="center">
-
-### 🤝 Get In Touch
-
-**Abhishek Giri** - Team Lead & Project Coordinator
-
-<p>
 <a href="https://linkedin.com/in/abhishek-giri04">
-<img src="https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-</a>
+  <img src="https://img.shields.io/badge/Connect%20on-LinkedIn-0077B5?style=for-the-badge&logo=linkedin" alt="LinkedIn - Abhishek Giri"/>
+</a>  
 <a href="https://github.com/abhishekgiri04">
-<img src="https://img.shields.io/badge/GitHub-Follow-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-</a>
+  <img src="https://img.shields.io/badge/Follow%20on-GitHub-100000?style=for-the-badge&logo=github" alt="GitHub - Abhishek Giri"/>
+</a>  
 <a href="mailto:abhishekgiri.dev@gmail.com">
-<img src="https://img.shields.io/badge/Email-Contact-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/>
+  <img src="https://img.shields.io/badge/Email-Contact-D14836?style=for-the-badge&logo=gmail" alt="Email - Abhishek Giri"/>
 </a>
-</p>
 
----
+</div>
+
+<div align="center">
 
 ## 📄 License
 
@@ -641,8 +601,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-### Built with ❤️ by HR-GenAI Team
+**🚀 Built with ❤️ for Hiring Excellence**  
+*Transforming Recruitment Through AI-Powered Intelligence*
 
-**© 2025 HR-GenAI | All Rights Reserved**
+---
+
+**© 2026 HR-GenAI - AI-Powered Hiring Intelligence Platform. All Rights Reserved.**
 
 </div>
