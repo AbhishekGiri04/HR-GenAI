@@ -606,6 +606,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**© 2026 HR-GenAI - AI-Powered Hiring Intelligence Platform. All Rights Reserved.**
+**© 2026 HR-GenAI — AI-Powered Hiring Intelligence Platform. All Rights Reserved.**
 
 </div>
