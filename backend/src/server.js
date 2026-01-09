@@ -7,11 +7,9 @@ require('dotenv').config();
 
 const connectDB = require('./config/database');
 const candidateRoutes = require('./routes/candidates');
-const analysisRoutes = require('./routes/analysis');
 const genomeRoutes = require('./routes/genome');
 const analyticsRoutes = require('./routes/analytics');
 const aiCompletionRoutes = require('./routes/aiCompletion');
-const aiCopilotRoutes = require('./routes/aiCopilot');
 const hrInterviewRoutes = require('./routes/hrInterview');
 const templateRoutes = require('./routes/templates');
 const interviewRoutes = require('./routes/interview');
@@ -49,11 +47,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/candidates', candidateRoutes);
-app.use('/api/analysis', analysisRoutes);
 app.use('/api/genome', genomeRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api', aiCompletionRoutes);
-app.use('/api', aiCopilotRoutes);
 app.use('/api/hr', hrInterviewRoutes);
 app.use('/api/hr', templateRoutes);
 app.use('/api/interview', interviewRoutes);
