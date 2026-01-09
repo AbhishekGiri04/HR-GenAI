@@ -106,9 +106,22 @@ const candidateSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'analyzing', 'interview', 'completed', 'rejected'],
+    enum: ['pending', 'analyzing', 'interview', 'interviewed', 'completed', 'rejected'],
     default: 'pending'
-  }
+  },
+  interviewCompleted: {
+    type: Boolean,
+    default: false
+  },
+  interviewScore: {
+    type: Number,
+    default: null
+  },
+  assignedTemplate: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Template'
+  },
+  invitedAt: Date
 }, {
   timestamps: true
 });

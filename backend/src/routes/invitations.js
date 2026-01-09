@@ -72,7 +72,7 @@ router.post('/bulk-invite', async (req, res) => {
             });
           }
 
-          const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}`;
+          const interviewLink = `https://hrgen-dev.vercel.app/template-selection/${candidate._id}?fromEmail=true`;
 
           console.log(`Sending email to ${candidateData.email}...`);
           

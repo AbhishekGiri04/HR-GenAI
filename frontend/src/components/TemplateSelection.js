@@ -14,6 +14,17 @@ const TemplateSelection = () => {
   const { notification, closeNotification, confirmUseTemplate, confirmDeleteTemplate, showSuccess } = useTemplateNotifications();
 
   useEffect(() => {
+    // Auto-login as candidate when coming from email link
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromEmail = urlParams.get('fromEmail');
+    
+    if (fromEmail === 'true' && candidateId && candidateId.length === 24) {
+      // Set candidate role in localStorage
+      localStorage.setItem('userRole', 'candidate');
+      localStorage.setItem('candidateId', candidateId);
+      console.log('Auto-logged in as candidate from email link');
+    }
+    
     fetchTemplates();
   }, [candidateId]);
 
