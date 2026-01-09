@@ -4,7 +4,7 @@
 
 <h1>💡 HR-GenAI - AI-Powered Hiring Intelligence Platform</h1>
 
-<h3 style="color: #2563eb; font-weight: 600; margin: 15px 0; font-size: 1.3em;">A revolutionary AI-powered hiring intelligence platform that transforms recruitment by combining intelligent resume analysis, AI-driven voice interviews, and proprietary Digital DNA Profiling to deliver up to 95% accuracy in candidate evaluation—enabling faster, fairer, and data-driven hiring decisions at scale.</h3>
+<p style="color: #2563eb; margin: 15px 0; font-size: 1.1em;">A revolutionary AI-powered hiring intelligence platform that transforms recruitment by combining intelligent resume analysis, AI-driven voice interviews, and proprietary Digital DNA Profiling to deliver up to 95% accuracy in candidate evaluation—enabling faster, fairer, and data-driven hiring decisions at scale.</p>
 
 <p style="font-size: 1.2em; color: #1e40af; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 20px; border-radius: 12px; max-width: 800px; margin: 20px auto; line-height: 1.6; border-left: 4px solid #2563eb;">
 </p>
@@ -74,105 +74,105 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 ---
 
-## 📁 Project Directory Structure
+## 📁 Project Structure
 
 ```
 HR-GenAI/
-├── frontend/                        # React Frontend Application (Port 3000)
-│   ├── public/                      # Static assets and HTML template
+├── frontend/                   # React Frontend (Port 3000)
+│   ├── public/
+│   │   └── index.html
 │   ├── src/
-│   │   ├── components/              # Reusable UI components
-│   │   │   ├── common/              # Shared components (Header, Footer, etc.)
-│   │   │   ├── forms/               # Form components
-│   │   │   └── ui/                  # UI elements (buttons, modals, etc.)
-│   │   ├── pages/                   # Application pages/routes
-│   │   │   ├── auth/                # Authentication pages
-│   │   │   ├── dashboard/           # Dashboard components
-│   │   │   ├── interview/           # Interview interface
-│   │   │   └── analytics/           # Analytics and reports
-│   │   ├── services/                # API services and utilities
-│   │   ├── hooks/                   # Custom React hooks
-│   │   ├── utils/                   # Helper functions
-│   │   ├── styles/                  # CSS and styling files
-│   │   ├── App.jsx                  # Main application component
-│   │   └── main.jsx                 # Application entry point
-│   ├── package.json                 # Frontend dependencies
-│   ├── vite.config.js               # Vite configuration
-│   └── .env.example                 # Environment variables template
-├── backend/                         # Node.js Backend Server (Port 5001)
+│   │   ├── components/         # UI components
+│   │   │   ├── AIAgent.js
+│   │   │   ├── Header.js
+│   │   │   ├── Footer.js
+│   │   │   ├── ResumeUpload.js
+│   │   │   ├── VoiceInterviewBox.js
+│   │   │   ├── GenomeChart.js
+│   │   │   ├── TemplateSelection.js
+│   │   │   └── ...
+│   │   ├── pages/              # Application pages
+│   │   │   ├── LoadingPage.js
+│   │   │   ├── SignInPage.js
+│   │   │   ├── SignUpPage.js
+│   │   │   ├── DashboardPage.js
+│   │   │   ├── HRDashboardPage.js
+│   │   │   ├── InterviewPage.js
+│   │   │   ├── AnalyticsPage.js
+│   │   │   ├── GenomeProfilePage.js
+│   │   │   └── ...
+│   │   ├── services/           # API services
+│   │   │   └── websocketService.js
+│   │   ├── contexts/           # React contexts
+│   │   │   └── authContext.js
+│   │   ├── firebase/           # Firebase config
+│   │   │   └── firebaseConfig.js
+│   │   ├── hooks/              # Custom hooks
+│   │   ├── styles/             # CSS files
+│   │   ├── App.js              # Main app
+│   │   └── index.js            # Entry point
+│   ├── package.json
+│   ├── tailwind.config.js
+│   └── .env.example
+├── backend/                    # Node.js Backend (Port 5001)
 │   ├── src/
-│   │   ├── controllers/             # Request handlers and business logic
-│   │   │   ├── authController.js    # Authentication logic
-│   │   │   ├── candidateController.js # Candidate management
-│   │   │   ├── interviewController.js # Interview operations
-│   │   │   └── analyticsController.js # Analytics and reporting
-│   │   ├── models/                  # Database schemas and models
-│   │   │   ├── User.js              # User model
-│   │   │   ├── Candidate.js         # Candidate model
-│   │   │   ├── Interview.js         # Interview model
-│   │   │   └── Template.js          # Interview template model
-│   │   ├── routes/                  # API route definitions
-│   │   │   ├── auth.js              # Authentication routes
-│   │   │   ├── candidates.js        # Candidate routes
-│   │   │   ├── interviews.js        # Interview routes
-│   │   │   └── analytics.js         # Analytics routes
-│   │   ├── services/                # External services and integrations
-│   │   │   ├── openaiService.js     # OpenAI GPT-4 integration
-│   │   │   ├── emailService.js      # Email notifications
-│   │   │   ├── voiceService.js      # Voice processing
-│   │   │   └── pdfService.js        # PDF generation
-│   │   ├── middleware/              # Authentication & validation middleware
-│   │   │   ├── auth.js              # JWT authentication
-│   │   │   ├── validation.js        # Request validation
-│   │   │   └── upload.js            # File upload handling
-│   │   ├── utils/                   # Utility functions
-│   │   ├── config/                  # Configuration files
-│   │   └── server.js                # Main server application
-│   ├── package.json                 # Backend dependencies
-│   └── .env.example                 # Environment variables template
-├── docs/                            # Documentation & Project Assets
-│   ├── API_DOCUMENTATION.md         # Complete API reference
-│   ├── DEPLOYMENT.md                # Deployment instructions
-│   ├── CONTRIBUTING.md              # Contribution guidelines
-│   ├── screenshots/                 # Application screenshots
-│   │   ├── HR-Dashboard.png         # Main dashboard
-│   │   ├── Home_Page.png            # Landing page
-│   │   ├── Loading_Page.png         # Loading screen
-│   │   ├── SignIn_Page.png          # Authentication
-│   │   ├── SignUp_Page.png          # Registration
-│   │   ├── Candidate_Page.png       # Candidate interface
-│   │   ├── Assessment_Page.png      # Assessment selection
-│   │   ├── Huma_Voice-AI.png        # AI interviewer interface
-│   │   ├── Analytics-Dashboard.png  # Analytics dashboard
-│   │   ├── Proctoring_Setup.png     # Proctoring configuration
-│   │   ├── Settings.png             # Settings page
-│   │   └── Profile_Page.png         # User profile
-│   ├── diagrams/                    # Architecture diagrams
-│   │   ├── Architecture.png         # System architecture
-│   │   ├── DFD.png                  # Data flow diagram
-│   │   └── System Architecture & DFD.png # Complete architecture
-│   ├── assets/                      # Project assets
-│   │   ├── HRGenAI.jpeg             # Project logo
-│   │   ├── ProblemStatements.png    # Problem statement
-│   │   ├── Solutions.png            # Solution overview
-│   │   └── Features.png             # Features overview
-│   └── README.md                    # Documentation index
-├── scripts/                         # Development and deployment scripts
-│   ├── start-dev.sh                 # Start development servers
-│   ├── stop-dev.sh                  # Stop development servers
-│   ├── setup.sh                     # Initial project setup
-│   └── deploy.sh                    # Production deployment
-├── tests/                           # Test suites
-│   ├── frontend/                    # Frontend tests
-│   ├── backend/                     # Backend tests
-│   └── e2e/                         # End-to-end tests
-├── README.md                        # Main project documentation
-├── LICENSE                          # MIT License
-├── .env.example                     # Global environment template
-├── .gitignore                       # Git ignore patterns
-├── docker-compose.yml               # Docker configuration
-├── package.json                     # Root package configuration
-└── CHANGELOG.md                     # Version history
+│   │   ├── ai-engines/         # AI processing engines
+│   │   │   ├── InterviewAIEngine.js
+│   │   │   ├── ai-evaluation-engine.js
+│   │   │   ├── intelligent-question-generator.js
+│   │   │   ├── voice-emotion-analyzer.js
+│   │   │   └── skill-dna.js
+│   │   ├── controllers/        # Business logic
+│   │   │   ├── candidateController.js
+│   │   │   └── genomeController.js
+│   │   ├── models/             # Database models
+│   │   │   ├── Candidate.js
+│   │   │   ├── Interview.js
+│   │   │   ├── Template.js
+│   │   │   └── GenomeProfile.js
+│   │   ├── routes/             # API routes
+│   │   │   ├── candidates.js
+│   │   │   ├── interview.js
+│   │   │   ├── templates.js
+│   │   │   ├── analytics.js
+│   │   │   ├── genome.js
+│   │   │   └── ...
+│   │   ├── services/           # External services
+│   │   │   ├── emailService.js
+│   │   │   ├── websocketService.js
+│   │   │   └── templateScheduler.js
+│   │   ├── config/             # Configuration
+│   │   │   └── database.js
+│   │   ├── scripts/            # Utility scripts
+│   │   │   └── seedTemplates.js
+│   │   └── server.js           # Main server
+│   ├── uploads/                # File uploads
+│   │   ├── documents/
+│   │   └── temp/
+│   ├── package.json
+│   └── .env.example
+├── docs/                       # Documentation & Assets
+│   ├── API_DOCUMENTATION.md
+│   ├── HRGenAI.jpeg
+│   ├── CodeCatalyst.jpg
+│   ├── ProblemStatements.png
+│   ├── Solutions.png
+│   ├── Features.png
+│   ├── Architecture.png
+│   ├── System_Architecture.png
+│   ├── Loading_Page.png
+│   ├── Home_Page.png
+│   ├── SignIn_Page.png
+│   ├── HR-Dashboard.png
+│   ├── Analytics-Dashboard.png
+│   ├── Huma_Voice-AI.png
+│   └── ...
+├── start-dev.sh                # Start development
+├── stop-dev.sh                 # Stop development
+├── vercel.json                 # Vercel config
+├── LICENSE
+├── .gitignore
+└── README.md
 ```
 
 ---
@@ -570,7 +570,48 @@ npm run dev
 
 ---
 
-## 📞 Contact & Support
+<div align="center">
+
+<img src="docs/System_Architecture.png" alt="System Architecture & DFD" width="800"/>
+
+### Architecture Overview
+<img src="docs/Architecture.png" alt="Architecture Diagram" width="100%"/>
+
+### Data Flow
+
+```mermaid
+graph TD
+    A[HR Manager] -->|Resume Upload| B[Resume Processor<br/>GPT-4 Analysis]
+    B -->|Extracted Data| C[Candidate Database]
+    B -->|Profile Info| D[Huma AI Interviewer]
+    D -->|Voice Data| E[AI Analysis Engine<br/>Personality + EQ]
+    E -->|Results| F[Digital DNA Generator]
+    F -->|Final Report| G[Email Service]
+    
+    style A fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#000
+    style B fill:#FFF9C4,stroke:#FFC107,stroke-width:2px,color:#000
+    style C fill:#E0F2F1,stroke:#009688,stroke-width:2px,color:#000
+    style D fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#000
+    style E fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px,color:#000
+    style F fill:#FFCCBC,stroke:#FF5722,stroke-width:2px,color:#000
+    style G fill:#FCE4EC,stroke:#E91E63,stroke-width:2px,color:#000
+```
+
+</div>
+
+---
+
+<div align="center">
+
+<img src="docs/CodeCatalyst.jpg" alt="Code Catalyst" width="100%" style="margin: 20px 0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
+
+</div>
+
+---
+
+<div align="center">
+
+## 👥 Team
 
 <div align="center">
 
@@ -600,22 +641,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-### Built with ❤️ for Human Potential Excellence
+### Built with ❤️ by HR-GenAI Team
 
-<h2 style="color: #2563eb; margin: 20px 0;">HR-GenAI</h2>
-
-<p style="font-size: 1.1em; color: #1e40af; max-width: 600px; margin: 15px auto; line-height: 1.6;">
-<em>AI-powered hiring intelligence</em>
-</p>
-
----
-
-<p style="color: #64748b; margin: 20px 0;">
-<strong>© 2026 HR-GenAI | All Rights Reserved</strong>
-</p>
-
-<p style="color: #2563eb; font-weight: 600;">
-<em>Empowering intelligent hiring decisions</em>
-</p>
+**© 2025 HR-GenAI | All Rights Reserved**
 
 </div>
