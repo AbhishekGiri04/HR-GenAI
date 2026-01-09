@@ -4,7 +4,7 @@
 
 <h1>💡 HR-GenAI - AI-Powered Hiring Intelligence Platform</h1>
 
-<h3 style="color: #2563eb; font-weight: 600; margin: 15px 0; font-size: 1.3em;">🚀 A revolutionary AI-powered hiring intelligence platform that transforms recruitment by combining intelligent resume analysis, AI-driven voice interviews, and proprietary Digital DNA Profiling to deliver up to 95% accuracy in candidate evaluation—enabling faster, fairer, and data-driven hiring decisions at scale.</h3>
+<h3 style="color: #2563eb; font-weight: 600; margin: 15px 0; font-size: 1.3em;">A revolutionary AI-powered hiring intelligence platform that transforms recruitment by combining intelligent resume analysis, AI-driven voice interviews, and proprietary Digital DNA Profiling to deliver up to 95% accuracy in candidate evaluation—enabling faster, fairer, and data-driven hiring decisions at scale.</h3>
 
 <p style="font-size: 1.2em; color: #1e40af; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 20px; border-radius: 12px; max-width: 800px; margin: 20px auto; line-height: 1.6; border-left: 4px solid #2563eb;">
 </p>
@@ -507,9 +507,9 @@ npm run dev
 
 ---
 
-## 👥 Team
-
 <div align="center">
+
+## 👥 Team
 
 <table>
 <tr>
@@ -517,36 +517,25 @@ npm run dev
   <img src="docs/AbhishekGiri.jpg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #2563eb;"/><br/>
   <b>🧑🏻💻 Abhishek Giri</b><br/>
   <em>Team Lead & Full-stack Developer</em><br/>
-  <a href="https://github.com/abhishekgiri04">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-  </a><br/>
-  <a href="https://linkedin.com/in/abhishek-giri04">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-  </a>
+  <a href="https://github.com/abhishekgiri04">GitHub</a> | <a href="https://linkedin.com/in/abhishek-giri04">LinkedIn</a>
 </td>
 <td align="center">
   <img src="docs/MuskanSharma.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #e91e63;"/><br/>
   <b>👩🏻💻 Muskan Sharma</b><br/>
   <em>Frontend Developer</em><br/>
-  <a href="https://github.com/MuskanSharma2006">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-  </a>
+  <a href="https://github.com/MuskanSharma2006">GitHub</a>
 </td>
 <td align="center">
   <img src="docs/KashishSharma.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #4caf50;"/><br/>
   <b>👩🏻💻 Kashish Sharma</b><br/>
   <em>Backend Developer</em><br/>
-  <a href="https://github.com/KashishSharma11">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-  </a>
+  <a href="https://github.com/KashishSharma11">GitHub</a>
 </td>
 <td align="center">
   <img src="docs/SidhKhurana.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #ff9800;"/><br/>
   <b>🧑🏻💻 Sidh Khurana</b><br/>
   <em>AI/ML Engineer</em><br/>
-  <a href="https://github.com/Sidh1818">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-  </a>
+  <a href="https://github.com/Sidh1818">GitHub</a>
 </td>
 </tr>
 </table>
