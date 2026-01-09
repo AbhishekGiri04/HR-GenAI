@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const nodemailer = require('nodemailer');
+const { createTransport } = require('nodemailer');
 const Candidate = require('../models/Candidate');
 const Template = require('../models/Template');
 require('dotenv').config();
 
 // Initialize Gmail transporter
-const transporter = nodemailer.createTransporter({
+const transporter = createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
