@@ -77,7 +77,7 @@ router.post('/bulk-invite', async (req, res) => {
           console.log(`Sending email to ${candidateData.email}...`);
           
           const { data, error } = await resend.emails.send({
-            from: 'HR GenAI <abhishekgiri0405@gmail.com>',
+            from: 'HR GenAI <onboarding@resend.dev>',
             to: candidateData.email,
             subject: `Interview Invitation - ${template.name}`,
             html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
