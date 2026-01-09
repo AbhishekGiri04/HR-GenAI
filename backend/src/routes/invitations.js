@@ -11,7 +11,21 @@ if (process.env.RESEND_API_KEY) {
   resend = new Resend(process.env.RESEND_API_KEY);
   console.log('✅ Resend email service initialized');
 } else {
-  console.log('❌ RESEND_API_KEY not set');
+  console.log('❌ RESEND_API_KEY not set - bulk invitations will fail');
+}
+
+// Gmail fallback
+const nodemailer = require('nodemailer');
+let gmailTransporter = null;
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  gmailTransporter = nodemailer.createTransporter({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+  console.log('✅ Gmail SMTP fallback initialized');
 }
 
 // Bulk invite candidates
@@ -28,8 +42,8 @@ router.post('/bulk-invite', async (req, res) => {
       return res.status(400).json({ error: 'Template ID required' });
     }
     
-    if (!resend) {
-      return res.status(500).json({ error: 'Email service not configured' });
+    if (!resend && !gmailTransporter) {
+      return res.status(500).json({ error: 'No email service configured. Please set RESEND_API_KEY or Gmail credentials.' });
     }
 
     const template = await Template.findById(templateId);
@@ -76,20 +90,33 @@ router.post('/bulk-invite', async (req, res) => {
 
           console.log(`Sending email to ${candidateData.email}...`);
           
-          const { data, error } = await resend.emails.send({
-            from: 'HR GenAI <onboarding@resend.dev>',
-            to: candidateData.email,
-            subject: `Interview Invitation - ${template.name}`,
-            html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
-          });
+          let emailResult;
           
-          if (error) {
-            throw new Error(error.message);
+          if (resend) {
+            // Use Resend (preferred)
+            const { data, error } = await resend.emails.send({
+              from: 'HR GenAI <onboarding@resend.dev>',
+              to: candidateData.email,
+              subject: `Interview Invitation - ${template.name}`,
+              html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
+            });
+            
+            if (error) throw new Error(error.message);
+            emailResult = { id: data.id, service: 'Resend' };
+          } else if (gmailTransporter) {
+            // Use Gmail fallback
+            const info = await gmailTransporter.sendMail({
+              from: process.env.EMAIL_USER,
+              to: candidateData.email,
+              subject: `Interview Invitation - ${template.name}`,
+              html: generateInvitationEmail(candidateData.name, template, interviewLink, customMessage, interviewDate, interviewTime)
+            });
+            emailResult = { id: info.messageId, service: 'Gmail' };
           }
           
-          console.log(`✅ Email sent to ${candidateData.email}, ID: ${data.id}`);
+          console.log(`✅ Email sent to ${candidateData.email} via ${emailResult.service}, ID: ${emailResult.id}`);
           
-          results.push({ email: candidateData.email, status: 'sent', emailId: data.id });
+          results.push({ email: candidateData.email, status: 'sent', emailId: emailResult.id, service: emailResult.service });
         } catch (error) {
           console.error(`❌ Failed ${candidateData.email}:`, error.message);
           results.push({ email: candidateData.email, status: 'failed', error: error.message });

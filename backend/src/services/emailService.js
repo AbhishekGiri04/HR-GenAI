@@ -8,15 +8,33 @@ class EmailService {
 
   initTransporter() {
     try {
-      this.transporter = nodemailer.createTransporter({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+      if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+        console.log('❌ Gmail credentials not configured');
+        return;
       }
+
+      this.transporter = nodemailer.createTransporter({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
+      });
+
+      // Test connection
+      this.transporter.verify((error, success) => {
+        if (error) {
+          console.log('❌ Gmail SMTP connection failed:', error.message);
+          this.transporter = null;
+        } else {
+          console.log('✅ Gmail SMTP ready for sending emails');
+        }
       });
     } catch (error) {
-      console.log('Email service not configured');
+      console.log('❌ Email service initialization failed:', error.message);
       this.transporter = null;
     }
   }
