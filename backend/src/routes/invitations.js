@@ -18,7 +18,7 @@ if (process.env.RESEND_API_KEY) {
 const nodemailer = require('nodemailer');
 let gmailTransporter = null;
 if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-  gmailTransporter = nodemailer.createTransporter({
+  gmailTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
