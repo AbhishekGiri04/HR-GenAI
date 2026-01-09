@@ -338,6 +338,14 @@ router.post('/evaluate/:candidateId', async (req, res) => {
     const finalScore = Math.round((totalScore / maxScore) * 100);
     const skillBonus = Math.round(skillMatchPercentage * 0.3); // 30% weight for skill match
     const overallScore = Math.min(finalScore + skillBonus, 100);
+    
+    console.log(`📊 EVALUATION RESULTS:`);
+    console.log(`   Total Score: ${totalScore}/${maxScore}`);
+    console.log(`   Final Score: ${finalScore}%`);
+    console.log(`   Skill Bonus: ${skillBonus}%`);
+    console.log(`   Overall Score: ${overallScore}%`);
+    console.log(`   Passing Score: ${template.passingScore}%`);
+    console.log(`   Status: ${overallScore >= template.passingScore ? 'PASSED ✅' : 'FAILED ❌'}`);
 
     // Generate genome profile
     const genomeProfile = {
@@ -354,14 +362,23 @@ router.post('/evaluate/:candidateId', async (req, res) => {
     };
 
     // Update candidate with results
+    console.log(`💾 Saving candidate with score: ${overallScore}`);
     const updatedCandidate = await Candidate.findByIdAndUpdate(candidateId, {
       interviewCompleted: true,
       interviewScore: overallScore,
       overallScore: overallScore,
       genomeProfile: genomeProfile,
       evaluatedAnswers: evaluatedAnswers,
-      lastInterviewDate: new Date()
+      lastInterviewDate: new Date(),
+      status: 'completed'
     }, { new: true });
+    
+    console.log(`✅ Candidate updated successfully:`);
+    console.log(`   ID: ${updatedCandidate._id}`);
+    console.log(`   Name: ${updatedCandidate.name}`);
+    console.log(`   Interview Score: ${updatedCandidate.interviewScore}`);
+    console.log(`   Status: ${updatedCandidate.status}`);
+    console.log(`   Interview Completed: ${updatedCandidate.interviewCompleted}`);
 
     // Auto-send offer letter if candidate passed
     let offerLetterSent = false;
