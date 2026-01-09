@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocat
 import { AuthProvider, useAuth } from './contexts/authContext';
 import LoadingPage from './pages/LoadingPage';
 import DashboardPage from './pages/DashboardPage';
-import AnalysisPage from './pages/AnalysisPage';
 import GenomeProfilePage from './pages/GenomeProfilePage';
 import CandidateProfilePage from './pages/CandidateProfilePage';
 import AnalyticsPage from './pages/AnalyticsPage';
@@ -61,7 +60,6 @@ function AppContent() {
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
         <Route path="/template-selection/:candidateId" element={<ProtectedRoute><TemplateSelection /></ProtectedRoute>} />
         <Route path="/template-selection" element={<ProtectedRoute><TemplateSelection /></ProtectedRoute>} />
-        <Route path="/analysis" element={<ProtectedRoute requireRole="hr"><AnalysisPage /></ProtectedRoute>} />
         <Route path="/profile/:candidateId" element={<ProtectedRoute><CandidateProfilePage /></ProtectedRoute>} />
         <Route path="/genome/:id" element={<ProtectedRoute><GenomeProfilePage /></ProtectedRoute>} />
         <Route path="/analytics" element={<ProtectedRoute requireRole="hr"><AnalyticsPage /></ProtectedRoute>} />

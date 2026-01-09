@@ -3,7 +3,6 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Card, Button, Modal, notification } from 'antd';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import InterviewManager from '../components/InterviewManager';
-import AICopilot from '../components/AICopilot';
 import TemplateBasedInterview from '../components/TemplateBasedInterview';
 import Header from '../components/Header';
 import { useAuth } from '../contexts/authContext';
@@ -19,7 +18,6 @@ const ComprehensiveInterview = () => {
   const [loading, setLoading] = useState(true);
   const [interviewResults, setInterviewResults] = useState(null);
   const [showResults, setShowResults] = useState(false);
-  const [copilotStealthMode, setCopilotStealthMode] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
 
   // If template is provided, use template-based interview directly
@@ -69,7 +67,7 @@ const ComprehensiveInterview = () => {
   // Handle copilot suggestions
   const handleCopilotSuggestion = (suggestion) => {
     // Could be used to show notifications or update UI
-    console.log('AI Copilot suggestion:', suggestion);
+    console.log('AI suggestion:', suggestion);
   };
 
   // Navigate back
@@ -133,27 +131,14 @@ const ComprehensiveInterview = () => {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {/* Interview Manager - Main Content */}
-          <div className="xl:col-span-3">
+          <div className="w-full">
             <InterviewManager
               candidateData={candidateData}
               onInterviewComplete={handleInterviewComplete}
               onQuestionChange={setCurrentQuestion}
             />
-          </div>
-
-          {/* AI Copilot - Sidebar */}
-          <div className="xl:col-span-1">
-            <div className="sticky top-6">
-              <AICopilot
-                candidateData={candidateData}
-                currentQuestion={currentQuestion}
-                onSuggestionGenerated={handleCopilotSuggestion}
-                stealthMode={copilotStealthMode}
-                onStealthToggle={() => setCopilotStealthMode(!copilotStealthMode)}
-              />
-            </div>
           </div>
         </div>
       </div>

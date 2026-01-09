@@ -1,7 +1,7 @@
 const express = require('express');
 const Template = require('../models/Template');
 const Candidate = require('../models/Candidate');
-const offerLetterService = require('../services/offerLetterService');
+
 const router = express.Router();
 
 // Configure new interview template - NO AI DEPENDENCIES
@@ -380,27 +380,14 @@ router.post('/evaluate/:candidateId', async (req, res) => {
     console.log(`   Status: ${updatedCandidate.status}`);
     console.log(`   Interview Completed: ${updatedCandidate.interviewCompleted}`);
 
-    // Auto-send offer letter if candidate passed
-    let offerLetterSent = false;
-    if (overallScore >= template.passingScore) {
-      console.log(`✅ Candidate passed! Score: ${overallScore}% >= ${template.passingScore}%`);
-      const offerResult = await offerLetterService.generateAndSendOfferLetter(
-        updatedCandidate,
-        template,
-        { overallScore, evaluatedAnswers }
-      );
-      offerLetterSent = offerResult.success;
-      if (offerLetterSent) {
-        console.log(`📧 Offer letter sent to ${updatedCandidate.email || updatedCandidate.personalInfo?.email}`);
-      }
-    }
+    // Offer letter functionality disabled
 
     res.json({
       success: true,
       genomeProfile,
       finalScore: overallScore,
       passed: overallScore >= template.passingScore,
-      offerLetterSent,
+      offerLetterSent: false,
       evaluatedAnswers,
       redirect: '/dashboard'
     });
