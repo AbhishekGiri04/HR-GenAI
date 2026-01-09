@@ -7,10 +7,7 @@
 <h3 style="color: #2563eb; font-weight: 600; margin: 15px 0; font-size: 1.3em;">🚀 A revolutionary AI-powered hiring intelligence platform that transforms recruitment by combining intelligent resume analysis, AI-driven voice interviews, and proprietary Digital DNA Profiling to deliver up to 95% accuracy in candidate evaluation—enabling faster, fairer, and data-driven hiring decisions at scale.</h3>
 
 <p style="font-size: 1.2em; color: #1e40af; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 20px; border-radius: 12px; max-width: 800px; margin: 20px auto; line-height: 1.6; border-left: 4px solid #2563eb;">
-  🎯 Revolutionizing HR with AI-powered precision and intelligence for modern recruitment challenges.
 </p>
-
-<img src="docs/CodeCatalyst.jpg" alt="Code Catalyst" width="100%" style="margin: 20px 0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
 
 <p align="center">
   <img src="https://img.shields.io/badge/AI_Powered-GPT--4-FF6B6B?style=for-the-badge&logo=openai&logoColor=white"/>
@@ -20,6 +17,8 @@
   <img src="https://img.shields.io/badge/MongoDB-4EA94B-FFEAA7?style=for-the-badge&logo=mongodb&logoColor=white"/>
   <img src="https://img.shields.io/badge/Accuracy-95%25-A29BFE?style=for-the-badge"/>
 </p>
+
+<img src="docs/CodeCatalyst.jpg" alt="Code Catalyst" width="100%" style="margin: 20px 0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
 
 </div>
 
@@ -515,6 +514,50 @@ npm run dev
 <table>
 <tr>
 <td align="center">
+  <img src="docs/AbhishekGiri.jpg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #2563eb;"/><br/>
+  <b>🧑🏻💻 Abhishek Giri</b><br/>
+  <em>Team Lead & Full-stack Developer</em><br/>
+  <a href="https://github.com/abhishekgiri04">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
+  </a><br/>
+  <a href="https://linkedin.com/in/abhishek-giri04">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+  </a>
+</td>
+<td align="center">
+  <img src="docs/MuskanSharma.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #e91e63;"/><br/>
+  <b>👩🏻💻 Muskan Sharma</b><br/>
+  <em>Frontend Developer</em><br/>
+  <a href="https://github.com/MuskanSharma2006">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
+</td>
+<td align="center">
+  <img src="docs/KashishSharma.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #4caf50;"/><br/>
+  <b>👩🏻💻 Kashish Sharma</b><br/>
+  <em>Backend Developer</em><br/>
+  <a href="https://github.com/KashishSharma11">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
+</td>
+<td align="center">
+  <img src="docs/SidhKhurana.jpeg" width="150" height="150" style="border-radius: 50%; object-fit: cover; border: 4px solid #ff9800;"/><br/>
+  <b>🧑🏻💻 Sidh Khurana</b><br/>
+  <em>AI/ML Engineer</em><br/>
+  <a href="https://github.com/Sidh1818">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
+</td>
+</tr>
+</table>
+
+</div>
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center">
   <b>🧑🏻‍💻 Abhishek Giri</b><br/>
   <em>Team Lead & Full-stack Developer</em><br/>
   <a href="https://github.com/abhishekgiri04">GitHub</a> | <a href="https://linkedin.com/in/abhishek-giri04">LinkedIn</a>
@@ -570,16 +613,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Built with ❤️ for Human Potential Excellence
 
-<h2 style="color: #2563eb; margin: 20px 0;">HR-GenAI - AI-Powered Hiring Intelligence Platform</h2>
+<h2 style="color: #2563eb; margin: 20px 0;">HR-GenAI</h2>
 
 <p style="font-size: 1.1em; color: #1e40af; max-width: 600px; margin: 15px auto; line-height: 1.6;">
-<em>Transforming hiring with AI precision and data-driven insights</em>
+<em>AI-powered hiring intelligence</em>
 </p>
 
 ---
 
 <p style="color: #64748b; margin: 20px 0;">
-<strong>© 2026 HR-GenAI Team | All Rights Reserved</strong>
+<strong>© 2026 HR-GenAI | All Rights Reserved</strong>
 </p>
 
 <p style="color: #2563eb; font-weight: 600;">
