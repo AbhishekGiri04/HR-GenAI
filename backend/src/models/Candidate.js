@@ -121,7 +121,18 @@ const candidateSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Template'
   },
-  invitedAt: Date
+  invitedAt: Date,
+  jobRole: String,
+  aiHireStatus: {
+    type: String,
+    enum: ['invited', 'interviewing', 'evaluated', 'offered', 'rejected'],
+    default: 'invited'
+  },
+  aiHireTimeline: [{
+    step: String,
+    timestamp: Date,
+    details: String
+  }]
 }, {
   timestamps: true
 });

@@ -29,6 +29,7 @@ import BulkInviteModal from '../components/BulkInviteModal';
 import TemplateNotification from '../components/TemplateNotification';
 import useTemplateNotifications from '../hooks/useTemplateNotifications';
 import Spline from '@splinetool/react-spline';
+import QuickHire from '../components/QuickHire';
 
 const HRDashboard = () => {
   const navigate = useNavigate();
@@ -241,6 +242,9 @@ const HRDashboard = () => {
               <p className="text-purple-100 text-sm font-semibold">Pass Rate</p>
             </div>
           </div>
+
+          {/* Quick AI Hire Section */}
+          <QuickHire />
 
           {/* 3D Spline Robot */}
           <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-gray-100 mb-8">

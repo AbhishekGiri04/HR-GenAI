@@ -14,6 +14,7 @@ const hrInterviewRoutes = require('./routes/hrInterview');
 const templateRoutes = require('./routes/templates');
 const interviewRoutes = require('./routes/interview');
 const invitationRoutes = require('./routes/invitations');
+const autoHireRoutes = require('./routes/autoHire');
 const websocketService = require('./services/websocketService');
 const templateScheduler = require('./services/templateScheduler');
 
@@ -54,6 +55,7 @@ app.use('/api/hr', hrInterviewRoutes);
 app.use('/api/hr', templateRoutes);
 app.use('/api/interview', interviewRoutes);
 app.use('/api/invitations', invitationRoutes);
+app.use('/api', autoHireRoutes);
 
 // Root route
 app.get('/', (req, res) => {

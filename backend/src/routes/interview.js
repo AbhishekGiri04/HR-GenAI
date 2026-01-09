@@ -380,6 +380,19 @@ router.post('/evaluate/:candidateId', async (req, res) => {
     console.log(`   Status: ${updatedCandidate.status}`);
     console.log(`   Interview Completed: ${updatedCandidate.interviewCompleted}`);
 
+    // Trigger Quick Hire completion if this is an AI hire
+    if (updatedCandidate.aiHireStatus) {
+      try {
+        const axios = require('axios');
+        await axios.post(`${process.env.API_URL || 'http://localhost:5001'}/api/quick-hire/complete`, {
+          candidateId: updatedCandidate._id
+        });
+        console.log('✅ Quick Hire completion triggered');
+      } catch (error) {
+        console.error('⚠️ Quick Hire completion failed:', error.message);
+      }
+    }
+
     // Offer letter functionality disabled
 
     res.json({

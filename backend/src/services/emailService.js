@@ -167,7 +167,25 @@ class EmailService {
     }
   }
 
+  async sendEmail(to, subject, text) {
+    if (!this.transporter) {
+      console.log('⚠️ Email not sent (service not configured)');
+      return false;
+    }
+    try {
+      await this.transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to,
+        subject,
+        text
+      });
+      console.log(`✅ Email sent to ${to}`);
+      return true;
+    } catch (error) {
+      console.error('Email error:', error.message);
+      return false;
+    }
+  }
 
 }
-
 module.exports = new EmailService();

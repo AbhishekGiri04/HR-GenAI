@@ -1,0 +1,80 @@
+const express = require('express');
+const router = express.Router();
+const Template = require('../models/Template');
+const { generateInterviewTemplate } = require('../ai-engines/smartMessageGenerator');
+const emailService = require('../services/emailService');
+
+/**
+ * POST /api/auto-hire
+ * Simple: Email + Job Role → Template → Deploy → Email
+ */
+router.post('/auto-hire', async (req, res) => {
+  const { email, jobRole } = req.body;
+
+  if (!email || !jobRole) {
+    return res.status(400).json({ error: 'Email and job role required' });
+  }
+
+  try {
+    console.log(`🚀 Auto-Hire: ${email} for ${jobRole}`);
+
+    // Step 1: AI Generate Template
+    const templateData = await generateInterviewTemplate(jobRole);
+    
+    // Step 2: Save & Deploy Template
+    const template = new Template({
+      ...templateData,
+      isDeployed: true,
+      isActive: true,
+      createdBy: 'AI-Auto',
+      categoryQuestions: {
+        'Technical Skills': 3,
+        'Problem Solving': 2,
+        'Communication': 2
+      }
+    });
+    await template.save();
+    console.log(`✅ Template created & deployed: ${template._id}`);
+
+    // Step 3: Send Email
+    const dashboardLink = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard`;
+    
+    const emailBody = `
+Dear Candidate,
+
+You've been invited to interview for the ${jobRole} position!
+
+Our AI interviewer "Huma" will conduct a ${templateData.duration}-minute interview.
+
+📋 Interview Topics:
+${templateData.categories.map(cat => `• ${cat}`).join('\n')}
+
+🔗 Start Interview: ${dashboardLink}
+
+Steps:
+1. Upload your resume
+2. Huma will analyze and conduct interview
+3. Results will be sent automatically
+
+Good luck! 🚀
+
+HR Team
+    `.trim();
+
+    await emailService.sendEmail(email, `Interview Invitation - ${jobRole}`, emailBody);
+    console.log(`✅ Email sent to ${email}`);
+
+    res.json({
+      success: true,
+      templateName: template.name,
+      templateId: template._id,
+      message: 'Template created, deployed, and email sent!'
+    });
+
+  } catch (error) {
+    console.error('❌ Auto-Hire Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+module.exports = router;
