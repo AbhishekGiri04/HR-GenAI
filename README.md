@@ -22,7 +22,11 @@
 
 ## 📖 Problem Statement
 
-The traditional hiring process is fundamentally broken. With over **85% of resumes containing false information** and **60% of new hires underperforming expectations**, companies are losing millions in bad hiring decisions. Current recruitment systems rely on manual resume screening, biased human interviews, and gut-feeling decisions that lead to poor outcomes.
+<div align="center">
+  <img src="docs/Problem Statements.jpeg" alt="Problem Statement" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
+</div>
+
+<br/>
 
 ### Critical Challenges in Current Hiring Systems
 
@@ -50,6 +54,12 @@ The traditional hiring process is fundamentally broken. With over **85% of resum
 ---
 
 ## 💡 Our Solution
+
+<div align="center">
+  <img src="docs/Solution.jpeg" alt="Our Solution" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
+</div>
+
+<br/>
 
 **HR-GenAI** revolutionizes hiring with AI-powered intelligence and voice interview technology:
 
@@ -178,25 +188,36 @@ HR-GenAI/
 
 <div align="center">
 
-### High-Level Architecture
+<img src="docs/System Architecture & DFD.png" alt="System Architecture & DFD" width="800"/>
 
-```mermaid
-graph TD
-    A["🖥️ CLIENT LAYER (React)<br/>Port 3000 - User Interface"] -->|HTTP/REST API| B["⚡ API GATEWAY (Express.js)<br/>Port 5001 - Request Validation & Routing"]
-    B --> C["🔍 AUTHENTICATION LAYER<br/>Firebase Auth + JWT Tokens"]
-    C --> D["🧠 AI PROCESSING ENGINE<br/>GPT-4 + Gemini AI Models<br/>Resume Analysis + Question Generation"]
-    D --> E["🎤 VOICE AI LAYER<br/>Huma - AI Interviewer<br/>Speech Recognition + TTS"]
-    E --> F["📊 ANALYSIS ENGINE<br/>Personality Detection + EQ Analysis<br/>Performance Prediction"]
-    F --> G["💾 DATA LAYER (MongoDB)<br/>Collections: candidates, templates, interviews"]
-    
-    style A fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#000
-    style B fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#000
-    style C fill:#FFF3E0,stroke:#FF9800,stroke-width:2px,color:#000
-    style D fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px,color:#000
-    style E fill:#FFF9C4,stroke:#FFC107,stroke-width:2px,color:#000
-    style F fill:#FCE4EC,stroke:#E91E63,stroke-width:2px,color:#000
-    style G fill:#E0F2F1,stroke:#009688,stroke-width:2px,color:#000
-```
+### 🏗️ Architecture Overview
+<img src="docs/Architecture.png" alt="Architecture Diagram" width="600"/>
+
+**HR-GenAI follows a modern microservices architecture with AI-powered components:**
+
+- **Frontend Layer**: React.js with responsive UI components
+- **API Gateway**: Express.js handling all client requests
+- **AI Engine**: GPT-4 & Gemini for intelligent processing
+- **Database Layer**: MongoDB for scalable data storage
+- **Authentication**: Firebase for secure user management
+- **Real-time Communication**: WebSocket for live updates
+
+### 📊 Data Flow Diagram
+<img src="docs/DFD.png" alt="Data Flow Diagram" width="600"/>
+
+**Complete data flow from candidate onboarding to final evaluation:**
+
+1. **Resume Processing**: PDF/DOC → AI Analysis → Structured Data
+2. **Interview Orchestration**: Template Selection → Dynamic Questions → Voice/Text Responses
+3. **Real-time Analysis**: Voice Emotion → Personality Traits → Performance Scoring
+4. **Result Generation**: DNA Profile → Predictive Analytics → Email Reports
+
+### 🔄 How It Works
+
+1. **📄 Upload Resume** → AI extracts candidate info with 95% accuracy
+2. **🎤 AI Interview** → Huma conducts personalized voice interviews
+3. **🧬 DNA Analysis** → Creates comprehensive personality & skill profile
+4. **📊 Results** → Automated email reports with hiring recommendations
 
 </div>
 
