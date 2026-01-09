@@ -1,22 +1,22 @@
 <div align="center">
 
-<img src="docs/HRGenAI.png" alt="HR-GenAI Logo" width="200" style="margin-bottom: 20px;"/>
+<img src="docs/HRGenAI.jpeg" alt="HR-GenAI Logo" width="100%" style="margin-bottom: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
 
-<h1>🧬 HR-GenAI - AI-Powered Hiring Intelligence Platform for Modern HR Teams </h1>
+<h1>🧬 HR-GenAI - AI-Powered Hiring Intelligence Platform</h1>
 
-<h3 style="color: #2563eb; font-weight: 600; margin: 15px 0;">HR-GenAI - AI-powered hiring intelligence platform</h3>
+<h3 style="color: #2563eb; font-weight: 600; margin: 15px 0; font-size: 1.3em;">🚀 Revolutionary AI-powered hiring intelligence platform transforming recruitment</h3>
 
 <p style="font-size: 1.2em; color: #1e40af; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 20px; border-radius: 12px; max-width: 800px; margin: 20px auto; line-height: 1.6; border-left: 4px solid #2563eb;">
   🎯 A comprehensive AI-powered hiring platform that transforms recruitment through intelligent resume analysis, voice interviews, and Digital DNA profiling with <strong style="color: #1d4ed8;">95% accuracy</strong>.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/AI_Powered-GPT--4-667EEA?style=for-the-badge&logo=openai&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Voice_AI-Huma-10B981?style=for-the-badge&logo=microphone&logoColor=white"/>
-  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=node.js&logoColor=white"/>
-  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Accuracy-95%25-10b981?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/AI_Powered-GPT--4-FF6B6B?style=for-the-badge&logo=openai&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Voice_AI-Huma-4ECDC4?style=for-the-badge&logo=microphone&logoColor=white"/>
+  <img src="https://img.shields.io/badge/React-18-45B7D1?style=for-the-badge&logo=react&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Node.js-20-96CEB4?style=for-the-badge&logo=node.js&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B-FFEAA7?style=for-the-badge&logo=mongodb&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Accuracy-95%25-A29BFE?style=for-the-badge"/>
 </p>
 
 </div>
@@ -41,13 +41,13 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 **HR-GenAI revolutionizes hiring with intelligent automation and data-driven insights:**
 
-• **3.2 Second Resume Analysis** - GPT-4 powered extraction with 95% accuracy, eliminating hours of manual screening  
-• **AI Voice Interviewer (Huma)** - Conducts natural conversations, adapts questions dynamically, and analyzes voice patterns for confidence levels  
-• **100% Bias-Free Evaluation** - Objective AI assessment eliminates unconscious bias, ensuring fair evaluation for all candidates  
-• **Digital DNA Profiling** - MBTI personality analysis, OCEAN traits evaluation, and EQ scoring for comprehensive candidate insights  
-• **Real-Time Anti-Cheating** - Advanced proctoring with camera monitoring, screen sharing enforcement, and automatic violation detection  
-• **Predictive Analytics** - 91.5% accurate performance and retention predictions based on interview data and personality analysis  
-• **Automated Workflow** - Template-based interviews, bulk email invitations, and detailed PDF reports streamline the entire hiring process
+• ⚡ **3.2 Second Resume Analysis** - GPT-4 powered extraction with 95% accuracy, eliminating hours of manual screening  
+• 🤖 **AI Voice Interviewer (Huma)** - Conducts natural conversations, adapts questions dynamically, and analyzes voice patterns for confidence levels  
+• ⚖️ **100% Bias-Free Evaluation** - Objective AI assessment eliminates unconscious bias, ensuring fair evaluation for all candidates  
+• 🧬 **Digital DNA Profiling** - MBTI personality analysis, OCEAN traits evaluation, and EQ scoring for comprehensive candidate insights  
+• 🛡️ **Real-Time Anti-Cheating** - Advanced proctoring with camera monitoring, screen sharing enforcement, and automatic violation detection  
+• 📊 **Predictive Analytics** - 91.5% accurate performance and retention predictions based on interview data and personality analysis  
+• 🔄 **Automated Workflow** - Template-based interviews, bulk email invitations, and detailed PDF reports streamline the entire hiring process
 
 ---
 
@@ -60,16 +60,16 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 **Advanced AI-Powered Hiring Platform Features:**
 
-• **GPT-4 Resume Analysis** - Complete candidate profile extraction with 95% accuracy and red flag detection  
-• **Huma Voice AI** - Natural conversation interviewer with dynamic questioning and voice pattern analysis  
-• **Dynamic Question Engine** - Role-specific questions based on candidate background to prevent cheating  
-• **Multi-Layer Proctoring** - Webcam monitoring, screen sharing, and suspicious behavior detection  
-• **Personality & EQ Profiling** - MBTI framework, Big Five traits, and emotional intelligence scoring  
-• **Performance Prediction** - 91.5% accurate job performance and retention probability algorithms  
-• **Enterprise Dashboard** - Real-time analytics, candidate comparison, and customizable reporting  
-• **Smart Communication** - Automated email templates, scheduling, and PDF report generation  
-• **Template Management** - Reusable interview templates with custom scoring criteria  
-• **API Integration** - RESTful APIs and webhook support for existing HR systems
+• 🧠 **GPT-4 Resume Analysis** - Complete candidate profile extraction with 95% accuracy and red flag detection  
+• 🎤 **Huma Voice AI** - Natural conversation interviewer with dynamic questioning and voice pattern analysis  
+• ⚡ **Dynamic Question Engine** - Role-specific questions based on candidate background to prevent cheating  
+• 📹 **Multi-Layer Proctoring** - Webcam monitoring, screen sharing, and suspicious behavior detection  
+• 🧬 **Personality & EQ Profiling** - MBTI framework, Big Five traits, and emotional intelligence scoring  
+• 📈 **Performance Prediction** - 91.5% accurate job performance and retention probability algorithms  
+• 📊 **Enterprise Dashboard** - Real-time analytics, candidate comparison, and customizable reporting  
+• 📧 **Smart Communication** - Automated email templates, scheduling, and PDF report generation  
+• 📋 **Template Management** - Reusable interview templates with custom scoring criteria  
+• 🔗 **API Integration** - RESTful APIs and webhook support for existing HR systems
 
 ---
 
@@ -77,50 +77,101 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 ```bash
 HR-GenAI/
-├── frontend/                        # React frontend (Port 3000)
-│   ├── src/
-│   │   ├── components/              # Reusable UI components
-│   │   ├── pages/                   # Application pages
-│   │   ├── services/                # API services
-│   │   ├── App.jsx                  # Main application
-│   │   └── main.jsx                 # Entry point
-│   ├── package.json                 # Frontend dependencies
-│   └── .env.example                 # Environment template
-├── backend/                         # Node.js backend (Port 5001)
-│   ├── src/
-│   │   ├── controllers/             # Request handlers
-│   │   ├── models/                  # Database models
-│   │   ├── routes/                  # API routes
-│   │   ├── services/                # Business logic
-│   │   ├── middleware/              # Authentication & validation
-│   │   └── server.js                # Main server file
-│   ├── package.json                 # Backend dependencies
-│   └── .env.example                 # Environment template
-├── docs/                            # Documentation & Screenshots
-│   ├── HR-Dashboard.png             # Main dashboard
-│   ├── Home_Page.png                # Home page
-│   ├── Loading_Page.png             # Loading screen
-│   ├── SignIn_Page.png              # Sign in page
-│   ├── SignUp_Page.png              # Sign up page
-│   ├── Candidate_Page.png           # Candidate profile
-│   ├── Assesment_Page.png           # Assessment selection
-│   ├── Huma_Voice-AI.png            # AI interviewer
-│   ├── Analytics-Dashboard.png      # Analytics dashboard
-│   ├── Proctoring_Setup.png         # Proctoring setup
-│   ├── Settings.png                 # Settings page
-│   ├── Profile_Page.png             # User profile
-│   ├── Problem Statements.jpeg     # Problem statement
-│   ├── Solution.jpeg                # Solution overview
-│   ├── Architecture.png             # System architecture
-│   ├── DFD.png                      # Data flow diagram
-│   ├── HRGenAI.png                  # Project logo
-│   └── System Architecture & DFD.png # Complete architecture
-├── README.md                        # Project documentation
-├── LICENSE                          # MIT License
-├── .env.example                     # Environment template
-├── .gitignore                       # Git ignore patterns
-├── start-dev.sh                     # Development script
-└── stop-dev.sh                      # Stop script
+├── 📂 frontend/                     # 🎨 React Frontend Application (Port 3000)
+│   ├── 📂 public/                   # Static assets and HTML template
+│   ├── 📂 src/
+│   │   ├── 📂 components/           # 🧩 Reusable UI components
+│   │   │   ├── 📂 common/           # Shared components (Header, Footer, etc.)
+│   │   │   ├── 📂 forms/            # Form components
+│   │   │   └── 📂 ui/               # UI elements (buttons, modals, etc.)
+│   │   ├── 📂 pages/                # 📄 Application pages/routes
+│   │   │   ├── 📂 auth/             # Authentication pages
+│   │   │   ├── 📂 dashboard/        # Dashboard components
+│   │   │   ├── 📂 interview/        # Interview interface
+│   │   │   └── 📂 analytics/        # Analytics and reports
+│   │   ├── 📂 services/             # 🔧 API services and utilities
+│   │   ├── 📂 hooks/                # Custom React hooks
+│   │   ├── 📂 utils/                # Helper functions
+│   │   ├── 📂 styles/               # CSS and styling files
+│   │   ├── 📄 App.jsx               # 🚀 Main application component
+│   │   └── 📄 main.jsx              # ⚡ Application entry point
+│   ├── 📄 package.json              # 📦 Frontend dependencies
+│   ├── 📄 vite.config.js            # Vite configuration
+│   └── 📄 .env.example              # 🔧 Environment variables template
+├── 📂 backend/                      # 🔧 Node.js Backend Server (Port 5001)
+│   ├── 📂 src/
+│   │   ├── 📂 controllers/          # 🎮 Request handlers and business logic
+│   │   │   ├── 📄 authController.js # Authentication logic
+│   │   │   ├── 📄 candidateController.js # Candidate management
+│   │   │   ├── 📄 interviewController.js # Interview operations
+│   │   │   └── 📄 analyticsController.js # Analytics and reporting
+│   │   ├── 📂 models/               # 💾 Database schemas and models
+│   │   │   ├── 📄 User.js           # User model
+│   │   │   ├── 📄 Candidate.js      # Candidate model
+│   │   │   ├── 📄 Interview.js      # Interview model
+│   │   │   └── 📄 Template.js       # Interview template model
+│   │   ├── 📂 routes/               # 🛣️ API route definitions
+│   │   │   ├── 📄 auth.js           # Authentication routes
+│   │   │   ├── 📄 candidates.js     # Candidate routes
+│   │   │   ├── 📄 interviews.js     # Interview routes
+│   │   │   └── 📄 analytics.js      # Analytics routes
+│   │   ├── 📂 services/             # 📧 External services and integrations
+│   │   │   ├── 📄 openaiService.js  # OpenAI GPT-4 integration
+│   │   │   ├── 📄 emailService.js   # Email notifications
+│   │   │   ├── 📄 voiceService.js   # Voice processing
+│   │   │   └── 📄 pdfService.js     # PDF generation
+│   │   ├── 📂 middleware/           # 🔒 Authentication & validation middleware
+│   │   │   ├── 📄 auth.js           # JWT authentication
+│   │   │   ├── 📄 validation.js     # Request validation
+│   │   │   └── 📄 upload.js         # File upload handling
+│   │   ├── 📂 utils/                # 🛠️ Utility functions
+│   │   ├── 📂 config/               # ⚙️ Configuration files
+│   │   └── 📄 server.js             # 🚀 Main server application
+│   ├── 📄 package.json              # 📦 Backend dependencies
+│   └── 📄 .env.example              # 🔧 Environment variables template
+├── 📂 docs/                         # 📸 Documentation & Project Assets
+│   ├── 📄 API_DOCUMENTATION.md      # 📡 Complete API reference
+│   ├── 📄 DEPLOYMENT.md             # 🚀 Deployment instructions
+│   ├── 📄 CONTRIBUTING.md           # 🤝 Contribution guidelines
+│   ├── 📂 screenshots/              # 📸 Application screenshots
+│   │   ├── 📄 HR-Dashboard.png      # Main dashboard
+│   │   ├── 📄 Home_Page.png         # Landing page
+│   │   ├── 📄 Loading_Page.png      # Loading screen
+│   │   ├── 📄 SignIn_Page.png       # Authentication
+│   │   ├── 📄 SignUp_Page.png       # Registration
+│   │   ├── 📄 Candidate_Page.png    # Candidate interface
+│   │   ├── 📄 Assessment_Page.png   # Assessment selection
+│   │   ├── 📄 Huma_Voice-AI.png     # AI interviewer interface
+│   │   ├── 📄 Analytics-Dashboard.png # Analytics dashboard
+│   │   ├── 📄 Proctoring_Setup.png  # Proctoring configuration
+│   │   ├── 📄 Settings.png          # Settings page
+│   │   └── 📄 Profile_Page.png      # User profile
+│   ├── 📂 diagrams/                 # 📊 Architecture diagrams
+│   │   ├── 📄 Architecture.png      # System architecture
+│   │   ├── 📄 DFD.png               # Data flow diagram
+│   │   └── 📄 System Architecture & DFD.png # Complete architecture
+│   ├── 📂 assets/                   # 🎨 Project assets
+│   │   ├── 📄 HRGenAI.png           # Project logo
+│   │   ├── 📄 ProblemStatements.png # Problem statement
+│   │   ├── 📄 Solutions.png         # Solution overview
+│   │   └── 📄 Features.png          # Features overview
+│   └── 📄 README.md                 # 📖 Documentation index
+├── 📂 scripts/                      # 🔧 Development and deployment scripts
+│   ├── 📄 start-dev.sh              # 🚀 Start development servers
+│   ├── 📄 stop-dev.sh               # 🛑 Stop development servers
+│   ├── 📄 setup.sh                  # ⚙️ Initial project setup
+│   └── 📄 deploy.sh                 # 🚀 Production deployment
+├── 📂 tests/                        # 🧪 Test suites
+│   ├── 📂 frontend/                 # Frontend tests
+│   ├── 📂 backend/                  # Backend tests
+│   └── 📂 e2e/                      # End-to-end tests
+├── 📄 README.md                     # 📖 Main project documentation
+├── 📄 LICENSE                       # ⚖️ MIT License
+├── 📄 .env.example                  # 🔧 Global environment template
+├── 📄 .gitignore                    # 🚫 Git ignore patterns
+├── 📄 docker-compose.yml            # 🐳 Docker configuration
+├── 📄 package.json                  # 📦 Root package configuration
+└── 📄 CHANGELOG.md                  # 📝 Version history
 ```
 
 ---
@@ -129,28 +180,28 @@ HR-GenAI/
 
 <table>
 <tr>
-<td><img src="docs/Loading_Page.png" width="100%"/><br/><b>Loading Screen</b></td>
-<td><img src="docs/Home_Page.png" width="100%"/><br/><b>Home Page</b></td>
+<td><img src="docs/screenshots/Loading_Page.png" width="100%"/><br/><b>Loading Screen</b></td>
+<td><img src="docs/screenshots/Home_Page.png" width="100%"/><br/><b>Home Page</b></td>
 </tr>
 <tr>
-<td><img src="docs/SignIn_Page.png" width="100%"/><br/><b>Sign In Page</b></td>
-<td><img src="docs/SignUp_Page.png" width="100%"/><br/><b>Sign Up Page</b></td>
+<td><img src="docs/screenshots/SignIn_Page.png" width="100%"/><br/><b>Sign In Page</b></td>
+<td><img src="docs/screenshots/SignUp_Page.png" width="100%"/><br/><b>Sign Up Page</b></td>
 </tr>
 <tr>
-<td><img src="docs/HR-Dashboard.png" width="100%"/><br/><b>HR Dashboard</b></td>
-<td><img src="docs/Analytics-Dashboard.png" width="100%"/><br/><b>Analytics Dashboard</b></td>
+<td><img src="docs/screenshots/HR-Dashboard.png" width="100%"/><br/><b>HR Dashboard</b></td>
+<td><img src="docs/screenshots/Analytics-Dashboard.png" width="100%"/><br/><b>Analytics Dashboard</b></td>
 </tr>
 <tr>
-<td><img src="docs/Candidate_Page.png" width="100%"/><br/><b>Candidate Dashboard</b></td>
-<td><img src="docs/Assesment_Page.png" width="100%"/><br/><b>Assessment Selection</b></td>
+<td><img src="docs/screenshots/Candidate_Page.png" width="100%"/><br/><b>Candidate Dashboard</b></td>
+<td><img src="docs/screenshots/Assesment_Page.png" width="100%"/><br/><b>Assessment Selection</b></td>
 </tr>
 <tr>
-<td><img src="docs/Huma_Voice-AI.png" width="100%"/><br/><b>Huma AI Interviewer</b></td>
-<td><img src="docs/Proctoring_Setup.png" width="100%"/><br/><b>Proctoring Setup</b></td>
+<td><img src="docs/screenshots/Huma_Voice-AI.png" width="100%"/><br/><b>Huma AI Interviewer</b></td>
+<td><img src="docs/screenshots/Proctoring_Setup.png" width="100%"/><br/><b>Proctoring Setup</b></td>
 </tr>
 <tr>
-<td><img src="docs/Settings.png" width="100%"/><br/><b>Settings Page</b></td>
-<td><img src="docs/Profile_Page.png" width="100%"/><br/><b>User Profile</b></td>
+<td><img src="docs/screenshots/Settings.png" width="100%"/><br/><b>Settings Page</b></td>
+<td><img src="docs/screenshots/Profile_Page.png" width="100%"/><br/><b>User Profile</b></td>
 </tr>
 </table>
 
@@ -259,11 +310,13 @@ graph TD
 
 ### 📋 Prerequisites
 
+<div align="center">
+
 <table>
 <tr>
-<td><b>Software</b></td>
-<td><b>Version</b></td>
-<td><b>Purpose</b></td>
+<th><b>Software</b></th>
+<th><b>Version</b></th>
+<th><b>Purpose</b></th>
 </tr>
 <tr>
 <td>Node.js</td>
@@ -291,6 +344,8 @@ graph TD
 <td>Dependencies and data</td>
 </tr>
 </table>
+
+</div>
 
 ---
 
@@ -383,129 +438,15 @@ npm run dev
 
 ## 📡 API Documentation
 
-### 🎯 Core Endpoints
+<div align="center">
 
-#### 1️⃣ Resume Analysis
+### 🎯 Complete API Reference
 
-**Endpoint**: `POST /api/candidates/analyze-resume`
+**For detailed API documentation with all endpoints, authentication, and examples:**
 
-**Description**: Analyzes uploaded resume using GPT-4 and extracts candidate information.
+**[📖 View Full API Documentation](docs/API_DOCUMENTATION.md)**
 
-**Request**:
-```bash
-curl -X POST http://localhost:5001/api/candidates/analyze-resume \
-  -H "Content-Type: multipart/form-data" \
-  -F "resume=@candidate_resume.pdf"
-```
-
-**Response** (200 OK):
-```json
-{
-  "success": true,
-  "candidate": {
-    "name": "John Doe",
-    "email": "john.doe@email.com",
-    "phone": "+1234567890",
-    "skills": ["JavaScript", "React", "Node.js"],
-    "experience": "3 years",
-    "education": "Bachelor's in Computer Science",
-    "extractionAccuracy": 95,
-    "aiAnalysis": {
-      "strengths": ["Strong technical skills", "Good communication"],
-      "concerns": ["Limited leadership experience"],
-      "culturalFit": 85
-    }
-  }
-}
-```
-
----
-
-#### 2️⃣ Start AI Interview
-
-**Endpoint**: `POST /api/interviews/start`
-
-**Description**: Initiates AI interview session with Huma.
-
-```bash
-curl -X POST http://localhost:5001/api/interviews/start \
-  -H "Content-Type: application/json" \
-  -d '{
-    "candidateId": "candidate_id_here",
-    "templateId": "template_id_here"
-  }'
-```
-
-**Response**:
-```json
-{
-  "success": true,
-  "interviewId": "interview_session_id",
-  "humaGreeting": "Hello! I'm Huma, your AI interviewer. Ready to begin?",
-  "firstQuestion": "Tell me about yourself and your background.",
-  "sessionToken": "jwt_token_here"
-}
-```
-
----
-
-#### 3️⃣ Get Candidate Analytics
-
-**Endpoint**: `GET /api/analytics/candidate/{candidateId}`
-
-```bash
-curl -X GET http://localhost:5001/api/analytics/candidate/candidate_id_here
-```
-
-**Response**:
-```json
-{
-  "candidateProfile": {
-    "digitalDNA": {
-      "personality": {
-        "mbti": "ENFP",
-        "traits": {
-          "openness": 85,
-          "conscientiousness": 78,
-          "extraversion": 92,
-          "agreeableness": 80,
-          "neuroticism": 25
-        }
-      },
-      "eqAnalysis": {
-        "overallEQ": 8.5,
-        "selfAwareness": 9,
-        "empathy": 8,
-        "stressManagement": 7
-      }
-    },
-    "performancePrediction": {
-      "jobFitScore": 88,
-      "retentionProbability": 91.5,
-      "culturalFitScore": 85
-    }
-  }
-}
-```
-
----
-
-#### 4️⃣ Send Bulk Invitations
-
-**Endpoint**: `POST /api/invitations/bulk-invite`
-
-```bash
-curl -X POST http://localhost:5001/api/invitations/bulk-invite \
-  -H "Content-Type: application/json" \
-  -d '{
-    "candidates": [
-      {"name": "John Doe", "email": "john@email.com"},
-      {"name": "Jane Smith", "email": "jane@email.com"}
-    ],
-    "templateId": "template_id_here",
-    "customMessage": "We are excited to interview you!"
-  }'
-```
+</div>
 
 ---
 
