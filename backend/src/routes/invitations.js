@@ -18,9 +18,20 @@ try {
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
-      }
+      },
+      timeout: 10000,
+      connectionTimeout: 10000
     });
     console.log('✅ Email transporter initialized for:', process.env.EMAIL_USER);
+    
+    // Verify connection
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error('❌ Email verification failed:', error.message);
+      } else {
+        console.log('✅ Email server connection verified');
+      }
+    });
   }
 } catch (error) {
   console.error('❌ Email transporter failed:', error.message);
