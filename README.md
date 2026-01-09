@@ -37,12 +37,12 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 **HR-GenAI revolutionizes hiring with intelligent automation and data-driven insights:**
 
-• **3.2 Second Resume Analysis** - GPT-4 powered extraction with 95% accuracy, eliminating hours of manual screening
-• **AI Voice Interviewer (Huma)** - Conducts natural conversations, adapts questions dynamically, and analyzes voice patterns for confidence levels
-• **100% Bias-Free Evaluation** - Objective AI assessment eliminates unconscious bias, ensuring fair evaluation for all candidates
-• **Digital DNA Profiling** - MBTI personality analysis, OCEAN traits evaluation, and EQ scoring for comprehensive candidate insights
-• **Real-Time Anti-Cheating** - Advanced proctoring with camera monitoring, screen sharing enforcement, and automatic violation detection
-• **Predictive Analytics** - 91.5% accurate performance and retention predictions based on interview data and personality analysis
+• **3.2 Second Resume Analysis** - GPT-4 powered extraction with 95% accuracy, eliminating hours of manual screening  
+• **AI Voice Interviewer (Huma)** - Conducts natural conversations, adapts questions dynamically, and analyzes voice patterns for confidence levels  
+• **100% Bias-Free Evaluation** - Objective AI assessment eliminates unconscious bias, ensuring fair evaluation for all candidates  
+• **Digital DNA Profiling** - MBTI personality analysis, OCEAN traits evaluation, and EQ scoring for comprehensive candidate insights  
+• **Real-Time Anti-Cheating** - Advanced proctoring with camera monitoring, screen sharing enforcement, and automatic violation detection  
+• **Predictive Analytics** - 91.5% accurate performance and retention predictions based on interview data and personality analysis  
 • **Automated Workflow** - Template-based interviews, bulk email invitations, and detailed PDF reports streamline the entire hiring process
 
 ---
@@ -56,16 +56,16 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 **Advanced AI-Powered Hiring Platform Features:**
 
-• **Intelligent Resume Processing** - Advanced OCR and GPT-4 analysis extracts complete candidate profiles with skills, experience, education, and red flag detection
-• **Huma AI Interviewer** - Natural language voice AI conducts personalized interviews, asks follow-up questions, and maintains conversational flow
-• **Dynamic Question Generation** - Creates unique, role-specific questions based on candidate background and job requirements to prevent cheating
-• **Comprehensive Proctoring System** - Multi-layer security with webcam monitoring, microphone detection, screen sharing enforcement, and suspicious behavior alerts
-• **Personality & EQ Analysis** - Deep psychological profiling using MBTI framework, Big Five traits, emotional intelligence scoring, and stress pattern analysis
-• **Performance Prediction Engine** - Machine learning algorithms predict job performance, cultural fit, and 6-month retention probability with 91.5% accuracy
-• **Enterprise Dashboard** - Real-time analytics, candidate comparison tools, bulk operations, and customizable reporting for HR teams
-• **Automated Communication** - Smart email templates, interview scheduling, candidate notifications, and detailed PDF report generation
-• **Template Management System** - Create reusable interview templates with custom questions, scoring criteria, and role-specific assessments
-• **Integration Ready** - RESTful APIs, webhook support, and seamless integration with existing HR systems and ATS platforms
+• **GPT-4 Resume Analysis** - Complete candidate profile extraction with 95% accuracy and red flag detection  
+• **Huma Voice AI** - Natural conversation interviewer with dynamic questioning and voice pattern analysis  
+• **Dynamic Question Engine** - Role-specific questions based on candidate background to prevent cheating  
+• **Multi-Layer Proctoring** - Webcam monitoring, screen sharing, and suspicious behavior detection  
+• **Personality & EQ Profiling** - MBTI framework, Big Five traits, and emotional intelligence scoring  
+• **Performance Prediction** - 91.5% accurate job performance and retention probability algorithms  
+• **Enterprise Dashboard** - Real-time analytics, candidate comparison, and customizable reporting  
+• **Smart Communication** - Automated email templates, scheduling, and PDF report generation  
+• **Template Management** - Reusable interview templates with custom scoring criteria  
+• **API Integration** - RESTful APIs and webhook support for existing HR systems
 
 ---
 
