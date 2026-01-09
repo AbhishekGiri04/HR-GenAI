@@ -1,7 +1,10 @@
-<h1 align="center">🧬 HR-GenAI - AI-Powered Hiring Intelligence Platform for Modern HR Teams 🚀</h1>
+<div align="center">
 
-<p align="center">
-  🎯 A comprehensive AI-powered hiring platform that transforms recruitment through intelligent resume analysis, voice interviews, and Digital DNA profiling with 95% accuracy.
+<h1>🧬 HR-GenAI</h1>
+<h2>AI-Powered Hiring Intelligence Platform for Modern HR Teams 🚀</h2>
+
+<p style="font-size: 1.2em; color: #64748b; max-width: 800px; margin: 20px auto; line-height: 1.6;">
+  🎯 A comprehensive AI-powered hiring platform that transforms recruitment through intelligent resume analysis, voice interviews, and Digital DNA profiling with <strong>95% accuracy</strong>.
 </p>
 
 <p align="center">
@@ -13,6 +16,8 @@
   <img src="https://img.shields.io/badge/Accuracy-95%25-10b981?style=for-the-badge"/>
 </p>
 
+</div>
+
 ---
 
 <div align="center">
@@ -21,7 +26,16 @@
 
 <br/>
 
-Traditional hiring processes are plagued with inefficiencies that cost companies time, money, and talent. With over 85% of resumes containing false information and 90% of hiring decisions affected by unconscious bias, companies are losing millions in bad hiring decisions. Current recruitment systems rely on manual resume screening, biased human interviews, and gut-feeling decisions that lead to poor outcomes.
+**The hiring industry is broken.** Companies are drowning in inefficient processes that waste time, money, and miss top talent. Here's the harsh reality:
+
+🔴 **85% of resumes contain false information** - How do you trust what you're reading?  
+🔴 **90% of hiring decisions are biased** - Unconscious bias excludes diverse talent  
+🔴 **45+ day hiring cycles** - Top candidates are lost to faster competitors  
+🔴 **40+ hours per hire** - HR teams are overwhelmed with manual screening  
+🔴 **60% of new hires underperform** - Poor assessment leads to wrong decisions  
+🔴 **33% quit within 6 months** - Cultural fit is ignored in traditional processes
+
+**The cost?** Bad hires cost companies 30% of the employee's first-year salary. For a $60,000 role, that's $18,000 down the drain. Multiply this across your organization, and you're looking at millions in losses.
 
 ---
 
@@ -29,29 +43,13 @@ Traditional hiring processes are plagued with inefficiencies that cost companies
   <img src="docs/Solution.jpeg" alt="Our Solution" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
 </div>
 
-<br/>
-
-**Key Features:**
-
-• **3.2 seconds** resume analysis with 95% accuracy  
-• **AI Voice Interviewer (Huma)** conducts natural conversations  
-• **Digital DNA Profiling** with MBTI, OCEAN traits, EQ analysis  
-• **Anti-Cheating System** with real-time proctoring  
-• **Predictive Analytics** for performance and retention  
-• **Automated Email Reports** with detailed candidate evaluation  
-• **Template System** for reusable interview processes  
-• **Analytics Dashboard** with hiring insights
-
 ---
 
 ## ✨ Key Features
 
-- 🤖 **AI Voice Interviewer**: Meet Huma - conducts natural voice interviews, adapts questions based on responses, analyzes voice patterns for confidence and stress levels
-- 📄 **GPT-4 Resume Analysis**: 95% accurate extraction of candidate profiles, identifies skills and experience, flags inconsistencies and red flags
-- 🎲 **Dynamic Question Generation**: Creates unique questions based on candidate skills, prevents cheating through personalized assessments, adapts difficulty based on role requirements
-- 🛡️ **Strict Anti-Cheating**: Real-time proctoring with camera and microphone monitoring, screen sharing enforcement, automatic disqualification for suspicious behavior
-- 🎭 **Personality Detection**: MBTI personality type analysis, OCEAN traits evaluation, Emotional Intelligence (EQ) scoring with voice analysis
-- 📊 **Predictive Analytics**: Performance prediction based on interview data, retention probability calculations, cultural fit assessment with 91.5% accuracy
+<div align="center">
+  <img src="docs/Home_Page.png" alt="Key Features" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
+</div>
 
 ---
 
