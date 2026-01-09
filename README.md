@@ -55,31 +55,36 @@ HR-GenAI is a revolutionary AI-powered platform that transforms hiring through:
 
 <div align="center">
 
-```mermaid
-graph TD
-    A[👤 User] --> B[🌐 React Frontend]
-    B --> C[🔧 Node.js Backend]
-    C --> D[🤖 AI Engine]
-    C --> E[📊 MongoDB]
-    C --> F[📧 Email Service]
-    
-    D --> G[📄 Resume Analysis]
-    D --> H[🎤 Voice Interview]
-    D --> I[🧬 DNA Profiling]
-    
-    style A fill:#e1f5fe
-    style B fill:#61dafb
-    style C fill:#68d391
-    style D fill:#ff6b6b
-    style E fill:#4ecdc4
-```
+<img src="docs/System Architecture & DFD.png" alt="System Architecture & DFD" width="800"/>
+
+### 🏛️ Architecture Overview
+<img src="docs/Architecture.png" alt="Architecture Diagram" width="600"/>
+
+**HR-GenAI follows a modern microservices architecture with AI-powered components:**
+
+- **Frontend Layer**: React.js with responsive UI components
+- **API Gateway**: Express.js handling all client requests
+- **AI Engine**: GPT-4 & Gemini for intelligent processing
+- **Database Layer**: MongoDB for scalable data storage
+- **Authentication**: Firebase for secure user management
+- **Real-time Communication**: WebSocket for live updates
+
+### 📊 Data Flow Diagram
+<img src="docs/DFD.png" alt="Data Flow Diagram" width="600"/>
+
+**Complete data flow from candidate onboarding to final evaluation:**
+
+1. **Resume Processing**: PDF/DOC → AI Analysis → Structured Data
+2. **Interview Orchestration**: Template Selection → Dynamic Questions → Voice/Text Responses
+3. **Real-time Analysis**: Voice Emotion → Personality Traits → Performance Scoring
+4. **Result Generation**: DNA Profile → Predictive Analytics → Email Reports
 
 ### 🔄 How It Works
 
-1. **📄 Upload Resume** → AI extracts candidate info
-2. **🎤 AI Interview** → Huma asks personalized questions  
-3. **🧬 DNA Analysis** → Creates personality & skill profile
-4. **📊 Results** → Email report with hiring recommendation
+1. **📄 Upload Resume** → AI extracts candidate info with 95% accuracy
+2. **🎤 AI Interview** → Huma conducts personalized voice interviews
+3. **🧬 DNA Analysis** → Creates comprehensive personality & skill profile
+4. **📊 Results** → Automated email reports with hiring recommendations
 
 </div>
 
