@@ -15,26 +15,15 @@
 
 ---
 
-## Problem Statement
-
 <div align="center">
   <img src="docs/Problem Statements.jpeg" alt="Problem Statement" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
 </div>
 
 <br/>
 
-**Key Issues:**
-
-• **Manual Screening**: 40+ hours per hire, overwhelming HR teams  
-• **Unconscious Bias**: 90% of decisions affected, excluding diverse talent  
-• **Slow Process**: 45+ day cycles losing top candidates  
-• **False Information**: 85% resumes contain lies  
-• **No Standards**: Inconsistent evaluation creating legal risks  
-• **Limited Insights**: Surface assessment ignoring cultural fit
+Traditional hiring processes are plagued with inefficiencies that cost companies time, money, and talent. With over 85% of resumes containing false information and 90% of hiring decisions affected by unconscious bias, companies are losing millions in bad hiring decisions. Current recruitment systems rely on manual resume screening, biased human interviews, and gut-feeling decisions that lead to poor outcomes.
 
 ---
-
-## Our Solution
 
 <div align="center">
   <img src="docs/Solution.jpeg" alt="Our Solution" width="100%" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"/>
@@ -148,8 +137,6 @@ HR-GenAI/
 
 ---
 
-## System Architecture
-
 <div align="center">
 
 <img src="docs/System Architecture & DFD.png" alt="System Architecture & DFD" width="800"/>
@@ -157,52 +144,7 @@ HR-GenAI/
 ### Architecture Overview
 <img src="docs/Architecture.png" alt="Architecture Diagram" width="600"/>
 
-**Modern microservices architecture:**
-
-• **Frontend**: React.js with responsive UI  
-• **Backend**: Express.js API gateway  
-• **AI Engine**: GPT-4 & Gemini processing  
-• **Database**: MongoDB for data storage  
-• **Auth**: Firebase user management
-
 ### Data Flow
-<img src="docs/DFD.png" alt="Data Flow Diagram" width="600"/>
-
-**Process Flow:**
-
-1. **Resume Upload** → AI Analysis → Candidate Profile  
-2. **AI Interview** → Voice Analysis → Personality Traits  
-3. **DNA Profiling** → Performance Prediction → Email Reports
-
-</div>
-
----
-
-## 📊 Technical Flow Diagrams
-
-<div align="center">
-
-### Data Flow Diagram (Level 0)
-
-```mermaid
-graph LR
-    A[👤 HR Manager] -->|Input| B["🧬 HR-GenAI<br/>Hiring Intelligence<br/>Platform"]
-    C[📄 Resume Upload] -->|Content| B
-    D[🎤 Voice Interview] -->|Data| B
-    B -->|Output| E[📊 Candidate Report]
-    B -->|Alerts| F[⚠️ Hiring Recommendations]
-    B -->|Analytics| G[📈 Performance Insights]
-    
-    style A fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#000
-    style B fill:#C8E6C9,stroke:#4CAF50,stroke-width:3px,color:#000
-    style C fill:#FFF9C4,stroke:#FFC107,stroke-width:2px,color:#000
-    style D fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#000
-    style E fill:#E1F5FE,stroke:#03A9F4,stroke-width:2px,color:#000
-    style F fill:#FFEBEE,stroke:#F44336,stroke-width:2px,color:#000
-    style G fill:#FFF3E0,stroke:#FF9800,stroke-width:2px,color:#000
-```
-
-### Data Flow Diagram (Level 1)
 
 ```mermaid
 graph TD
@@ -211,10 +153,7 @@ graph TD
     B -->|Profile Info| D[🎤 Huma AI Interviewer]
     D -->|Voice Data| E[🧠 AI Analysis Engine<br/>Personality + EQ]
     E -->|Results| F[📊 Digital DNA Generator]
-    F -->|Store| G[💾 Interview Database]
-    F -->|Final Report| H[📧 Email Service]
-    I[📋 Template System] -->|Questions| D
-    H -->|Send| J[📱 Candidate Notification]
+    F -->|Final Report| G[📧 Email Service]
     
     style A fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#000
     style B fill:#FFF9C4,stroke:#FFC107,stroke-width:2px,color:#000
@@ -222,43 +161,12 @@ graph TD
     style D fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#000
     style E fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px,color:#000
     style F fill:#FFCCBC,stroke:#FF5722,stroke-width:2px,color:#000
-    style G fill:#E0F2F1,stroke:#009688,stroke-width:2px,color:#000
-    style H fill:#FCE4EC,stroke:#E91E63,stroke-width:2px,color:#000
-    style I fill:#F1F8E9,stroke:#8BC34A,stroke-width:2px,color:#000
-    style J fill:#E1F5FE,stroke:#03A9F4,stroke-width:2px,color:#000
-```
-
-### AI Analysis Engine Flow
-
-```mermaid
-graph TD
-    A[🧠 AI ANALYSIS ENGINE] --> B[📝 Resume Analysis<br/>GPT-4 Model]
-    A --> C[🎤 Voice Analysis<br/>Speech Recognition]
-    B --> D[💼 Skills Extraction]
-    B --> E[📊 Experience Analysis]
-    B --> F[🚩 Inconsistency Detection]
-    C --> G[😊 Emotion Analysis]
-    C --> H[🎯 Confidence Scoring]
-    D --> I[⚙️ Digital DNA Generator<br/>Parallel Processing]
-    E --> I
-    F --> I
-    G --> I
-    H --> I
-    I --> J[✅ Complete Candidate Profile]
-    
-    style A fill:#E8F5E9,stroke:#4CAF50,stroke-width:3px,color:#000
-    style B fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#000
-    style C fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#000
-    style D fill:#FFF9C4,stroke:#FFC107,stroke-width:2px,color:#000
-    style E fill:#FFEBEE,stroke:#F44336,stroke-width:2px,color:#000
-    style F fill:#FFCCBC,stroke:#FF5722,stroke-width:2px,color:#000
-    style G fill:#E1F5FE,stroke:#03A9F4,stroke-width:2px,color:#000
-    style H fill:#FCE4EC,stroke:#E91E63,stroke-width:2px,color:#000
-    style I fill:#F1F8E9,stroke:#8BC34A,stroke-width:2px,color:#000
-    style J fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px,color:#000
+    style G fill:#FCE4EC,stroke:#E91E63,stroke-width:2px,color:#000
 ```
 
 </div>
+
+
 
 ---
 
@@ -603,51 +511,22 @@ curl -X POST http://localhost:5001/api/invitations/bulk-invite \
 
 <table>
 <tr>
-<td align="center" width="25%">
-<img src="https://img.shields.io/badge/Team-Lead-FF6B6B?style=for-the-badge" alt="Team Lead"/><br/>
-<b>🧑🏻‍💻 Abhishek Giri</b><br/>
-<sub>Full-Stack Developer & AI Engineer</sub><br/><br/>
-<b>Core Responsibilities:</b><br/>
-• System Architecture & Design<br/>
-• AI Model Integration (GPT-4, Gemini)<br/>
-• Backend API Development<br/>
-• Frontend Development<br/>
-• DevOps & Deployment<br/><br/>
-<a href="https://github.com/abhishekgiri04"><img src="https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white" alt="GitHub"/></a>
-<a href="https://linkedin.com/in/abhishek-giri04"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+<td align="center">
+  <b>🧑🏻‍💻 Abhishek Giri</b><br/>
+  <em>Team Lead & Full-stack Developer</em><br/>
+  <a href="https://github.com/abhishekgiri04">GitHub</a> | <a href="https://linkedin.com/in/abhishek-giri04">LinkedIn</a>
 </td>
-<td align="center" width="25%">
-<img src="https://img.shields.io/badge/Frontend-Developer-61DAFB?style=for-the-badge" alt="Frontend Developer"/><br/>
-<b>👩🏻‍💻 Muskan Sharma</b><br/>
-<sub>UI/UX Specialist</sub><br/><br/>
-<b>Core Responsibilities:</b><br/>
-• React Component Development<br/>
-• UI/UX Design & Prototyping<br/>
-• Dashboard Visualization<br/>
-• Responsive Design<br/>
-• User Experience Optimization<br/>
+<td align="center">
+  <b>👩🏻‍💻 Muskan Sharma</b><br/>
+  <em>Frontend Developer</em>
 </td>
-<td align="center" width="25%">
-<img src="https://img.shields.io/badge/Backend-Engineer-4CAF50?style=for-the-badge" alt="Backend Engineer"/><br/>
-<b>👩🏻‍💻 Kashish Sharma</b><br/>
-<sub>Backend Specialist</sub><br/><br/>
-<b>Core Responsibilities:</b><br/>
-• API Development & Integration<br/>
-• Database Design & Optimization<br/>
-• Authentication & Security<br/>
-• Email Service Integration<br/>
-• Performance Optimization<br/>
+<td align="center">
+  <b>👩🏻‍💻 Kashish Sharma</b><br/>
+  <em>Backend Developer</em>
 </td>
-<td align="center" width="25%">
-<img src="https://img.shields.io/badge/AI/ML-Specialist-9C27B0?style=for-the-badge" alt="AI/ML Specialist"/><br/>
-<b>🧑🏻‍💻 Sidh Khurana</b><br/>
-<sub>AI/ML Engineer</sub><br/><br/>
-<b>Core Responsibilities:</b><br/>
-• AI Model Training & Fine-tuning<br/>
-• Voice Analysis Implementation<br/>
-• Personality Detection Algorithms<br/>
-• Performance Prediction Models<br/>
-• AI Accuracy Optimization<br/>
+<td align="center">
+  <b>🧑🏻‍💻 Sidh Khurana</b><br/>
+  <em>AI/ML Engineer</em>
 </td>
 </tr>
 </table>
