@@ -51,6 +51,77 @@ HR-GenAI is a revolutionary AI-powered platform that transforms hiring through:
 
 ---  
 
+## 🏗️ System Architecture
+
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        A[React App] --> B[Authentication]
+        A --> C[Dashboard]
+        A --> D[Interview Interface]
+        A --> E[Analytics]
+    end
+    
+    subgraph "Backend Layer"
+        F[Express.js API] --> G[Authentication Controller]
+        F --> H[Candidate Controller]
+        F --> I[Interview Controller]
+        F --> J[Template Controller]
+    end
+    
+    subgraph "AI Engine Layer"
+        K[GPT-4 Resume Analysis]
+        L[Voice Emotion Analyzer]
+        M[Question Generator]
+        N[Evaluation Engine]
+        O[Personality Profiler]
+    end
+    
+    subgraph "Data Layer"
+        P[(MongoDB)]
+        Q[Firebase Auth]
+        R[File Storage]
+    end
+    
+    subgraph "External Services"
+        S[OpenAI API]
+        T[Gemini API]
+        U[Email Service]
+        V[WebSocket]
+    end
+    
+    A --> F
+    F --> K
+    F --> L
+    F --> M
+    F --> N
+    F --> O
+    F --> P
+    B --> Q
+    F --> S
+    F --> T
+    F --> U
+    F --> V
+    
+    style A fill:#61dafb
+    style F fill:#68d391
+    style K fill:#ff6b6b
+    style P fill:#4ecdc4
+```
+
+### 🔄 Data Flow
+
+1. **Resume Upload** → GPT-4 Analysis → Candidate Profile Creation
+2. **Interview Setup** → Dynamic Question Generation → Voice/Text Interview
+3. **Real-time Evaluation** → AI Analysis → Digital DNA Profile
+4. **Results Generation** → Email Reports → Dashboard Analytics
+
+</div>
+
+---
+
 ## 🛠️ Tech Stack
 
 <div align="center">
