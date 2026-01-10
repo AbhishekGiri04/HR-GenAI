@@ -134,14 +134,45 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
     }
     
     try {
+      // Generate questions with proper voice/text types
+      const generatedQuestions = [];
+      
+      template.categories.forEach(categoryValue => {
+        const category = questionCategories.find(c => c.value === categoryValue);
+        const questionCount = categoryQuestions[categoryValue] || category.defaultCount;
+        
+        for (let i = 0; i < questionCount; i++) {
+          generatedQuestions.push({
+            question: `Sample ${category.label} question ${i + 1}`,
+            category: categoryValue,
+            type: category.type, // 'voice' or 'text'
+            interviewMode: category.type, // for compatibility
+            difficulty: template.difficulty
+          });
+        }
+      });
+      
+      // Add custom questions
+      template.customQuestions.forEach(customQ => {
+        const category = questionCategories.find(c => c.value === customQ.category);
+        generatedQuestions.push({
+          question: customQ.question,
+          category: customQ.category,
+          type: category?.type || 'text',
+          interviewMode: category?.type || 'text',
+          difficulty: template.difficulty
+        });
+      });
+      
       const templateData = {
         ...template,
         categoryQuestions,
         totalQuestions: estimatedQuestions,
+        questions: generatedQuestions,
         createdBy: 'HR'
       };
       
-      console.log('Submitting template:', templateData);
+      console.log('Submitting template with questions:', templateData);
       
       const response = await fetch(`${API_URL}/api/hr/templates`, {
         method: 'POST',
