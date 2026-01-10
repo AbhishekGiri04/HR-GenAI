@@ -101,7 +101,7 @@ const EmbeddedResumeViewer = ({ candidateId, candidateName }) => {
             onClick={() => setViewMode('buttons')}
             className="text-blue-600 hover:text-blue-800 font-medium"
           >
-            ← Back to options
+            Back to options
           </button>
         </div>
       </div>
