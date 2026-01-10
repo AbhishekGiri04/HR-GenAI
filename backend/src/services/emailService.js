@@ -9,7 +9,7 @@ class EmailService {
   initTransporter() {
     try {
       if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        console.log('❌ Gmail credentials not configured');
+        console.log('❌ Gmail credentials not configured - Email service disabled');
         return;
       }
 
@@ -21,18 +21,14 @@ class EmailService {
         },
         tls: {
           rejectUnauthorized: false
-        }
+        },
+        timeout: 10000,
+        connectionTimeout: 10000
       });
 
-      // Test connection
-      this.transporter.verify((error, success) => {
-        if (error) {
-          console.log('❌ Gmail SMTP connection failed:', error.message);
-          this.transporter = null;
-        } else {
-          console.log('✅ Gmail SMTP ready for sending emails');
-        }
-      });
+      // Skip connection test to avoid timeout issues
+      console.log('📧 Email service initialized (connection will be tested on first send)');
+        
     } catch (error) {
       console.log('❌ Email service initialization failed:', error.message);
       this.transporter = null;
