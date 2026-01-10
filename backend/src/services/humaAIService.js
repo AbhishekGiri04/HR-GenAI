@@ -138,7 +138,7 @@ Guidelines:
         if (query.includes('leave') || query.includes('vacation') || query.includes('sick')) {
             return {
                 success: true,
-                response: "📋 **HR Leave Policies:**\n\n• **Vacation Leave:** 15 days per year for full-time employees\n• **Sick Leave:** 15 days per year for full-time employees\n• **Service Incentive Leave:** 5 days per year after 1 year of service\n\n**Application Process:**\n- Submit through Employee Self Service portal\n- Get approval from immediate supervisor\n- Vacation and Sick leave can be carried over (max 30 days)\n- Vacation leave can be encashed, Sick leave cannot\n\nFor specific leave balances, please contact HR directly.",
+                response: "📋 **Leave Policy Information**\n\n**Available Leave Types:**\n• **Vacation Leave:** 15 days annually (1.25 days/month)\n• **Sick Leave:** 15 days annually (1.25 days/month)\n• **Service Incentive Leave:** 5 days annually (after 1 year)\n• **Maternity Leave:** 105 days paid\n• **Paternity Leave:** 7 days paid\n• **Bereavement Leave:** 3-5 days paid\n\n**Key Guidelines:**\n✅ Maximum carryover: 30 days\n✅ Advance notice: 3-7 days required\n✅ Medical certificate needed for sick leave >3 days\n✅ Vacation leave can be encashed\n\n📞 **Need specific leave balance?** Contact HR at hr@hrgenai.com",
                 timestamp: new Date().toISOString()
             };
         }
@@ -146,7 +146,7 @@ Guidelines:
         if (query.includes('policy') || query.includes('policies')) {
             return {
                 success: true,
-                response: "📚 **HR Policies Available:**\n\n• Leave Policy (Vacation, Sick, Service Incentive)\n• Attendance Policy\n• Employee Benefits\n• Code of Conduct\n• Performance Management\n\n**Key Points:**\n- All policies are available in Employee Self Service portal\n- Regular updates are communicated via email\n- For specific policy questions, contact HR department\n\nWhat specific policy would you like to know about?",
+                response: "📚 **HR Policy Directory**\n\n**Available Policies:**\n🏖️ **Leave Policy** - Vacation, sick, maternity/paternity leave\n⏰ **Attendance Policy** - Working hours, tardiness guidelines\n🏥 **Employee Benefits** - Health insurance, retirement plans\n📋 **Code of Conduct** - Professional behavior standards\n📈 **Performance Management** - Reviews and development\n\n**Access Methods:**\n• Employee Self Service Portal: portal.hrgenai.com\n• HR Department: hr@hrgenai.com\n• Policy updates via company email\n\n❓ **Need specific policy details?** Just ask me about any policy above!",
                 timestamp: new Date().toISOString()
             };
         }
@@ -154,14 +154,22 @@ Guidelines:
         if (query.includes('contact') || query.includes('hr')) {
             return {
                 success: true,
-                response: "📞 **Contact HR Department:**\n\n• Email: hr@company.com\n• Phone: Available during business hours\n• Employee Self Service Portal: For leave applications and policy access\n• Office Hours: Monday to Friday, 9 AM - 5 PM\n\n**For Immediate Assistance:**\n- Leave applications and approvals\n- Policy clarifications\n- Employee benefits information\n- General HR inquiries",
+                response: "📞 **HR Department Contact**\n\n**Primary Contact:**\n📧 Email: hr@hrgenai.com\n📱 Phone: +1 (555) 123-4567\n🕘 Office Hours: Monday-Friday, 9:00 AM - 5:00 PM\n\n**Online Services:**\n🌐 Employee Portal: portal.hrgenai.com\n📋 Leave Applications & Approvals\n📊 Policy Access & Updates\n💼 Benefits Information\n\n**Emergency Contact:**\n🚨 24/7 availability for urgent matters\n\n**Popular Services:**\n• Leave balance inquiries\n• Policy clarifications\n• Benefits enrollment\n• Performance reviews",
+                timestamp: new Date().toISOString()
+            };
+        }
+        
+        if (query.includes('benefit') || query.includes('insurance') || query.includes('retirement')) {
+            return {
+                success: true,
+                response: "💼 **Employee Benefits Package**\n\n**Health & Wellness:**\n🏥 Health Insurance - 100% company-paid (employee)\n👨‍👩‍👧‍👦 Family Coverage - 50% company contribution\n🦷 Dental & Vision included\n\n**Financial Benefits:**\n💰 Retirement Plan - Up to 5% company match\n📈 Investment options available\n💵 Immediate vesting for contributions\n\n**Professional Development:**\n📚 Training Budget: $2,000/year per employee\n🎓 Conference attendance support\n📜 Certification sponsorship\n\n**Time Off Benefits:**\n🏖️ Paid vacation & sick leave\n👶 Maternity/Paternity leave\n⚰️ Bereavement leave\n\n📋 **Need enrollment help?** Contact HR for personalized assistance!",
                 timestamp: new Date().toISOString()
             };
         }
         
         return {
             success: true,
-            response: "👋 Hi! I'm Huma, your HR assistant. I can help you with:\n\n• **HR Policies** - Leave, attendance, benefits\n• **Leave Balances** - Vacation, sick, service incentive leave\n• **General Questions** - HR procedures and guidelines\n\n**Popular Topics:**\n- \"leave policies\" - Get information about vacation and sick leave\n- \"contact hr\" - Get HR department contact information\n- \"policies\" - Browse available HR policies\n\nWhat would you like to know about?",
+            response: "👋 **Welcome to Huma AI - Your HR Assistant**\n\n**I can help you with:**\n\n🏖️ **Leave Management**\n• Leave policies and balances\n• Application procedures\n• Carryover rules\n\n📋 **HR Policies**\n• Company policies and procedures\n• Code of conduct\n• Performance guidelines\n\n💼 **Employee Benefits**\n• Health insurance details\n• Retirement plans\n• Professional development\n\n📞 **Contact Information**\n• HR department details\n• Emergency contacts\n• Online portals\n\n**Quick Commands:**\n💬 \"leave policies\" - Get leave information\n💬 \"contact hr\" - HR contact details\n💬 \"benefits\" - Employee benefits overview\n💬 \"policies\" - Browse all HR policies\n\n❓ **What would you like to know about?**",
             timestamp: new Date().toISOString()
         };
     }

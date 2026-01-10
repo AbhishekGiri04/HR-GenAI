@@ -1,0 +1,16 @@
+employee_id,name,position,department,vacation_leave,sick_leave,service_incentive_leave,employment_status,hire_date,salary,manager,email
+EMP001,Alexander Verdad,Account Receivable Assistant,Finance,12,15,5,Permanent,2023-01-15,55000,Sarah Johnson,alexander.verdad@hrgenai.com
+EMP002,Maria Rodriguez,Software Developer,IT,8,12,5,Permanent,2022-03-10,75000,David Chen,maria.rodriguez@hrgenai.com
+EMP003,James Wilson,Marketing Specialist,Marketing,15,10,5,Permanent,2021-06-20,62000,Lisa Thompson,james.wilson@hrgenai.com
+EMP004,Sarah Johnson,Finance Manager,Finance,10,8,5,Permanent,2020-02-14,85000,Robert Davis,sarah.johnson@hrgenai.com
+EMP005,David Chen,IT Manager,IT,5,15,5,Permanent,2019-09-01,95000,Robert Davis,david.chen@hrgenai.com
+EMP006,Lisa Thompson,Marketing Manager,Marketing,12,6,5,Permanent,2020-11-30,88000,Robert Davis,lisa.thompson@hrgenai.com
+EMP007,Michael Brown,HR Specialist,Human Resources,14,12,5,Permanent,2022-08-15,58000,Jennifer Lee,michael.brown@hrgenai.com
+EMP008,Jennifer Lee,HR Manager,Human Resources,8,10,5,Permanent,2019-04-22,82000,Robert Davis,jennifer.lee@hrgenai.com
+EMP009,Robert Davis,Operations Director,Operations,6,5,5,Permanent,2018-01-10,120000,CEO,robert.davis@hrgenai.com
+EMP010,Emily Garcia,UX Designer,IT,13,14,5,Permanent,2023-05-08,68000,David Chen,emily.garcia@hrgenai.com
+EMP011,Thomas Anderson,Sales Representative,Sales,11,9,5,Permanent,2022-12-01,52000,Amanda White,thomas.anderson@hrgenai.com
+EMP012,Amanda White,Sales Manager,Sales,7,11,5,Permanent,2021-03-18,78000,Robert Davis,amanda.white@hrgenai.com
+EMP013,Kevin Martinez,Quality Assurance,IT,15,8,5,Permanent,2023-02-20,61000,David Chen,kevin.martinez@hrgenai.com
+EMP014,Rachel Taylor,Content Writer,Marketing,9,13,5,Contract,2023-07-12,48000,Lisa Thompson,rachel.taylor@hrgenai.com
+EMP015,Daniel Kim,Business Analyst,Operations,12,7,5,Permanent,2022-10-05,71000,Robert Davis,daniel.kim@hrgenai.com

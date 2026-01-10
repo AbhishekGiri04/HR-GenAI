@@ -205,14 +205,45 @@ exports.getResume = async (req, res) => {
       return res.status(404).json({ error: 'Resume not found' });
     }
     
-    if (fs.existsSync(candidate.resumePath)) {
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `inline; filename="${candidate.name}_resume.pdf"`);
-      res.sendFile(require('path').resolve(candidate.resumePath));
+    const path = require('path');
+    const resumePath = path.resolve(candidate.resumePath);
+    
+    if (fs.existsSync(resumePath)) {
+      const stat = fs.statSync(resumePath);
+      const fileExtension = path.extname(candidate.resumePath).toLowerCase();
+      
+      // Set appropriate content type based on file extension
+      let contentType = 'application/octet-stream';
+      if (fileExtension === '.pdf') {
+        contentType = 'application/pdf';
+      } else if (fileExtension === '.doc') {
+        contentType = 'application/msword';
+      } else if (fileExtension === '.docx') {
+        contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      }
+      
+      res.setHeader('Content-Type', contentType);
+      res.setHeader('Content-Length', stat.size);
+      res.setHeader('Content-Disposition', `inline; filename="${candidate.name.replace(/[^a-zA-Z0-9]/g, '_')}_resume${fileExtension}"`);
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      
+      // Stream the file
+      const fileStream = fs.createReadStream(resumePath);
+      fileStream.pipe(res);
+      
+      fileStream.on('error', (streamError) => {
+        console.error('File stream error:', streamError);
+        if (!res.headersSent) {
+          res.status(500).json({ error: 'Error reading resume file' });
+        }
+      });
     } else {
+      console.error('Resume file not found:', resumePath);
       res.status(404).json({ error: 'Resume file not found on server' });
     }
   } catch (error) {
+    console.error('Resume serving error:', error);
     res.status(500).json({ error: 'Failed to serve resume' });
   }
 };

@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GenomeChart from '../components/GenomeChart';
 import CandidateEvaluation from '../components/CandidateEvaluation';
+import EmbeddedResumeViewer from '../components/EmbeddedResumeViewer';
 import axios from 'axios';
 
 const CandidateProfilePage = () => {
@@ -171,15 +172,17 @@ const CandidateProfilePage = () => {
             </div>
           </div>
 
-          {/* View Resume Button - Always Visible */}
+          {/* View Resume Section - Enhanced */}
           <div className="flex justify-center mb-8">
-            <button
-              onClick={() => window.open(`${API_URL}/api/candidates/${candidateId}/resume`, '_blank')}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl hover:shadow-2xl transition-all font-bold text-lg flex items-center space-x-3 border-2 border-white/20 hover:scale-105"
-            >
-              <FileText className="w-6 h-6" />
-              <span>View Resume</span>
-            </button>
+            <div className="bg-slate-900/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-blue-500/30 w-full max-w-4xl">
+              <div className="flex items-center justify-center mb-6">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-2xl mr-4">
+                  <FileText className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Resume Document</h3>
+              </div>
+              <EmbeddedResumeViewer candidateId={candidateId} candidateName={candidate.name} />
+            </div>
           </div>
 
           {/* Candidate Evaluation Section */}
