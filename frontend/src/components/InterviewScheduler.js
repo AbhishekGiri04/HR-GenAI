@@ -10,6 +10,7 @@ const InterviewScheduler = () => {
   const [endDate, setEndDate] = useState('');
   const [candidateEmails, setCandidateEmails] = useState('');
   const [jobRole, setJobRole] = useState('');
+  const [progress, setProgress] = useState([]);
 
   useEffect(() => {
     fetchSchedule();
@@ -83,11 +84,6 @@ const InterviewScheduler = () => {
       return;
     }
 
-    if (!startDate || !endDate) {
-      alert('Please select start and end dates');
-      return;
-    }
-
     const emails = candidateEmails.split(',').map(email => email.trim()).filter(email => email);
     if (emails.length === 0) {
       alert('Please enter valid email addresses');
@@ -95,82 +91,54 @@ const InterviewScheduler = () => {
     }
 
     setLoading(true);
+    setProgress([]);
+    
+    const addProgress = (message) => {
+      setProgress(prev => [...prev, message]);
+    };
+
     try {
       const API_BASE = process.env.NODE_ENV === 'production' 
         ? 'https://hrgen-dev.onrender.com' 
         : 'http://localhost:5001';
 
-      // Step 1: Create AI-generated template
-      const templateData = {
-        name: `AI Generated - ${jobRole}`,
-        difficulty: 'medium',
-        duration: 60,
-        categories: ['Technical', 'Behavioral', 'Problem Solving'],
-        passingScore: 70,
-        templateType: 'instant',
-        questions: [
-          {
-            question: `What interests you most about the ${jobRole} position?`,
-            category: 'Behavioral',
-            difficulty: 'easy'
-          },
-          {
-            question: `Describe your experience relevant to ${jobRole}`,
-            category: 'Technical',
-            difficulty: 'medium'
-          },
-          {
-            question: 'How do you handle challenging situations at work?',
-            category: 'Problem Solving',
-            difficulty: 'medium'
-          }
-        ]
-      };
-
-      const templateResponse = await fetch(`${API_BASE}/api/hr/templates`, {
+      addProgress('🤖 AI Creating Template...');
+      
+      // Use the original auto-hire endpoint
+      const response = await fetch(`${API_BASE}/api/auto-hire`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(templateData)
+        body: JSON.stringify({ 
+          email: candidateEmails, 
+          jobRole 
+        })
       });
 
-      const template = await templateResponse.json();
-      if (!template.success) {
-        throw new Error('Failed to create template');
+      const data = await response.json();
+
+      if (response.ok) {
+        addProgress(`✓ Template Created: ${data.templateName}`);
+        await new Promise(resolve => setTimeout(resolve, 800));
+        addProgress('✓ Template Auto-Deployed');
+        await new Promise(resolve => setTimeout(resolve, 800));
+        addProgress(`✓ Emails Sent: ${data.emailsSent}/${data.totalEmails}`);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        addProgress(`🎉 Done! ${data.emailsSent} candidates invited.`);
+        
+        setTimeout(() => {
+          setCandidateEmails('');
+          setJobRole('');
+          setProgress([]);
+        }, 5000);
+      } else {
+        throw new Error(data.error || 'Failed to create template');
       }
 
-      // Step 2: Deploy template
-      await fetch(`${API_BASE}/api/hr/templates/${template.data._id}/deploy`, {
-        method: 'POST'
-      });
-
-      // Step 3: Process each candidate
-      for (const email of emails) {
-        const candidateData = {
-          candidateId: `ai_hire_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          candidateName: email.split('@')[0],
-          candidateEmail: email,
-          templateId: template.data._id,
-          hrEmail: 'hr@company.com',
-          jobRole,
-          startDate,
-          endDate
-        };
-
-        await fetch(`${API_BASE}/api/schedule/auto-interview`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(candidateData)
-        });
-      }
-
-      alert(`✅ AI Hire Complete!\n\n• Template created: ${template.data.name}\n• Template deployed\n• ${emails.length} interview invitations sent\n• Huma AI ready to interview`);
-      setCandidateEmails('');
-      setJobRole('');
       fetchSchedule();
       fetchNextSlot();
     } catch (error) {
       console.error('Error starting AI hire:', error);
-      alert('❌ Failed to start AI hire process: ' + error.message);
+      addProgress('✗ ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -237,8 +205,19 @@ const InterviewScheduler = () => {
           className="bg-white text-blue-600 px-6 py-3 rounded-lg font-bold hover:bg-blue-50 transition-colors disabled:opacity-50 flex items-center space-x-2"
         >
           <Play size={16} />
-          <span>{loading ? 'Starting...' : 'Start AI Hire'}</span>
+          <span>{loading ? 'AI Processing...' : 'Start AI Hire'}</span>
         </button>
+        
+        {/* Progress Display */}
+        {progress.length > 0 && (
+          <div className="mt-4 space-y-2">
+            {progress.map((item, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded p-2 text-sm">
+                {item}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Interview Scheduler */}
