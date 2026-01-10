@@ -39,9 +39,9 @@ const QuickHire = () => {
         await delay(800);
         addProgress('✓ Template Auto-Deployed', 'success');
         await delay(800);
-        addProgress('✓ Email Sent to Candidate', 'success');
+        addProgress(`✓ Emails Sent: ${data.emailsSent}/${data.totalEmails}`, 'success');
         await delay(500);
-        addProgress(`🎉 Done! Candidate will upload resume and Huma will interview.`, 'success');
+        addProgress(`🎉 Done! ${data.emailsSent} candidates invited.`, 'success');
         
         setTimeout(() => {
           setEmail('');
@@ -75,18 +75,19 @@ const QuickHire = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Candidate Email</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Candidate Emails (comma-separated)</label>
           <div className="relative">
             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="email"
+            <textarea
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="candidate@example.com"
+              placeholder="email1@example.com, email2@example.com"
               className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               disabled={loading}
+              rows={2}
             />
           </div>
+          <p className="text-xs text-gray-500 mt-1">Enter multiple emails separated by commas</p>
         </div>
 
         <div>
