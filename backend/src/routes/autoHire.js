@@ -8,7 +8,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * POST /api/auto-hire
- * Simple: Email + Job Role → Template → Deploy → Email
+ * Quick AI Hire: Email + Job Role → AI creates template → Deploys → Sends email → Huma interviews
  */
 router.post('/auto-hire', async (req, res) => {
   const { email, jobRole } = req.body;
@@ -18,7 +18,7 @@ router.post('/auto-hire', async (req, res) => {
   }
 
   try {
-    console.log(`🚀 Auto-Hire: ${email} for ${jobRole}`);
+    console.log(`🚀 Quick AI Hire: ${email} for ${jobRole}`);
 
     // Step 1: AI Generate Template
     const templateData = await generateInterviewTemplate(jobRole);
@@ -47,8 +47,12 @@ Dear Candidate,
 
 You've been invited to interview for the ${jobRole} position!
 
-🤖 AI Interview Details:
+🤖 Quick AI Hire - Powered by Huma AI
 Our intelligent interviewer "Huma" will conduct a personalized ${templateData.duration}-minute interview.
+
+📋 Interview Format:
+• Phase 1: Text-based Cultural & Behavioral Questions (3 questions)
+• Phase 2: Voice-based Technical Interview with Huma AI (5 questions)
 
 📋 Interview Topics:
 ${templateData.categories.map(cat => `• ${cat}`).join('\n')}
@@ -57,7 +61,7 @@ ${templateData.categories.map(cat => `• ${cat}`).join('\n')}
 • Duration: ${templateData.duration} minutes
 • Difficulty: ${templateData.difficulty.charAt(0).toUpperCase() + templateData.difficulty.slice(1)}
 • Passing Score: ${templateData.passingScore}%
-• Total Questions: ${templateData.totalQuestions} (5 Voice + 3 Text)
+• Total Questions: ${templateData.totalQuestions} (3 Text + 5 Voice)
 
 🎯 Interview Link: ${dashboardLink}
 
@@ -65,8 +69,9 @@ ${templateData.categories.map(cat => `• ${cat}`).join('\n')}
 1. Click the link above
 2. Upload your resume
 3. Huma will analyze your profile
-4. Complete the AI-powered interview (Voice + Text)
-5. Results will be sent automatically
+4. Complete Phase 1: Text-based questions
+5. Complete Phase 2: Voice interview with Huma AI
+6. Results will be sent automatically
 
 Please ensure:
 ✓ Stable internet connection

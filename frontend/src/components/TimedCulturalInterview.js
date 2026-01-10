@@ -130,6 +130,7 @@ const TimedCulturalInterview = ({ questions, candidateInfo, onComplete, template
       // Voice phase: technical, problem-solving, communication questions
       interviewQuestions = questions.filter(q => 
         q.type === 'voice' || 
+        q.category === 'Technical Skills' ||
         q.category === 'technical' || 
         q.category === 'problem-solving' || 
         q.category === 'communication'
@@ -262,7 +263,14 @@ const TimedCulturalInterview = ({ questions, candidateInfo, onComplete, template
       setTimeRemaining(interviewQuestions[currentQuestion + 1]?.timeLimit || 300);
     } else {
       if (interviewPhase === 'text' && template?.interviewType === 'mixed') {
-        const voiceQs = questions?.filter(q => q.category === 'technical' || q.category === 'problem-solving' || q.category === 'communication') || voiceQuestions;
+        const voiceQs = questions?.filter(q => 
+          q.type === 'voice' || 
+          q.category === 'Technical Skills' ||
+          q.category === 'technical' || 
+          q.category === 'problem-solving' || 
+          q.category === 'communication'
+        ) || [];
+        
         if (voiceQs.length > 0) {
           console.log('🔄 Switching to voice phase with', voiceQs.length, 'questions');
           setInterviewPhase('voice');
