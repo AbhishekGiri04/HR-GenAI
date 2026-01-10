@@ -246,7 +246,7 @@ async function generateInterviewTemplate(jobRole) {
   return {
     name: jobRole,
     difficulty: 'medium',
-    duration: 30,
+    duration: 15,
     categories: ['Technical Skills', 'Behavioral'],
     interviewType: 'mixed',
     passingScore: 70,
