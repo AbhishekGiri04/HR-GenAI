@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calculator, Mail, FileText, Award, TrendingUp, Users } from 'lucide-react';
 
 const CandidateEvaluation = ({ candidate, onEvaluate }) => {
@@ -169,17 +169,13 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg border">
+    <div className="bg-transparent">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-gray-800 flex items-center">
-          <Award className="mr-2 text-blue-600" size={24} />
-          Interview Evaluation
-        </h3>
-        <div className="flex space-x-2">
+        <div className="flex space-x-3">
           <button
             onClick={handleRecalculate}
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg disabled:opacity-50 flex items-center space-x-2"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl disabled:opacity-50 flex items-center space-x-2 transition-all"
           >
             <Calculator size={16} />
             <span>Recalculate</span>
@@ -187,103 +183,100 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
           <button
             onClick={handleEvaluate}
             disabled={loading}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg disabled:opacity-50 flex items-center space-x-2"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl disabled:opacity-50 flex items-center space-x-2 transition-all"
           >
             <Mail size={16} />
-            <span>{loading ? 'Processing...' : 'Evaluate & Send Letter'}</span>
+            <span>{loading ? 'Processing...' : 'Evaluate & Send'}</span>
           </button>
         </div>
       </div>
 
       {/* Score Display */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className={`p-6 rounded-xl ${getScoreColor(scores.interviewScore || 0)}`}>
-          <div className="flex items-center justify-between mb-4">
+      <div className="grid grid-cols-1 gap-4 mb-6">
+        <div className={`p-4 rounded-xl border border-white/30 bg-white/10 backdrop-blur-sm`}>
+          <div className="flex items-center justify-between mb-2">
             <div>
-              <p className="text-sm font-medium opacity-75">Interview Score</p>
-              <p className="text-3xl font-bold">
+              <p className="text-sm font-medium text-white/80">Interview Score</p>
+              <p className="text-2xl font-bold text-white">
                 {scores.interviewScore || 'N/A'}
                 {scores.interviewScore && '/100'}
               </p>
             </div>
-            <Award size={28} />
+            <Award size={24} className="text-white/60" />
           </div>
-          <p className="text-xs opacity-75">Combined technical expertise and soft skills assessment</p>
         </div>
 
-        <div className={`p-6 rounded-xl ${getScoreColor(scores.growthPotential || 0)}`}>
-          <div className="flex items-center justify-between mb-4">
+        <div className={`p-4 rounded-xl border border-white/30 bg-white/10 backdrop-blur-sm`}>
+          <div className="flex items-center justify-between mb-2">
             <div>
-              <p className="text-sm font-medium opacity-75">Growth Potential</p>
-              <p className="text-3xl font-bold">
+              <p className="text-sm font-medium text-white/80">Growth Potential</p>
+              <p className="text-2xl font-bold text-white">
                 {scores.growthPotential || 'N/A'}
                 {scores.growthPotential && '%'}
               </p>
             </div>
-            <TrendingUp size={28} />
+            <TrendingUp size={24} className="text-white/60" />
           </div>
-          <p className="text-xs opacity-75">Predicted performance improvement and learning velocity over 12 months</p>
         </div>
 
-        <div className={`p-6 rounded-xl ${getScoreColor(scores.retentionScore || 0)}`}>
-          <div className="flex items-center justify-between mb-4">
+        <div className={`p-4 rounded-xl border border-white/30 bg-white/10 backdrop-blur-sm`}>
+          <div className="flex items-center justify-between mb-2">
             <div>
-              <p className="text-sm font-medium opacity-75">Retention Score</p>
-              <p className="text-3xl font-bold">
+              <p className="text-sm font-medium text-white/80">Retention Score</p>
+              <p className="text-2xl font-bold text-white">
                 {scores.retentionScore || 'N/A'}
                 {scores.retentionScore && '%'}
               </p>
             </div>
-            <Users size={28} />
+            <Users size={24} className="text-white/60" />
           </div>
-          <p className="text-xs opacity-75">Likelihood to stay committed and engaged for 2+ years</p>
         </div>
       </div>
 
       {/* Verdict */}
       {scores.interviewScore && (
-        <div className="mb-8">
-          <div className={`p-6 rounded-xl text-center border-2 ${
+        <div className="mb-6">
+          <div className={`p-4 rounded-xl text-center border-2 ${
             isPassed(scores.interviewScore) 
-              ? 'bg-green-50 border-green-200' 
-              : 'bg-red-50 border-red-200'
+              ? 'bg-green-500/20 border-green-400/50 backdrop-blur-sm' 
+              : 'bg-red-500/20 border-red-400/50 backdrop-blur-sm'
           }`}>
-            <p className="text-sm font-medium text-gray-600 mb-2">Final Verdict</p>
-            <p className={`text-2xl font-bold mb-2 ${
-              isPassed(scores.interviewScore) ? 'text-green-700' : 'text-red-700'
+            <p className="text-sm font-medium text-white/80 mb-1">Final Verdict</p>
+            <p className={`text-xl font-bold mb-1 ${
+              isPassed(scores.interviewScore) ? 'text-green-300' : 'text-red-300'
             }`}>
               {getVerdict(scores.interviewScore)}
             </p>
             <p className={`text-sm font-medium ${
-              isPassed(scores.interviewScore) ? 'text-green-600' : 'text-red-600'
+              isPassed(scores.interviewScore) ? 'text-green-400' : 'text-red-400'
             }`}>
-              {isPassed(scores.interviewScore) ? '✅ Passed - Meets requirements' : '❌ Did not meet requirements'}
+              {isPassed(scores.interviewScore) ? '✅ Passed' : '❌ Did not meet requirements'}
             </p>
           </div>
         </div>
       )}
 
       {/* Letter Download Buttons */}
-      <div className="flex space-x-4">
+      <div className="flex space-x-3">
         <button
           onClick={() => downloadLetter('offer')}
-          className="flex-1 bg-green-100 text-green-700 py-3 rounded-lg hover:bg-green-200 transition-colors font-medium flex items-center justify-center space-x-2"
+          className="flex-1 bg-green-600/80 hover:bg-green-600 text-white py-3 rounded-xl transition-all font-medium flex items-center justify-center space-x-2 backdrop-blur-sm border border-green-500/30"
         >
           <FileText size={16} />
-          <span>Download Offer Letter</span>
+          <span>Offer Letter</span>
         </button>
         <button
           onClick={() => downloadLetter('rejection')}
-          className="flex-1 bg-red-100 text-red-700 py-3 rounded-lg hover:bg-red-200 transition-colors font-medium flex items-center justify-center space-x-2"
+          className="flex-1 bg-red-600/80 hover:bg-red-600 text-white py-3 rounded-xl transition-all font-medium flex items-center justify-center space-x-2 backdrop-blur-sm border border-red-500/30"
         >
           <FileText size={16} />
-          <span>Download Rejection Letter</span>
+          <span>Rejection Letter</span>
         </button>
       </div>
 
       {evaluated && (
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-blue-700 text-sm font-medium">
+        <div className="mt-4 p-3 bg-blue-500/20 border border-blue-400/50 rounded-xl backdrop-blur-sm">
+          <p className="text-blue-300 text-sm font-medium">
             ✅ Candidate evaluated and letter sent via email successfully!
           </p>
         </div>

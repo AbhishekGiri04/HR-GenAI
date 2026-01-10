@@ -109,11 +109,7 @@ const HumaChat = ({ isOpen, onToggle }) => {
           onClick={onToggle}
           className="bg-white hover:bg-gray-50 text-blue-600 p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border-2 border-gray-200"
         >
-          <img 
-            src="/Users/abhishekgiri/Downloads/GITHUB_PROJECTS/HRGenAI/docs/HR.png" 
-            alt="HR Assistant" 
-            className="w-7 h-7"
-          />
+          <Bot className="w-7 h-7 text-blue-600" />
         </button>
         <div className="absolute -top-12 right-0 bg-gray-900 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
           Chat with Huma AI
@@ -128,11 +124,7 @@ const HumaChat = ({ isOpen, onToggle }) => {
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="bg-white/20 p-2 rounded-full">
-            <img 
-              src="/Users/abhishekgiri/Downloads/GITHUB_PROJECTS/HRGenAI/docs/HR.png" 
-              alt="HR Assistant" 
-              className="w-6 h-6"
-            />
+            <Bot className="w-6 h-6 text-white" />
           </div>
           <div>
             <h3 className="font-bold text-lg">Huma AI</h3>
@@ -163,12 +155,8 @@ const HumaChat = ({ isOpen, onToggle }) => {
             >
               <div className="flex items-start space-x-2">
                 {message.sender === 'huma' && (
-                  <div className="bg-white p-1 rounded-full mt-1 border border-gray-200">
-                    <img 
-                      src="/Users/abhishekgiri/Downloads/GITHUB_PROJECTS/HRGenAI/docs/HR.png" 
-                      alt="HR Assistant" 
-                      className="w-3 h-3"
-                    />
+                  <div className="bg-blue-100 p-1 rounded-full mt-1">
+                    <Bot size={14} className="text-blue-600" />
                   </div>
                 )}
                 <div className="flex-1">
@@ -224,12 +212,8 @@ const HumaChat = ({ isOpen, onToggle }) => {
           <div className="flex justify-start">
             <div className="bg-white p-4 rounded-2xl rounded-bl-md shadow-sm border border-gray-100">
               <div className="flex items-center space-x-3">
-                <div className="bg-white p-1 rounded-full border border-gray-200">
-                  <img 
-                    src="/Users/abhishekgiri/Downloads/GITHUB_PROJECTS/HRGenAI/docs/HR.png" 
-                    alt="HR Assistant" 
-                    className="w-3 h-3"
-                  />
+                <div className="bg-blue-100 p-1 rounded-full">
+                  <Bot size={14} className="text-blue-600" />
                 </div>
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>

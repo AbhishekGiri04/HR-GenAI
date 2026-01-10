@@ -41,7 +41,7 @@ const CandidateProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading profile...</p>
@@ -52,7 +52,7 @@ const CandidateProfilePage = () => {
 
   if (!candidate) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="text-center">
           <p className="text-gray-600">Candidate not found</p>
           <button onClick={() => navigate('/')} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg">
@@ -70,13 +70,13 @@ const CandidateProfilePage = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
       {/* Fixed Background */}
-      <div className="fixed inset-0 z-0" style={{
-        backgroundImage: 'url(https://i.etsystatic.com/43362815/r/il/55d8b4/5172417159/il_570xN.5172417159_2rji.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
-      }}>
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/96 via-blue-900/96 to-indigo-900/96"></div>
+      <div className="fixed inset-0 z-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://media.licdn.com/dms/image/v2/D5612AQG2rxgKF895hw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1698634696237?e=2147483647&v=beta&t=7XNM-SWCDa_fQ6EWmsomXCq4puQW8El9r9d7OUnTxZQ)'
+          }}
+        ></div>
       </div>
       <div className="relative z-10">
         <Header />
@@ -172,34 +172,46 @@ const CandidateProfilePage = () => {
             </div>
           </div>
 
-          {/* View Resume Section - Enhanced */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-slate-900/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-blue-500/30 w-full max-w-4xl">
-              <div className="flex items-center justify-center mb-6">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-2xl mr-4">
-                  <FileText className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-white">Resume Document</h3>
+      {/* Combined Resume and Evaluation Section */}
+      <div className="bg-slate-900/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-blue-500/30 w-full max-w-6xl mx-auto mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Resume Section */}
+          <div className="flex flex-col justify-center items-center min-h-[400px]">
+            <div className="flex items-center justify-center mb-6">
+              <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-2xl mr-4">
+                <FileText className="w-6 h-6 text-white" />
               </div>
+              <h3 className="text-2xl font-bold text-white">Resume Document</h3>
+            </div>
+            <div className="w-full max-w-md">
               <EmbeddedResumeViewer candidateId={candidateId} candidateName={candidate.name} />
             </div>
           </div>
-
-          {/* Candidate Evaluation Section */}
-          <div className="mb-8">
-            <CandidateEvaluation 
-              candidate={candidate} 
-              onEvaluate={(evaluationData) => {
-                // Update candidate with new evaluation data
-                setCandidate(prev => ({
-                  ...prev,
-                  interviewScore: evaluationData.interviewScore,
-                  growthPotential: evaluationData.growthPotential,
-                  retentionScore: evaluationData.retentionScore
-                }));
-              }}
-            />
+          
+          {/* Evaluation Section */}
+          <div>
+            <div className="flex items-center justify-center mb-6">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-3 rounded-2xl mr-4">
+                <Award className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-white">Interview Evaluation</h3>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <CandidateEvaluation 
+                candidate={candidate} 
+                onEvaluate={(evaluationData) => {
+                  setCandidate(prev => ({
+                    ...prev,
+                    interviewScore: evaluationData.interviewScore,
+                    growthPotential: evaluationData.growthPotential,
+                    retentionScore: evaluationData.retentionScore
+                  }));
+                }}
+              />
+            </div>
           </div>
+        </div>
+      </div>
 
           {/* Enhanced Interview Summary */}
           {candidate.interviewSummary && candidate.interviewSummary.summary ? (
