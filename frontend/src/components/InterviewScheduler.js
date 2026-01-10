@@ -96,34 +96,81 @@ const InterviewScheduler = () => {
 
     setLoading(true);
     try {
-      // Process each candidate
+      const API_BASE = process.env.NODE_ENV === 'production' 
+        ? 'https://hrgen-dev.onrender.com' 
+        : 'http://localhost:5001';
+
+      // Step 1: Create AI-generated template
+      const templateData = {
+        name: `AI Generated - ${jobRole}`,
+        difficulty: 'medium',
+        duration: 60,
+        categories: ['Technical', 'Behavioral', 'Problem Solving'],
+        passingScore: 70,
+        templateType: 'instant',
+        questions: [
+          {
+            question: `What interests you most about the ${jobRole} position?`,
+            category: 'Behavioral',
+            difficulty: 'easy'
+          },
+          {
+            question: `Describe your experience relevant to ${jobRole}`,
+            category: 'Technical',
+            difficulty: 'medium'
+          },
+          {
+            question: 'How do you handle challenging situations at work?',
+            category: 'Problem Solving',
+            difficulty: 'medium'
+          }
+        ]
+      };
+
+      const templateResponse = await fetch(`${API_BASE}/api/hr/templates`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(templateData)
+      });
+
+      const template = await templateResponse.json();
+      if (!template.success) {
+        throw new Error('Failed to create template');
+      }
+
+      // Step 2: Deploy template
+      await fetch(`${API_BASE}/api/hr/templates/${template.data._id}/deploy`, {
+        method: 'POST'
+      });
+
+      // Step 3: Process each candidate
       for (const email of emails) {
         const candidateData = {
           candidateId: `ai_hire_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           candidateName: email.split('@')[0],
           candidateEmail: email,
-          templateId: 'ai_generated',
+          templateId: template.data._id,
           hrEmail: 'hr@company.com',
           jobRole,
           startDate,
           endDate
         };
 
-        await fetch('/api/schedule/auto-interview', {
+        await fetch(`${API_BASE}/api/schedule/auto-interview`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(candidateData)
         });
       }
 
-      alert(`AI Hire process started for ${emails.length} candidates!`);
+      alert(`✅ AI Hire Complete!\n\n• Template created: ${template.data.name}\n• Template deployed\n• ${emails.length} interview invitations sent\n• Huma AI ready to interview`);
       setCandidateEmails('');
       setJobRole('');
       fetchSchedule();
       fetchNextSlot();
     } catch (error) {
       console.error('Error starting AI hire:', error);
-      alert('Failed to start AI hire process');
+      alert('❌ Failed to start AI hire process: ' + error.message);
     } finally {
       setLoading(false);
     }
