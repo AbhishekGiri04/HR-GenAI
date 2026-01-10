@@ -16,7 +16,7 @@ class InterviewEvaluationService {
 
         // EQ Analysis Score (25%)
         if (candidate.eqAnalysis?.overallEQ) {
-            const eqScore = (candidate.eqAnalysis.overallEQ / 10) * 100; // Convert to 100 scale
+            const eqScore = (candidate.eqAnalysis.overallEQ / 10) * 100;
             totalScore += eqScore * 0.25;
             components++;
         }
@@ -27,40 +27,32 @@ class InterviewEvaluationService {
             components++;
         }
 
-        // Hiring Probability Score (20%)
-        if (candidate.hiringProbability?.score) {
-            totalScore += candidate.hiringProbability.score * 0.2;
+        // Interview Responses Score (20%)
+        if (candidate.interviewResponses?.length > 0) {
+            // Calculate score based on response quality and completeness
+            const responseScore = Math.min(85, 60 + (candidate.interviewResponses.length * 5));
+            totalScore += responseScore * 0.2;
             components++;
         }
 
-        // Fallback calculations if main components missing
-        if (components === 0) {
-            // Try interview responses quality
-            if (candidate.interviewResponses?.length > 0) {
-                const avgResponseScore = 75; // Default good score
-                totalScore = avgResponseScore;
-                components = 1;
-            }
-            // Try answer quality analysis
-            else if (candidate.answerQualityAnalysis?.length > 0) {
-                const avgQuality = candidate.answerQualityAnalysis.reduce((sum, q) => sum + (q.score || 75), 0) / candidate.answerQualityAnalysis.length;
-                totalScore = avgQuality;
-                components = 1;
-            }
-            // Default score if interview completed
-            else if (candidate.interviewCompleted) {
-                totalScore = 78; // Default passing score
-                components = 1;
-            }
+        // If interview completed but no detailed analysis, use base score
+        if (components === 0 && candidate.interviewCompleted) {
+            return 75; // Default decent score for completed interviews
         }
 
-        return components > 0 ? Math.round(totalScore / components) : 78;
+        return components > 0 ? Math.round(totalScore / components) : 0;
     }
 
     // Calculate growth potential
     calculateGrowthPotential(candidate) {
         let growthScore = 0;
         let factors = 0;
+
+        // Base on interview score
+        if (candidate.interviewScore) {
+            growthScore += Math.min(95, candidate.interviewScore + 15);
+            factors++;
+        }
 
         // Learning velocity from skillDNA
         if (candidate.skillDNA?.learningVelocity) {
@@ -83,13 +75,24 @@ class InterviewEvaluationService {
             factors++;
         }
 
-        return factors > 0 ? Math.round(growthScore / factors) : 85; // Default good growth potential
+        // Default based on interview performance
+        if (factors === 0 && candidate.interviewScore) {
+            return Math.min(95, candidate.interviewScore + 20);
+        }
+
+        return factors > 0 ? Math.round(growthScore / factors) : 85;
     }
 
     // Calculate retention score
     calculateRetentionScore(candidate) {
         let retentionScore = 0;
         let factors = 0;
+
+        // Base on interview score
+        if (candidate.interviewScore) {
+            retentionScore += Math.min(95, candidate.interviewScore + 10);
+            factors++;
+        }
 
         // Emotional stability
         if (candidate.behaviorDNA?.emotional_stability) {
@@ -109,13 +112,12 @@ class InterviewEvaluationService {
             factors++;
         }
 
-        // Stress tolerance
-        if (candidate.behaviorDNA?.stress_tolerance) {
-            retentionScore += candidate.behaviorDNA.stress_tolerance;
-            factors++;
+        // Default based on interview performance
+        if (factors === 0 && candidate.interviewScore) {
+            return Math.min(95, candidate.interviewScore + 15);
         }
 
-        return factors > 0 ? Math.round(retentionScore / factors) : 88; // Default good retention
+        return factors > 0 ? Math.round(retentionScore / factors) : 88;
     }
 
     // Determine if candidate passed

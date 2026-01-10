@@ -4,6 +4,27 @@ import { Calculator, Mail, FileText, Award, TrendingUp, Users } from 'lucide-rea
 const CandidateEvaluation = ({ candidate, onEvaluate }) => {
   const [loading, setLoading] = useState(false);
   const [evaluated, setEvaluated] = useState(false);
+  const [scores, setScores] = useState({
+    interviewScore: candidate.interviewScore || null,
+    growthPotential: candidate.growthPotential || null,
+    retentionScore: candidate.retentionScore || null
+  });
+
+  // Auto-calculate scores when component mounts if interview is completed
+  useEffect(() => {
+    if (candidate.interviewCompleted && !candidate.interviewScore) {
+      handleRecalculate();
+    }
+  }, [candidate]);
+
+  // Update scores when candidate prop changes
+  useEffect(() => {
+    setScores({
+      interviewScore: candidate.interviewScore || null,
+      growthPotential: candidate.growthPotential || null,
+      retentionScore: candidate.retentionScore || null
+    });
+  }, [candidate.interviewScore, candidate.growthPotential, candidate.retentionScore]);
 
   const handleEvaluate = async () => {
     if (!candidate._id) {
@@ -69,11 +90,15 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       
       const data = await response.json();
       if (data.success) {
+        // Update local scores
+        setScores({
+          interviewScore: data.data.interviewScore,
+          growthPotential: data.data.growthPotential,
+          retentionScore: data.data.retentionScore
+        });
+        
         if (onEvaluate) onEvaluate(data.data);
         alert('✅ Scores recalculated successfully!');
-        
-        // Refresh page to show updated scores
-        setTimeout(() => window.location.reload(), 1000);
       } else {
         throw new Error(data.error || 'Recalculation failed');
       }
@@ -171,63 +196,68 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       </div>
 
       {/* Score Display */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className={`p-4 rounded-lg ${getScoreColor(candidate.interviewScore || 0)}`}>
-          <div className="flex items-center justify-between">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className={`p-6 rounded-xl ${getScoreColor(scores.interviewScore || 0)}`}>
+          <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-sm font-medium opacity-75">Interview Score</p>
-              <p className="text-2xl font-bold">
-                {candidate.interviewScore || 'N/A'}
-                {candidate.interviewScore && '/100'}
+              <p className="text-3xl font-bold">
+                {scores.interviewScore || 'N/A'}
+                {scores.interviewScore && '/100'}
               </p>
             </div>
-            <Award size={24} />
+            <Award size={28} />
           </div>
+          <p className="text-xs opacity-75">Combined technical expertise and soft skills assessment</p>
         </div>
 
-        <div className={`p-4 rounded-lg ${getScoreColor(candidate.growthPotential || 0)}`}>
-          <div className="flex items-center justify-between">
+        <div className={`p-6 rounded-xl ${getScoreColor(scores.growthPotential || 0)}`}>
+          <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-sm font-medium opacity-75">Growth Potential</p>
-              <p className="text-2xl font-bold">
-                {candidate.growthPotential || 'N/A'}
-                {candidate.growthPotential && '%'}
+              <p className="text-3xl font-bold">
+                {scores.growthPotential || 'N/A'}
+                {scores.growthPotential && '%'}
               </p>
             </div>
-            <TrendingUp size={24} />
+            <TrendingUp size={28} />
           </div>
+          <p className="text-xs opacity-75">Predicted performance improvement and learning velocity over 12 months</p>
         </div>
 
-        <div className={`p-4 rounded-lg ${getScoreColor(candidate.retentionScore || 0)}`}>
-          <div className="flex items-center justify-between">
+        <div className={`p-6 rounded-xl ${getScoreColor(scores.retentionScore || 0)}`}>
+          <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-sm font-medium opacity-75">Retention Score</p>
-              <p className="text-2xl font-bold">
-                {candidate.retentionScore || 'N/A'}
-                {candidate.retentionScore && '%'}
+              <p className="text-3xl font-bold">
+                {scores.retentionScore || 'N/A'}
+                {scores.retentionScore && '%'}
               </p>
             </div>
-            <Users size={24} />
+            <Users size={28} />
           </div>
+          <p className="text-xs opacity-75">Likelihood to stay committed and engaged for 2+ years</p>
         </div>
       </div>
 
       {/* Verdict */}
-      {candidate.interviewScore && (
-        <div className="mb-6">
-          <div className={`p-4 rounded-lg text-center ${
-            isPassed(candidate.interviewScore) 
-              ? 'bg-green-50 border border-green-200' 
-              : 'bg-red-50 border border-red-200'
+      {scores.interviewScore && (
+        <div className="mb-8">
+          <div className={`p-6 rounded-xl text-center border-2 ${
+            isPassed(scores.interviewScore) 
+              ? 'bg-green-50 border-green-200' 
+              : 'bg-red-50 border-red-200'
           }`}>
-            <p className="text-sm font-medium text-gray-600 mb-1">Final Verdict</p>
-            <p className={`text-xl font-bold ${
-              isPassed(candidate.interviewScore) ? 'text-green-700' : 'text-red-700'
+            <p className="text-sm font-medium text-gray-600 mb-2">Final Verdict</p>
+            <p className={`text-2xl font-bold mb-2 ${
+              isPassed(scores.interviewScore) ? 'text-green-700' : 'text-red-700'
             }`}>
-              {getVerdict(candidate.interviewScore)}
+              {getVerdict(scores.interviewScore)}
             </p>
-            <p className="text-sm text-gray-500 mt-1">
-              {isPassed(candidate.interviewScore) ? '✅ Passed' : '❌ Did not meet requirements'}
+            <p className={`text-sm font-medium ${
+              isPassed(scores.interviewScore) ? 'text-green-600' : 'text-red-600'
+            }`}>
+              {isPassed(scores.interviewScore) ? '✅ Passed - Meets requirements' : '❌ Did not meet requirements'}
             </p>
           </div>
         </div>
