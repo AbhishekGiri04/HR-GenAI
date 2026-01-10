@@ -330,9 +330,9 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-3">Question Categories</label>
             <p className="text-sm text-gray-600 mb-3">
-              {template.interviewType === 'technical' && 'All questions will be asked via Voice Interview'}
-              {template.interviewType === 'behavioral' && 'All questions will be asked via Text Interview'}
-              {template.interviewType === 'mixed' && 'Voice questions (Technical) + Text questions (Behavioral)'}
+              {template.interviewType === 'technical' && 'All questions will be conducted via Voice Interview'}
+              {template.interviewType === 'behavioral' && 'All questions will be conducted via Text Interview'}
+              {template.interviewType === 'mixed' && 'Mixed Interview: Voice questions (Technical) + Text questions (Behavioral)'}
             </p>
             <div className="space-y-3">
               {filteredCategories.map((category) => (
@@ -356,10 +356,10 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className="font-medium">{category.label}</span>
-                      <span className="text-xs px-2 py-1 rounded-full ${
-                        category.interviewMode === 'voice' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'
-                      }">
-                        {category.interviewMode === 'voice' ? 'Voice' : 'Text'}
+                      <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                        category.type === 'voice' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'
+                      }`}>
+                        {category.type === 'voice' ? 'Voice' : 'Text'}
                       </span>
                     </div>
                   </div>
