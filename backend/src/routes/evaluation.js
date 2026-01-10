@@ -180,18 +180,35 @@ router.get('/letter/:candidateId/:type', async (req, res) => {
         } else {
             return res.status(400).json({
                 success: false,
-                error: 'Invalid letter type'
+                error: 'Invalid letter type. Use "offer" or "rejection"'
             });
         }
 
-        res.download(letterResult.filePath, letterResult.fileName);
+        // Set proper headers for PDF download
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="${letterResult.fileName}"`);
+        
+        // Send the file
+        res.download(letterResult.filePath, letterResult.fileName, (err) => {
+            if (err) {
+                console.error('Download error:', err);
+                if (!res.headersSent) {
+                    res.status(500).json({
+                        success: false,
+                        error: 'Failed to download letter'
+                    });
+                }
+            }
+        });
 
     } catch (error) {
         console.error('Letter download error:', error);
-        res.status(500).json({
-            success: false,
-            error: 'Failed to generate letter'
-        });
+        if (!res.headersSent) {
+            res.status(500).json({
+                success: false,
+                error: 'Failed to generate letter: ' + error.message
+            });
+        }
     }
 });
 

@@ -29,8 +29,8 @@ import BulkInviteModal from '../components/BulkInviteModal';
 import TemplateNotification from '../components/TemplateNotification';
 import useTemplateNotifications from '../hooks/useTemplateNotifications';
 import Spline from '@splinetool/react-spline';
-import QuickHire from '../components/QuickHire';
 import InterviewScheduler from '../components/InterviewScheduler';
+import AutoEvaluationTrigger from '../components/AutoEvaluationTrigger';
 
 const HRDashboard = () => {
   const navigate = useNavigate();
@@ -244,8 +244,8 @@ const HRDashboard = () => {
             </div>
           </div>
 
-          {/* Quick AI Hire Section */}
-          <QuickHire />
+          {/* Auto-Evaluation Trigger */}
+          <AutoEvaluationTrigger />
 
           {/* Interview Scheduler */}
           <div className="mb-8">

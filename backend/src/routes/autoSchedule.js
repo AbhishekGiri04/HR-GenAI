@@ -8,7 +8,7 @@ const scheduler = new AutoInterviewScheduler();
 // POST /api/schedule/auto-interview - Auto schedule interview
 router.post('/auto-interview', async (req, res) => {
     try {
-        const { candidateId, candidateName, candidateEmail, templateId, hrEmail } = req.body;
+        const { candidateId, candidateName, candidateEmail, templateId, hrEmail, jobRole, startDate, endDate } = req.body;
 
         if (!candidateId || !candidateName || !candidateEmail) {
             return res.status(400).json({
@@ -17,8 +17,15 @@ router.post('/auto-interview', async (req, res) => {
             });
         }
 
-        // Get next available slot
-        const slot = scheduler.getNextAvailableSlot();
+        // Get next available slot within date range
+        let slot;
+        if (startDate && endDate) {
+            // Find slot within specified date range
+            slot = scheduler.getNextAvailableSlotInRange(startDate, endDate);
+        } else {
+            // Use default next available slot
+            slot = scheduler.getNextAvailableSlot();
+        }
         
         // Book the slot
         scheduler.bookSlot(slot.date);
@@ -33,7 +40,8 @@ router.post('/auto-interview', async (req, res) => {
             interviewDate: slot.date,
             interviewTime: slot.time,
             interviewLink,
-            hrEmail: hrEmail || 'hr@company.com'
+            hrEmail: hrEmail || 'hr@company.com',
+            jobRole: jobRole || 'Software Developer'
         });
 
         res.json({
@@ -42,7 +50,8 @@ router.post('/auto-interview', async (req, res) => {
                 candidateId,
                 scheduledSlot: slot,
                 interviewLink,
-                emailSent
+                emailSent,
+                jobRole
             },
             message: `Interview automatically scheduled for ${slot.date} at ${slot.time}`
         });

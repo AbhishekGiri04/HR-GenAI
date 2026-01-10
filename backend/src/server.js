@@ -19,6 +19,9 @@ const humaRoutes = require('./routes/huma');
 const humaTestRoutes = require('./routes/humaTest');
 const autoScheduleRoutes = require('./routes/autoSchedule');
 const evaluationRoutes = require('./routes/evaluation');
+const debugRoutes = require('./routes/debug');
+const autoEvalRoutes = require('./routes/autoEval');
+const interviewHandler = require('./services/interviewCompletionHandler');
 const websocketService = require('./services/websocketService');
 const templateScheduler = require('./services/templateScheduler');
 
@@ -34,6 +37,9 @@ connectDB();
 
 // Start template scheduler
 templateScheduler.start();
+
+// Initialize interview completion handler
+console.log('🤖 Auto-evaluation system initialized');
 
 // Security middleware
 app.use(helmet());
@@ -64,6 +70,8 @@ app.use('/api/huma', humaRoutes);
 app.use('/api/huma', humaTestRoutes);
 app.use('/api/schedule', autoScheduleRoutes);
 app.use('/api/evaluation', evaluationRoutes);
+app.use('/api/debug', debugRoutes);
+app.use('/api/auto-eval', autoEvalRoutes);
 
 // Root route
 app.get('/', (req, res) => {

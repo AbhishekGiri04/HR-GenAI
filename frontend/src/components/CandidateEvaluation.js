@@ -6,45 +6,92 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
   const [evaluated, setEvaluated] = useState(false);
 
   const handleEvaluate = async () => {
+    if (!candidate._id) {
+      alert('Candidate ID not found');
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch(`/api/evaluation/evaluate/${candidate._id}`, {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
       
       const data = await response.json();
       if (data.success) {
         setEvaluated(true);
-        if (onEvaluate) onEvaluate(data.data);
+        if (onEvaluate) onEvaluate(data.data.evaluation);
         alert(`Candidate evaluated! ${data.data.status === 'offered' ? 'Offer' : 'Rejection'} letter sent via email.`);
+        
+        // Refresh page to show updated scores
+        setTimeout(() => window.location.reload(), 2000);
+      } else {
+        throw new Error(data.error || 'Evaluation failed');
       }
     } catch (error) {
       console.error('Evaluation error:', error);
-      alert('Failed to evaluate candidate');
+      alert(`Failed to evaluate candidate: ${error.message}`);
     } finally {
       setLoading(false);
     }
   };
 
   const handleRecalculate = async () => {
+    if (!candidate._id) {
+      alert('Candidate ID not found');
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch(`/api/evaluation/recalculate/${candidate._id}`);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+      
       const data = await response.json();
       if (data.success) {
         if (onEvaluate) onEvaluate(data.data);
         alert('Scores recalculated successfully!');
+        
+        // Refresh page to show updated scores
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        throw new Error(data.error || 'Recalculation failed');
       }
     } catch (error) {
       console.error('Recalculation error:', error);
-      alert('Failed to recalculate scores');
+      alert(`Failed to recalculate scores: ${error.message}`);
     } finally {
       setLoading(false);
     }
   };
 
   const downloadLetter = (type) => {
-    window.open(`/api/evaluation/letter/${candidate._id}/${type}`, '_blank');
+    if (!candidate._id) {
+      alert('Candidate ID not found');
+      return;
+    }
+    
+    const url = `/api/evaluation/letter/${candidate._id}/${type}`;
+    
+    // Create a temporary link and click it
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${type}_letter_${candidate.name?.replace(/\s+/g, '_') || 'candidate'}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const getScoreColor = (score) => {

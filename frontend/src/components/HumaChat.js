@@ -37,7 +37,11 @@ const HumaChat = ({ isOpen, onToggle }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/huma/chat', {
+      const API_BASE = process.env.NODE_ENV === 'production' 
+        ? 'https://hrgen-dev.onrender.com' 
+        : 'http://localhost:5001';
+        
+      const response = await fetch(`${API_BASE}/api/huma/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,6 +51,10 @@ const HumaChat = ({ isOpen, onToggle }) => {
           userId: localStorage.getItem('userId') || null
         })
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
 
       const data = await response.json();
 
@@ -62,7 +70,7 @@ const HumaChat = ({ isOpen, onToggle }) => {
       console.error('Error sending message:', error);
       const errorMessage = {
         id: Date.now() + 1,
-        text: "I'm having trouble connecting right now. Please try again later.",
+        text: "I'm having trouble connecting right now. Please check your internet connection and try again.",
         sender: 'huma',
         timestamp: new Date()
       };

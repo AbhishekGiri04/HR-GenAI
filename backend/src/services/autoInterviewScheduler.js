@@ -13,6 +13,39 @@ class AutoInterviewScheduler {
         this.scheduledInterviews = new Map(); // date -> count
     }
 
+    // Get next available slot within date range
+    getNextAvailableSlotInRange(startDate, endDate) {
+        let currentDate = moment(startDate);
+        const endMoment = moment(endDate);
+        
+        while (currentDate.isSameOrBefore(endMoment)) {
+            // Skip weekends
+            if (!this.workingDays.includes(currentDate.day())) {
+                currentDate.add(1, 'day');
+                continue;
+            }
+
+            const dateKey = currentDate.format('YYYY-MM-DD');
+            const scheduledCount = this.scheduledInterviews.get(dateKey) || 0;
+
+            if (scheduledCount < this.dailyCapacity) {
+                // Calculate time slot
+                const timeSlot = this.calculateTimeSlot(scheduledCount);
+                return {
+                    date: dateKey,
+                    time: timeSlot,
+                    datetime: `${dateKey} ${timeSlot}`,
+                    slotNumber: scheduledCount + 1
+                };
+            }
+
+            currentDate.add(1, 'day');
+        }
+
+        // If no slot found in range, return next available slot
+        return this.getNextAvailableSlot();
+    }
+
     // Get next available slot
     getNextAvailableSlot() {
         let currentDate = moment().add(1, 'day'); // Start from tomorrow
