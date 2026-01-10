@@ -22,6 +22,7 @@ router.post('/auto-hire', async (req, res) => {
 
     // Step 1: AI Generate Template
     const templateData = await generateInterviewTemplate(jobRole);
+    console.log(`📊 Template generated with ${templateData.questions.length} questions`);
     
     // Step 2: Save & Deploy Template
     const template = new Template({
@@ -30,13 +31,13 @@ router.post('/auto-hire', async (req, res) => {
       isActive: true,
       createdBy: 'AI-Auto',
       categoryQuestions: {
-        'Technical Skills': 3,
-        'Problem Solving': 2,
-        'Communication': 2
+        'Technical Skills': 5,
+        'Behavioral': 3
       }
     });
     await template.save();
     console.log(`✅ Template created & deployed: ${template._id}`);
+    console.log(`✅ Questions saved: ${template.questions.length}`);
 
     // Step 3: Send Email using Resend
     const dashboardLink = process.env.FRONTEND_URL || 'https://hrgen-dev.vercel.app';
@@ -56,6 +57,7 @@ ${templateData.categories.map(cat => `• ${cat}`).join('\n')}
 • Duration: ${templateData.duration} minutes
 • Difficulty: ${templateData.difficulty.charAt(0).toUpperCase() + templateData.difficulty.slice(1)}
 • Passing Score: ${templateData.passingScore}%
+• Total Questions: ${templateData.totalQuestions} (5 Voice + 3 Text)
 
 🎯 Interview Link: ${dashboardLink}
 
@@ -63,7 +65,7 @@ ${templateData.categories.map(cat => `• ${cat}`).join('\n')}
 1. Click the link above
 2. Upload your resume
 3. Huma will analyze your profile
-4. Complete the AI-powered interview
+4. Complete the AI-powered interview (Voice + Text)
 5. Results will be sent automatically
 
 Please ensure:

@@ -228,6 +228,7 @@ async function generateInterviewTemplate(jobRole) {
     ...technicalQuestions.map((q, i) => ({
       question: q,
       category: 'Technical Skills',
+      type: 'voice',
       expectedAnswer: 'Detailed technical explanation expected',
       points: 15,
       difficulty: 'medium'
@@ -235,6 +236,7 @@ async function generateInterviewTemplate(jobRole) {
     ...behavioralQuestions.map((q, i) => ({
       question: q,
       category: 'Behavioral',
+      type: 'text',
       expectedAnswer: 'Behavioral response with examples',
       points: 10,
       difficulty: 'medium'
@@ -246,6 +248,7 @@ async function generateInterviewTemplate(jobRole) {
     difficulty: 'medium',
     duration: 30,
     categories: ['Technical Skills', 'Behavioral'],
+    interviewType: 'mixed',
     passingScore: 70,
     techStack: roleData.skills,
     questions: shuffle(questions),

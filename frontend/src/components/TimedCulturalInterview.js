@@ -114,13 +114,39 @@ const TimedCulturalInterview = ({ questions, candidateInfo, onComplete, template
     { question: "Describe your approach to debugging a complex application issue.", type: "technical", timeLimit: 240 }
   ];
 
-  const interviewQuestions = interviewPhase === 'text' 
-    ? (questions?.filter(q => q.category === 'behavioral' || q.category === 'cultural-fit' || q.category === 'leadership') || culturalQuestions)
-    : (questions?.filter(q => q.category === 'technical' || q.category === 'problem-solving' || q.category === 'communication') || voiceQuestions);
+  // Filter questions based on interview phase and type
+  let interviewQuestions = [];
+  
+  if (questions && questions.length > 0) {
+    if (interviewPhase === 'text') {
+      // Text phase: behavioral, cultural-fit, leadership questions
+      interviewQuestions = questions.filter(q => 
+        q.type === 'text' || 
+        q.category === 'behavioral' || 
+        q.category === 'cultural-fit' || 
+        q.category === 'leadership'
+      );
+    } else {
+      // Voice phase: technical, problem-solving, communication questions
+      interviewQuestions = questions.filter(q => 
+        q.type === 'voice' || 
+        q.category === 'technical' || 
+        q.category === 'problem-solving' || 
+        q.category === 'communication'
+      );
+    }
+  }
+  
+  // Fallback to default questions if filtering results in empty array
+  if (interviewQuestions.length === 0) {
+    interviewQuestions = interviewPhase === 'text' ? culturalQuestions : voiceQuestions;
+  }
   
   console.log('📊 Interview Phase:', interviewPhase);
-  console.log('📝 Total Questions:', interviewQuestions.length);
+  console.log('📝 All Questions:', questions?.length || 0);
+  console.log('📝 Filtered Questions:', interviewQuestions.length);
   console.log('🎯 Questions:', interviewQuestions.map(q => ({ question: q.question, category: q.category, type: q.type })));
+  
   const totalQuestions = interviewQuestions.length;
   const progress = Math.round(((currentQuestion + 1) / totalQuestions) * 100);
 
