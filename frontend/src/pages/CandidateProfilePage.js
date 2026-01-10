@@ -5,6 +5,7 @@ import { Brain, Award, TrendingUp, Target, Sparkles, ArrowLeft, Star, Zap, Shiel
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GenomeChart from '../components/GenomeChart';
+import CandidateEvaluation from '../components/CandidateEvaluation';
 import axios from 'axios';
 
 const CandidateProfilePage = () => {
@@ -180,6 +181,20 @@ const CandidateProfilePage = () => {
               <span>View Resume</span>
             </button>
           </div>
+
+          {/* Candidate Evaluation Section */}
+          <CandidateEvaluation 
+            candidate={candidate} 
+            onEvaluate={(evaluationData) => {
+              // Update candidate with new evaluation data
+              setCandidate(prev => ({
+                ...prev,
+                interviewScore: evaluationData.interviewScore,
+                growthPotential: evaluationData.growthPotential,
+                retentionScore: evaluationData.retentionScore
+              }));
+            }}
+          />
 
           {/* Enhanced Interview Summary */}
           {candidate.interviewSummary && candidate.interviewSummary.summary ? (

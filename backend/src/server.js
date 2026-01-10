@@ -15,6 +15,10 @@ const templateRoutes = require('./routes/templates');
 const interviewRoutes = require('./routes/interview');
 const invitationRoutes = require('./routes/invitations');
 const autoHireRoutes = require('./routes/autoHire');
+const humaRoutes = require('./routes/huma');
+const humaTestRoutes = require('./routes/humaTest');
+const autoScheduleRoutes = require('./routes/autoSchedule');
+const evaluationRoutes = require('./routes/evaluation');
 const websocketService = require('./services/websocketService');
 const templateScheduler = require('./services/templateScheduler');
 
@@ -56,6 +60,10 @@ app.use('/api/hr', templateRoutes);
 app.use('/api/interview', interviewRoutes);
 app.use('/api/invitations', invitationRoutes);
 app.use('/api', autoHireRoutes);
+app.use('/api/huma', humaRoutes);
+app.use('/api/huma', humaTestRoutes);
+app.use('/api/schedule', autoScheduleRoutes);
+app.use('/api/evaluation', evaluationRoutes);
 
 // Root route
 app.get('/', (req, res) => {

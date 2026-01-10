@@ -19,10 +19,12 @@ import TemplateSelection from './components/TemplateSelection';
 import TemplateBasedInterview from './components/TemplateBasedInterview';
 import TemplateNotification from './components/TemplateNotification';
 import useTemplateNotifications from './hooks/useTemplateNotifications';
+import HumaChat from './components/HumaChat';
 import './styles/main.css';
 
 function AppContent() {
   const [showLoading, setShowLoading] = useState(true);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const { user, loading, userRole } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -77,6 +79,13 @@ function AppContent() {
           onConfirm={notification.onConfirm || (() => {})}
           onCancel={() => {}}
           onClose={closeNotification}
+        />
+      )}
+      
+      {user && (
+        <HumaChat 
+          isOpen={isChatOpen} 
+          onToggle={() => setIsChatOpen(!isChatOpen)} 
         />
       )}
     </>

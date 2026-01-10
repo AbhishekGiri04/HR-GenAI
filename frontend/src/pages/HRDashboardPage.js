@@ -30,6 +30,7 @@ import TemplateNotification from '../components/TemplateNotification';
 import useTemplateNotifications from '../hooks/useTemplateNotifications';
 import Spline from '@splinetool/react-spline';
 import QuickHire from '../components/QuickHire';
+import InterviewScheduler from '../components/InterviewScheduler';
 
 const HRDashboard = () => {
   const navigate = useNavigate();
@@ -245,6 +246,11 @@ const HRDashboard = () => {
 
           {/* Quick AI Hire Section */}
           <QuickHire />
+
+          {/* Interview Scheduler */}
+          <div className="mb-8">
+            <InterviewScheduler />
+          </div>
 
           {/* 3D Spline Robot */}
           <div className="bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-gray-100 mb-8">
