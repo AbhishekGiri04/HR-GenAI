@@ -244,7 +244,7 @@ async function generateInterviewTemplate(jobRole) {
   ];
 
   return {
-    name: `AI Interview - ${jobRole}`,
+    name: jobRole,
     difficulty: 'medium',
     duration: 30,
     categories: ['Technical Skills', 'Behavioral'],
