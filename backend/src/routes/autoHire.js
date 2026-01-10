@@ -24,7 +24,23 @@ router.post('/auto-hire', async (req, res) => {
     const templateData = await generateInterviewTemplate(jobRole);
     console.log(`📊 Template generated with ${templateData.questions.length} questions`);
     
-    // Step 2: Save & Deploy Template
+    // Step 2: Save & Deploy Template (Check for duplicates)
+    const existingTemplate = await Template.findOne({ 
+      name: templateData.name,
+      createdBy: 'AI-Auto',
+      createdAt: { $gte: new Date(Date.now() - 60000) } // Last 1 minute
+    });
+    
+    if (existingTemplate) {
+      console.log(`⚠️ Template already exists: ${existingTemplate._id}`);
+      return res.json({
+        success: true,
+        templateName: existingTemplate.name,
+        templateId: existingTemplate._id,
+        message: 'Template already created!'
+      });
+    }
+    
     const template = new Template({
       ...templateData,
       isDeployed: true,

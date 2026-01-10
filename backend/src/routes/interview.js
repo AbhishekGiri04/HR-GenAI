@@ -70,7 +70,8 @@ router.post('/generate-questions/:candidateId/:templateId', async (req, res) => 
         difficulty: q.difficulty || template.difficulty,
         points: q.points || 10,
         type: q.category === 'Technical Skills' ? 'voice' : 'text',
-        expectedAnswer: q.expectedAnswer
+        expectedAnswer: q.expectedAnswer,
+        timeLimit: Math.floor((template.duration * 60) / template.questions.length) // Divide time equally
       }));
 
       return res.json({
@@ -285,6 +286,7 @@ router.get('/templates/:candidateId', async (req, res) => {
     const now = new Date();
     const templates = await Template.find({ 
       isActive: true,
+      isDeployed: true,  // Only deployed templates
       $or: [
         { expiresAt: { $exists: false } },
         { expiresAt: null },
