@@ -54,7 +54,11 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       if (data.success) {
         setEvaluated(true);
         if (onEvaluate) onEvaluate(data.data.evaluation);
-        alert(`✅ Candidate evaluated! ${data.data.status === 'offered' ? 'Offer' : 'Rejection'} letter sent via email.`);
+        
+        // Show professional success message
+        const letterType = data.data.status === 'offered' ? 'Offer' : 'Rejection';
+        const message = `Evaluation Complete\n\nCandidate has been successfully evaluated.\n${letterType} letter has been sent to ${candidate.email}.`;
+        alert(message);
         
         // Refresh page to show updated scores
         setTimeout(() => window.location.reload(), 2000);
@@ -63,7 +67,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       }
     } catch (error) {
       console.error('Evaluation error:', error);
-      alert(`❌ Failed to evaluate candidate: ${error.message}`);
+      alert(`Evaluation Error\n\nUnable to evaluate candidate.\nReason: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -98,13 +102,13 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
         });
         
         if (onEvaluate) onEvaluate(data.data);
-        alert('✅ Scores recalculated successfully!');
+        alert('Score Recalculation Complete\n\nAll scores have been successfully recalculated based on interview performance.');
       } else {
         throw new Error(data.error || 'Recalculation failed');
       }
     } catch (error) {
       console.error('Recalculation error:', error);
-      alert(`❌ Failed to recalculate scores: ${error.message}`);
+      alert(`Recalculation Error\n\nUnable to recalculate scores.\nReason: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -141,10 +145,10 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
       
-      alert(`✅ ${type.charAt(0).toUpperCase() + type.slice(1)} letter downloaded successfully!`);
+      alert(`Letter Download Complete\n\n${type.charAt(0).toUpperCase() + type.slice(1)} letter has been downloaded successfully.`);
     } catch (error) {
       console.error('Download error:', error);
-      alert(`❌ Failed to download ${type} letter: ${error.message}`);
+      alert(`Download Error\n\nUnable to download ${type} letter.\nReason: ${error.message}`);
     }
   };
 
@@ -250,7 +254,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
             <p className={`text-sm font-medium ${
               isPassed(scores.interviewScore) ? 'text-green-400' : 'text-red-400'
             }`}>
-              {isPassed(scores.interviewScore) ? '✅ Passed' : '❌ Did not meet requirements'}
+              {isPassed(scores.interviewScore) ? 'Passed' : 'Did not meet requirements'}
             </p>
           </div>
         </div>
@@ -277,7 +281,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       {evaluated && (
         <div className="mt-4 p-3 bg-blue-500/20 border border-blue-400/50 rounded-xl backdrop-blur-sm">
           <p className="text-blue-300 text-sm font-medium">
-            ✅ Candidate evaluated and letter sent via email successfully!
+            Evaluation completed successfully. Letter has been sent via email.
           </p>
         </div>
       )}

@@ -129,7 +129,7 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
             </label>
             {availableTemplates.length === 0 ? (
               <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-                <p className="text-yellow-800 font-medium">⚠️ No templates available</p>
+                <p className="text-yellow-800 font-medium">No templates available</p>
                 <p className="text-yellow-700 text-sm mt-1">
                   Please create a template first.
                 </p>
@@ -236,7 +236,7 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-blue-800 mb-2">
-                    📧 Interview Invitation
+                    Interview Invitation
                   </p>
                   {(() => {
                     const template = availableTemplates.find(t => t._id === selectedTemplate);
@@ -247,7 +247,7 @@ const BulkInviteModal = ({ isOpen, onClose, templates }) => {
                           <p><strong>Duration:</strong> {template.duration} minutes</p>
                           <p><strong>Difficulty:</strong> {template.difficulty}</p>
                           <p className="text-blue-700 font-medium mt-2">
-                            📧 Candidates will receive email with interview link
+                            Candidates will receive email with interview link
                           </p>
                         </div>
                       );

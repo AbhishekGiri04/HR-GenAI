@@ -14,7 +14,7 @@ const AutoEvaluationTrigger = () => {
     setProgress([]);
     
     try {
-      addProgress('🔍 Finding candidates with completed interviews...');
+      addProgress('Finding candidates with completed interviews...');
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const API_BASE = process.env.NODE_ENV === 'production' 
@@ -27,21 +27,21 @@ const AutoEvaluationTrigger = () => {
       
       const data = await response.json();
       if (data.success) {
-        addProgress('✅ All candidates evaluated successfully!');
+        addProgress('All candidates evaluated successfully!');
         await new Promise(resolve => setTimeout(resolve, 800));
-        addProgress('📧 Sending offer and rejection letters...');
+        addProgress('Sending offer and rejection letters...');
         await new Promise(resolve => setTimeout(resolve, 1200));
-        addProgress('🎉 Process completed! All letters sent via email.');
+        addProgress('Process completed! All letters sent via email.');
         
         setTimeout(() => {
           setProgress([]);
         }, 5000);
       } else {
-        addProgress('❌ Failed to process batch evaluation');
+        addProgress('Failed to process batch evaluation');
       }
     } catch (error) {
       console.error('Batch evaluation error:', error);
-      addProgress('❌ Error processing batch evaluation');
+      addProgress('Error processing batch evaluation');
     } finally {
       setLoading(false);
     }

@@ -8,7 +8,6 @@ class HumaAIService {
             apiKey: process.env.OPENAI_API_KEY
         });
         
-        // Load HR policies and employee data
         this.hrPolicies = this.loadHRPolicies();
         this.employeeData = this.loadEmployeeData();
     }
@@ -82,12 +81,10 @@ Encashment: Vacation leave can be encashed, Sick leave cannot`;
 
     async processQuery(userQuery, userId = null) {
         try {
-            // Check if OpenAI API key is available
             if (!process.env.OPENAI_API_KEY) {
                 return this.getFallbackResponse(userQuery);
             }
 
-            // Create context for the AI
             const context = this.buildContext(userQuery, userId);
             
             const response = await this.openai.chat.completions.create({
@@ -125,20 +122,17 @@ Guidelines:
 
         } catch (error) {
             console.error('Huma AI Error:', error);
-            
-            // Return fallback response for any error
             return this.getFallbackResponse(userQuery);
         }
     }
 
-    // Fallback response when OpenAI is not available
     getFallbackResponse(userQuery) {
         const query = userQuery.toLowerCase();
         
         if (query.includes('leave') || query.includes('vacation') || query.includes('sick')) {
             return {
                 success: true,
-                response: "Leave Policy Information\n\nAvailable Leave Types:\n€¢ Vacation Leave: 15 days annually (1.25 days/month)\n€¢ Sick Leave: 15 days annually (1.25 days/month)\n€¢ Service Incentive Leave: 5 days annually (after 1 year)\n€¢ Maternity Leave: 105 days paid\n€¢ Paternity Leave: 7 days paid\n€¢ Bereavement Leave: 3-5 days paid\n\nKey Guidelines:\n€¢ Maximum carryover: 30 days\n€¢ Advance notice: 3-7 days required\n€¢ Medical certificate needed for sick leave >3 days\n€¢ Vacation leave can be encashed\n\nNeed specific leave balance? Contact HR at hr@hrgenai.com",
+                response: "Leave Policy Information\n\nAvailable Leave Types:\nâ€¢ Vacation Leave: 15 days annually (1.25 days/month)\nâ€¢ Sick Leave: 15 days annually (1.25 days/month)\nâ€¢ Service Incentive Leave: 5 days annually (after 1 year)\nâ€¢ Maternity Leave: 105 days paid\nâ€¢ Paternity Leave: 7 days paid\nâ€¢ Bereavement Leave: 3-5 days paid\n\nKey Guidelines:\nâ€¢ Maximum carryover: 30 days\nâ€¢ Advance notice: 3-7 days required\nâ€¢ Medical certificate needed for sick leave >3 days\nâ€¢ Vacation leave can be encashed\n\nNeed specific leave balance? Contact HR at hr@hrgenai.com",
                 timestamp: new Date().toISOString()
             };
         }
@@ -146,7 +140,7 @@ Guidelines:
         if (query.includes('policy') || query.includes('policies')) {
             return {
                 success: true,
-                response: "HR Policy Directory\n\nAvailable Policies:\n€¢ Leave Policy - Vacation, sick, maternity/paternity leave\n€¢ Attendance Policy - Working hours, tardiness guidelines\n€¢ Employee Benefits - Health insurance, retirement plans\n€¢ Code of Conduct - Professional behavior standards\n€¢ Performance Management - Reviews and development\n\nAccess Methods:\n€¢ Employee Self Service Portal: portal.hrgenai.com\n€¢ HR Department: hr@hrgenai.com\n€¢ Policy updates via company email\n\nNeed specific policy details? Just ask me about any policy above!",
+                response: "HR Policy Directory\n\nAvailable Policies:\nâ€¢ Leave Policy - Vacation, sick, maternity/paternity leave\nâ€¢ Attendance Policy - Working hours, tardiness guidelines\nâ€¢ Employee Benefits - Health insurance, retirement plans\nâ€¢ Code of Conduct - Professional behavior standards\nâ€¢ Performance Management - Reviews and development\n\nAccess Methods:\nâ€¢ Employee Self Service Portal: portal.hrgenai.com\nâ€¢ HR Department: hr@hrgenai.com\nâ€¢ Policy updates via company email\n\nNeed specific policy details? Just ask me about any policy above!",
                 timestamp: new Date().toISOString()
             };
         }
@@ -154,7 +148,7 @@ Guidelines:
         if (query.includes('contact') || query.includes('hr')) {
             return {
                 success: true,
-                response: "HR Department Contact\n\nPrimary Contact:\n€¢ Email: hr@hrgenai.com\n€¢ Phone: +1 (555) 123-4567\n€¢ Office Hours: Monday-Friday, 9:00 AM - 5:00 PM\n\nOnline Services:\n€¢ Employee Portal: portal.hrgenai.com\n€¢ Leave Applications & Approvals\n€¢ Policy Access & Updates\n€¢ Benefits Information\n\nEmergency Contact:\n€¢ 24/7 availability for urgent matters\n\nPopular Services:\n€¢ Leave balance inquiries\n€¢ Policy clarifications\n€¢ Benefits enrollment\n€¢ Performance reviews",
+                response: "HR Department Contact\n\nPrimary Contact:\nâ€¢ Email: hr@hrgenai.com\nâ€¢ Phone: +1 (555) 123-4567\nâ€¢ Office Hours: Monday-Friday, 9:00 AM - 5:00 PM\n\nOnline Services:\nâ€¢ Employee Portal: portal.hrgenai.com\nâ€¢ Leave Applications & Approvals\nâ€¢ Policy Access & Updates\nâ€¢ Benefits Information\n\nEmergency Contact:\nâ€¢ 24/7 availability for urgent matters\n\nPopular Services:\nâ€¢ Leave balance inquiries\nâ€¢ Policy clarifications\nâ€¢ Benefits enrollment\nâ€¢ Performance reviews",
                 timestamp: new Date().toISOString()
             };
         }
@@ -162,14 +156,14 @@ Guidelines:
         if (query.includes('benefit') || query.includes('insurance') || query.includes('retirement')) {
             return {
                 success: true,
-                response: "Employee Benefits Package\n\n\n Health Insurance - 100% company-paid (employee)\n€€€ Family Coverage - 50% company contribution\n Dental & Vision included\n\n\n Retirement Plan - Up to 5% company match\n Investment options available\n Immediate vesting for contributions\n\n\n Training Budget: $2,000/year per employee\n Conference attendance support\n Certification sponsorship\n\n\n Paid vacation & sick leave\n Maternity/Paternity leave\n Bereavement leave\n\n  Contact HR for personalized assistance!",
+                response: "Employee Benefits Package\n\nHealth & Wellness:\nâ€¢ Health Insurance - 100% company-paid (employee)\nâ€¢ Family Coverage - 50% company contribution\nâ€¢ Dental & Vision included\n\nFinancial Benefits:\nâ€¢ Retirement Plan - Up to 5% company match\nâ€¢ Investment options available\nâ€¢ Immediate vesting for contributions\n\nProfessional Development:\nâ€¢ Training Budget: $2,000/year per employee\nâ€¢ Conference attendance support\nâ€¢ Certification sponsorship\n\nTime Off Benefits:\nâ€¢ Paid vacation & sick leave\nâ€¢ Maternity/Paternity leave\nâ€¢ Bereavement leave\n\nNeed enrollment help? Contact HR for personalized assistance!",
                 timestamp: new Date().toISOString()
             };
         }
         
         return {
             success: true,
-            response: " \n\n\n\n \n€¢ Leave policies and balances\n€¢ Application procedures\n€¢ Carryover rules\n\n \n€¢ Company policies and procedures\n€¢ Code of conduct\n€¢ Performance guidelines\n\n \n€¢ Health insurance details\n€¢ Retirement plans\n€¢ Professional development\n\n \n€¢ HR department details\n€¢ Emergency contacts\n€¢ Online portals\n\n\n \"leave policies\" - Get leave information\n \"contact hr\" - HR contact details\n \"benefits\" - Employee benefits overview\n \"policies\" - Browse all HR policies\n\n ",
+            response: "Welcome to Huma AI - Your HR Assistant\n\nI can help you with:\n\nLeave Management\nâ€¢ Leave policies and balances\nâ€¢ Application procedures\nâ€¢ Carryover rules\n\nHR Policies\nâ€¢ Company policies and procedures\nâ€¢ Code of conduct\nâ€¢ Performance guidelines\n\nEmployee Benefits\nâ€¢ Health insurance details\nâ€¢ Retirement plans\nâ€¢ Professional development\n\nContact Information\nâ€¢ HR department details\nâ€¢ Emergency contacts\nâ€¢ Online portals\n\nQuick Commands:\nâ€¢ \"leave policies\" - Get leave information\nâ€¢ \"contact hr\" - HR contact details\nâ€¢ \"benefits\" - Employee benefits overview\nâ€¢ \"policies\" - Browse all HR policies\n\nWhat would you like to know about?",
             timestamp: new Date().toISOString()
         };
     }
@@ -177,7 +171,6 @@ Guidelines:
     buildContext(query, userId) {
         let context = "HR Policies:\n" + this.hrPolicies.substring(0, 1500) + "\n\n";
         
-        // Add employee data context if relevant
         if (query.toLowerCase().includes('leave') || 
             query.toLowerCase().includes('salary') || 
             query.toLowerCase().includes('employee') ||
@@ -189,7 +182,6 @@ Guidelines:
             context += "- Leave balances, Salary information\n";
             context += "- Employment status and dates\n\n";
             
-            // Add sample employee data
             if (this.employeeData.length > 0) {
                 context += "Sample Employee Data:\n";
                 context += `Name: ${this.employeeData[0].name || 'N/A'}\n`;
@@ -202,12 +194,10 @@ Guidelines:
         return context;
     }
 
-    // Get employee specific information
     getEmployeeInfo(employeeId) {
         return this.employeeData.find(emp => emp.employee_id === employeeId);
     }
 
-    // Calculate leave balances
     calculateLeaveBalance(employeeId, leaveType) {
         const employee = this.getEmployeeInfo(employeeId);
         if (!employee) return null;

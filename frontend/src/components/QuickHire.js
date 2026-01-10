@@ -24,7 +24,7 @@ const QuickHire = () => {
     setProgress([]);
 
     try {
-      addProgress('🤖 AI Creating Template...', 'loading');
+      addProgress('AI Creating Template...', 'loading');
       
       const response = await fetch(`${API_URL}/api/auto-hire`, {
         method: 'POST',
@@ -35,13 +35,13 @@ const QuickHire = () => {
       const data = await response.json();
 
       if (response.ok) {
-        addProgress(`✓ Template Created: ${data.templateName}`, 'success');
+        addProgress(`Template Created: ${data.templateName}`, 'success');
         await delay(800);
-        addProgress('✓ Template Auto-Deployed', 'success');
+        addProgress('Template Auto-Deployed', 'success');
         await delay(800);
-        addProgress(`✓ Emails Sent: ${data.emailsSent}/${data.totalEmails}`, 'success');
+        addProgress(`Emails Sent: ${data.emailsSent}/${data.totalEmails}`, 'success');
         await delay(500);
-        addProgress(`🎉 Done! ${data.emailsSent} candidates invited.`, 'success');
+        addProgress(`Done! ${data.emailsSent} candidates invited.`, 'success');
         
         setTimeout(() => {
           setEmail('');
@@ -52,7 +52,7 @@ const QuickHire = () => {
         throw new Error(data.error || 'Failed');
       }
     } catch (error) {
-      addProgress('✗ ' + error.message, 'error');
+      addProgress('Error: ' + error.message, 'error');
     } finally {
       setLoading(false);
     }

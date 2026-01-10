@@ -5,7 +5,7 @@ const HumaChat = ({ isOpen, onToggle }) => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "👋 Hello! I'm Huma, your AI-powered HR Assistant. I'm here to help you with HR policies, leave management, and workplace inquiries. How can I assist you today?",
+      text: " Hello! I'm Huma, your AI-powered HR Assistant. I'm here to help you with HR policies, leave management, and workplace inquiries. How can I assist you today?",
       sender: 'huma',
       timestamp: new Date()
     }
@@ -45,7 +45,7 @@ const HumaChat = ({ isOpen, onToggle }) => {
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsLoading(true);
-    setShowQuickActions(false);
+    setShowQuickActions(true);
 
     try {
       const API_BASE = process.env.NODE_ENV === 'production' 
@@ -181,7 +181,7 @@ const HumaChat = ({ isOpen, onToggle }) => {
         ))}
         
         {/* Quick Actions */}
-        {showQuickActions && messages.length <= 2 && (
+        {showQuickActions && (
           <div className="space-y-3">
             <div className="text-center">
               <p className="text-sm text-gray-600 font-medium">Quick Actions</p>
