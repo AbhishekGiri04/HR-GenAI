@@ -181,7 +181,7 @@ const HumaChat = ({ isOpen, onToggle }) => {
         ))}
         
         {/* Quick Actions */}
-        {showQuickActions && messages.length === 1 && (
+        {showQuickActions && messages.length <= 2 && (
           <div className="space-y-3">
             <div className="text-center">
               <p className="text-sm text-gray-600 font-medium">Quick Actions</p>

@@ -138,7 +138,7 @@ Guidelines:
         if (query.includes('leave') || query.includes('vacation') || query.includes('sick')) {
             return {
                 success: true,
-                response: "ğŸ“‹ **Leave Policy Information**\n\n**Available Leave Types:**\nâ€¢ **Vacation Leave:** 15 days annually (1.25 days/month)\nâ€¢ **Sick Leave:** 15 days annually (1.25 days/month)\nâ€¢ **Service Incentive Leave:** 5 days annually (after 1 year)\nâ€¢ **Maternity Leave:** 105 days paid\nâ€¢ **Paternity Leave:** 7 days paid\nâ€¢ **Bereavement Leave:** 3-5 days paid\n\n**Key Guidelines:**\nâœ… Maximum carryover: 30 days\nâœ… Advance notice: 3-7 days required\nâœ… Medical certificate needed for sick leave >3 days\nâœ… Vacation leave can be encashed\n\nğŸ“ **Need specific leave balance?** Contact HR at hr@hrgenai.com",
+                response: "Leave Policy Information\n\nAvailable Leave Types:\n€¢ Vacation Leave: 15 days annually (1.25 days/month)\n€¢ Sick Leave: 15 days annually (1.25 days/month)\n€¢ Service Incentive Leave: 5 days annually (after 1 year)\n€¢ Maternity Leave: 105 days paid\n€¢ Paternity Leave: 7 days paid\n€¢ Bereavement Leave: 3-5 days paid\n\nKey Guidelines:\n€¢ Maximum carryover: 30 days\n€¢ Advance notice: 3-7 days required\n€¢ Medical certificate needed for sick leave >3 days\n€¢ Vacation leave can be encashed\n\nNeed specific leave balance? Contact HR at hr@hrgenai.com",
                 timestamp: new Date().toISOString()
             };
         }
@@ -146,7 +146,7 @@ Guidelines:
         if (query.includes('policy') || query.includes('policies')) {
             return {
                 success: true,
-                response: "ğŸ“š **HR Policy Directory**\n\n**Available Policies:**\nğŸ–ï¸ **Leave Policy** - Vacation, sick, maternity/paternity leave\nâ° **Attendance Policy** - Working hours, tardiness guidelines\nğŸ¥ **Employee Benefits** - Health insurance, retirement plans\nğŸ“‹ **Code of Conduct** - Professional behavior standards\nğŸ“ˆ **Performance Management** - Reviews and development\n\n**Access Methods:**\nâ€¢ Employee Self Service Portal: portal.hrgenai.com\nâ€¢ HR Department: hr@hrgenai.com\nâ€¢ Policy updates via company email\n\nâ“ **Need specific policy details?** Just ask me about any policy above!",
+                response: "HR Policy Directory\n\nAvailable Policies:\n€¢ Leave Policy - Vacation, sick, maternity/paternity leave\n€¢ Attendance Policy - Working hours, tardiness guidelines\n€¢ Employee Benefits - Health insurance, retirement plans\n€¢ Code of Conduct - Professional behavior standards\n€¢ Performance Management - Reviews and development\n\nAccess Methods:\n€¢ Employee Self Service Portal: portal.hrgenai.com\n€¢ HR Department: hr@hrgenai.com\n€¢ Policy updates via company email\n\nNeed specific policy details? Just ask me about any policy above!",
                 timestamp: new Date().toISOString()
             };
         }
@@ -154,7 +154,7 @@ Guidelines:
         if (query.includes('contact') || query.includes('hr')) {
             return {
                 success: true,
-                response: "ğŸ“ **HR Department Contact**\n\n**Primary Contact:**\nğŸ“§ Email: hr@hrgenai.com\nğŸ“± Phone: +1 (555) 123-4567\nğŸ•˜ Office Hours: Monday-Friday, 9:00 AM - 5:00 PM\n\n**Online Services:**\nğŸŒ Employee Portal: portal.hrgenai.com\nğŸ“‹ Leave Applications & Approvals\nğŸ“Š Policy Access & Updates\nğŸ’¼ Benefits Information\n\n**Emergency Contact:**\nğŸš¨ 24/7 availability for urgent matters\n\n**Popular Services:**\nâ€¢ Leave balance inquiries\nâ€¢ Policy clarifications\nâ€¢ Benefits enrollment\nâ€¢ Performance reviews",
+                response: "HR Department Contact\n\nPrimary Contact:\n€¢ Email: hr@hrgenai.com\n€¢ Phone: +1 (555) 123-4567\n€¢ Office Hours: Monday-Friday, 9:00 AM - 5:00 PM\n\nOnline Services:\n€¢ Employee Portal: portal.hrgenai.com\n€¢ Leave Applications & Approvals\n€¢ Policy Access & Updates\n€¢ Benefits Information\n\nEmergency Contact:\n€¢ 24/7 availability for urgent matters\n\nPopular Services:\n€¢ Leave balance inquiries\n€¢ Policy clarifications\n€¢ Benefits enrollment\n€¢ Performance reviews",
                 timestamp: new Date().toISOString()
             };
         }
@@ -162,14 +162,14 @@ Guidelines:
         if (query.includes('benefit') || query.includes('insurance') || query.includes('retirement')) {
             return {
                 success: true,
-                response: "ğŸ’¼ **Employee Benefits Package**\n\n**Health & Wellness:**\nğŸ¥ Health Insurance - 100% company-paid (employee)\nğŸ‘¨â€ğŸ‘©â€ğŸ‘§â€ğŸ‘¦ Family Coverage - 50% company contribution\nğŸ¦· Dental & Vision included\n\n**Financial Benefits:**\nğŸ’° Retirement Plan - Up to 5% company match\nğŸ“ˆ Investment options available\nğŸ’µ Immediate vesting for contributions\n\n**Professional Development:**\nğŸ“š Training Budget: $2,000/year per employee\nğŸ“ Conference attendance support\nğŸ“œ Certification sponsorship\n\n**Time Off Benefits:**\nğŸ–ï¸ Paid vacation & sick leave\nğŸ‘¶ Maternity/Paternity leave\nâš°ï¸ Bereavement leave\n\nğŸ“‹ **Need enrollment help?** Contact HR for personalized assistance!",
+                response: "Employee Benefits Package\n\n\n Health Insurance - 100% company-paid (employee)\n€€€ Family Coverage - 50% company contribution\n Dental & Vision included\n\n\n Retirement Plan - Up to 5% company match\n Investment options available\n Immediate vesting for contributions\n\n\n Training Budget: $2,000/year per employee\n Conference attendance support\n Certification sponsorship\n\n\n Paid vacation & sick leave\n Maternity/Paternity leave\n Bereavement leave\n\n  Contact HR for personalized assistance!",
                 timestamp: new Date().toISOString()
             };
         }
         
         return {
             success: true,
-            response: "ğŸ‘‹ **Welcome to Huma AI - Your HR Assistant**\n\n**I can help you with:**\n\nğŸ–ï¸ **Leave Management**\nâ€¢ Leave policies and balances\nâ€¢ Application procedures\nâ€¢ Carryover rules\n\nğŸ“‹ **HR Policies**\nâ€¢ Company policies and procedures\nâ€¢ Code of conduct\nâ€¢ Performance guidelines\n\nğŸ’¼ **Employee Benefits**\nâ€¢ Health insurance details\nâ€¢ Retirement plans\nâ€¢ Professional development\n\nğŸ“ **Contact Information**\nâ€¢ HR department details\nâ€¢ Emergency contacts\nâ€¢ Online portals\n\n**Quick Commands:**\nğŸ’¬ \"leave policies\" - Get leave information\nğŸ’¬ \"contact hr\" - HR contact details\nğŸ’¬ \"benefits\" - Employee benefits overview\nğŸ’¬ \"policies\" - Browse all HR policies\n\nâ“ **What would you like to know about?**",
+            response: " \n\n\n\n \n€¢ Leave policies and balances\n€¢ Application procedures\n€¢ Carryover rules\n\n \n€¢ Company policies and procedures\n€¢ Code of conduct\n€¢ Performance guidelines\n\n \n€¢ Health insurance details\n€¢ Retirement plans\n€¢ Professional development\n\n \n€¢ HR department details\n€¢ Emergency contacts\n€¢ Online portals\n\n\n \"leave policies\" - Get leave information\n \"contact hr\" - HR contact details\n \"benefits\" - Employee benefits overview\n \"policies\" - Browse all HR policies\n\n ",
             timestamp: new Date().toISOString()
         };
     }
