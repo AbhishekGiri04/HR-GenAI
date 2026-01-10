@@ -39,6 +39,8 @@ router.post('/auto-hire', async (req, res) => {
     console.log(`✅ Template created & deployed: ${template._id}`);
 
     // Step 3: Send Email using Resend
+    const dashboardLink = process.env.FRONTEND_URL || 'https://hrgen-dev.vercel.app';
+    
     const inviteMessage = `
 Dear Candidate,
 
