@@ -18,7 +18,11 @@ const InterviewScheduler = () => {
 
   const fetchSchedule = async () => {
     try {
-      const response = await fetch('/api/schedule/availability');
+      const API_BASE = process.env.NODE_ENV === 'production' 
+        ? 'https://hrgen-dev.onrender.com' 
+        : 'http://localhost:5001';
+        
+      const response = await fetch(`${API_BASE}/api/schedule/availability`);
       const data = await response.json();
       if (data.success) {
         setSchedule(data.data);
@@ -48,7 +52,11 @@ const InterviewScheduler = () => {
     
     setLoading(true);
     try {
-      const response = await fetch('/api/schedule/set-capacity', {
+      const API_BASE = process.env.NODE_ENV === 'production' 
+        ? 'https://hrgen-dev.onrender.com' 
+        : 'http://localhost:5001';
+        
+      const response = await fetch(`${API_BASE}/api/schedule/set-capacity`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ capacity: parseInt(capacity) })
@@ -56,14 +64,14 @@ const InterviewScheduler = () => {
       
       const data = await response.json();
       if (data.success) {
-        alert('Daily capacity updated successfully!');
+        alert('✅ Daily capacity updated successfully!');
         fetchSchedule();
       } else {
-        alert('Failed to update capacity: ' + (data.error || 'Unknown error'));
+        alert('❌ Failed to update capacity: ' + (data.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error updating capacity:', error);
-      alert('Failed to update capacity');
+      alert('❌ Failed to update capacity');
     } finally {
       setLoading(false);
     }

@@ -13,7 +13,11 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
 
     setLoading(true);
     try {
-      const response = await fetch(`/api/evaluation/evaluate/${candidate._id}`, {
+      const API_BASE = process.env.NODE_ENV === 'production' 
+        ? 'https://hrgen-dev.onrender.com' 
+        : 'http://localhost:5001';
+        
+      const response = await fetch(`${API_BASE}/api/evaluation/evaluate/${candidate._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -29,7 +33,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       if (data.success) {
         setEvaluated(true);
         if (onEvaluate) onEvaluate(data.data.evaluation);
-        alert(`Candidate evaluated! ${data.data.status === 'offered' ? 'Offer' : 'Rejection'} letter sent via email.`);
+        alert(`✅ Candidate evaluated! ${data.data.status === 'offered' ? 'Offer' : 'Rejection'} letter sent via email.`);
         
         // Refresh page to show updated scores
         setTimeout(() => window.location.reload(), 2000);
@@ -38,7 +42,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       }
     } catch (error) {
       console.error('Evaluation error:', error);
-      alert(`Failed to evaluate candidate: ${error.message}`);
+      alert(`❌ Failed to evaluate candidate: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -52,7 +56,11 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
 
     setLoading(true);
     try {
-      const response = await fetch(`/api/evaluation/recalculate/${candidate._id}`);
+      const API_BASE = process.env.NODE_ENV === 'production' 
+        ? 'https://hrgen-dev.onrender.com' 
+        : 'http://localhost:5001';
+        
+      const response = await fetch(`${API_BASE}/api/evaluation/recalculate/${candidate._id}`);
       
       if (!response.ok) {
         const errorData = await response.json();
@@ -62,7 +70,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       const data = await response.json();
       if (data.success) {
         if (onEvaluate) onEvaluate(data.data);
-        alert('Scores recalculated successfully!');
+        alert('✅ Scores recalculated successfully!');
         
         // Refresh page to show updated scores
         setTimeout(() => window.location.reload(), 1000);
@@ -71,27 +79,48 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       }
     } catch (error) {
       console.error('Recalculation error:', error);
-      alert(`Failed to recalculate scores: ${error.message}`);
+      alert(`❌ Failed to recalculate scores: ${error.message}`);
     } finally {
       setLoading(false);
     }
   };
 
-  const downloadLetter = (type) => {
+  const downloadLetter = async (type) => {
     if (!candidate._id) {
       alert('Candidate ID not found');
       return;
     }
     
-    const url = `/api/evaluation/letter/${candidate._id}/${type}`;
-    
-    // Create a temporary link and click it
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${type}_letter_${candidate.name?.replace(/\s+/g, '_') || 'candidate'}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const API_BASE = process.env.NODE_ENV === 'production' 
+        ? 'https://hrgen-dev.onrender.com' 
+        : 'http://localhost:5001';
+        
+      const response = await fetch(`${API_BASE}/api/evaluation/letter/${candidate._id}/${type}`);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+      
+      // Get the blob from response
+      const blob = await response.blob();
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${type}_letter_${candidate.name?.replace(/\s+/g, '_') || 'candidate'}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      alert(`✅ ${type.charAt(0).toUpperCase() + type.slice(1)} letter downloaded successfully!`);
+    } catch (error) {
+      console.error('Download error:', error);
+      alert(`❌ Failed to download ${type} letter: ${error.message}`);
+    }
   };
 
   const getScoreColor = (score) => {

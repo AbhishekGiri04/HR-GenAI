@@ -7,7 +7,11 @@ const AutoEvaluationTrigger = () => {
   const triggerBatchEvaluation = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/auto-eval/batch', {
+      const API_BASE = process.env.NODE_ENV === 'production' 
+        ? 'https://hrgen-dev.onrender.com' 
+        : 'http://localhost:5001';
+        
+      const response = await fetch(`${API_BASE}/api/auto-eval/batch`, {
         method: 'POST'
       });
       

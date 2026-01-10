@@ -89,24 +89,26 @@ router.post('/set-capacity', (req, res) => {
     try {
         const { capacity } = req.body;
         
-        if (!capacity || capacity < 1) {
+        if (!capacity || isNaN(capacity) || capacity < 1 || capacity > 50) {
             return res.status(400).json({
                 success: false,
-                error: 'Invalid capacity value'
+                error: 'Capacity must be a number between 1 and 50'
             });
         }
 
-        scheduler.setDailyCapacity(capacity);
+        const numCapacity = parseInt(capacity);
+        scheduler.setDailyCapacity(numCapacity);
         
         res.json({
             success: true,
-            message: `Daily capacity set to ${capacity} interviews`
+            message: `Daily capacity set to ${numCapacity} interviews`,
+            capacity: numCapacity
         });
     } catch (error) {
         console.error('Set capacity error:', error);
         res.status(500).json({
             success: false,
-            error: 'Failed to set capacity'
+            error: 'Failed to set capacity: ' + error.message
         });
     }
 });
