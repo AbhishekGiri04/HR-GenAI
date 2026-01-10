@@ -221,97 +221,142 @@ const InterviewScheduler = () => {
       </div>
 
       {/* Interview Scheduler */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex items-center mb-6">
-          <Calendar className="mr-3 text-blue-600" size={24} />
-          <h2 className="text-2xl font-bold text-gray-800">Interview Scheduler</h2>
+      <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl p-8 border border-blue-100">
+        <div className="flex items-center mb-8">
+          <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mr-4">
+            <Calendar className="text-white" size={24} />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800">Interview Scheduler</h2>
+            <p className="text-gray-600">Manage your interview capacity and schedule</p>
+          </div>
         </div>
 
         {/* Capacity Settings */}
-        <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-center mb-3">
-            <Settings className="mr-2 text-gray-600" size={20} />
-            <h3 className="text-lg font-semibold">Daily Interview Capacity</h3>
+        <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
+          <div className="flex items-center mb-4">
+            <Settings className="mr-3 text-blue-600" size={20} />
+            <h3 className="text-lg font-semibold text-gray-800">Daily Interview Capacity</h3>
           </div>
           <div className="flex items-center space-x-4">
-            <input
-              type="number"
-              value={capacity}
-              onChange={(e) => setCapacity(parseInt(e.target.value) || 1)}
-              min="1"
-              max="50"
-              className="border border-gray-300 rounded px-3 py-2 w-20"
-            />
-            <span className="text-gray-600">interviews per day</span>
+            <div className="flex items-center space-x-2">
+              <input
+                type="number"
+                value={capacity}
+                onChange={(e) => setCapacity(parseInt(e.target.value) || 1)}
+                min="1"
+                max="50"
+                className="w-20 h-12 text-center text-lg font-bold border-2 border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <span className="text-gray-700 font-medium">interviews per day</span>
+            </div>
             <button
               onClick={updateCapacity}
               disabled={loading}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded disabled:opacity-50"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-semibold disabled:opacity-50 transition-all shadow-lg hover:shadow-xl"
             >
-              {loading ? 'Updating...' : 'Update'}
+              {loading ? 'Updating...' : 'Update Capacity'}
             </button>
           </div>
         </div>
 
         {/* Next Available Slot */}
         {nextSlot && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div className="flex items-center mb-2">
-              <Clock className="mr-2 text-green-600" size={20} />
+          <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl">
+            <div className="flex items-center mb-3">
+              <Clock className="mr-3 text-green-600" size={20} />
               <h3 className="text-lg font-semibold text-green-800">Next Available Slot</h3>
             </div>
-            <p className="text-green-700">
-              <strong>{nextSlot.date}</strong> at <strong>{nextSlot.time}</strong>
-            </p>
+            <div className="flex items-center space-x-4">
+              <div className="bg-white px-4 py-2 rounded-lg border border-green-200">
+                <span className="text-green-700 font-bold">{nextSlot.date}</span>
+              </div>
+              <div className="bg-white px-4 py-2 rounded-lg border border-green-200">
+                <span className="text-green-700 font-bold">{nextSlot.time}</span>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Schedule Overview */}
         <div>
-          <div className="flex items-center mb-4">
-            <CalendarDays className="mr-2 text-gray-600" size={20} />
-            <h3 className="text-lg font-semibold">7-Day Schedule Overview</h3>
+          <div className="flex items-center mb-6">
+            <CalendarDays className="mr-3 text-gray-600" size={20} />
+            <h3 className="text-lg font-semibold text-gray-800">7-Day Schedule Overview</h3>
           </div>
-          <div className="grid gap-3">
-            {schedule.map((day, index) => (
-              <div
-                key={index}
-                className={`p-3 rounded-lg border ${
-                  day.available === 0 ? 'bg-red-50 border-red-200' : 
-                  day.available < day.capacity / 2 ? 'bg-yellow-50 border-yellow-200' : 
-                  'bg-green-50 border-green-200'
-                }`}
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="font-semibold">{day.date}</span>
-                    <span className="ml-2 text-gray-600">({day.dayName})</span>
+          <div className="grid gap-4">
+            {schedule.map((day, index) => {
+              const utilizationPercent = (day.scheduled / day.capacity) * 100;
+              const isWeekend = day.dayName === 'Saturday' || day.dayName === 'Sunday';
+              
+              return (
+                <div
+                  key={index}
+                  className={`p-5 rounded-xl border-2 transition-all hover:shadow-lg ${
+                    day.available === 0 
+                      ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-200' 
+                      : day.available < day.capacity / 2 
+                      ? 'bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200' 
+                      : 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-200'
+                  } ${isWeekend ? 'opacity-75' : ''}`}
+                >
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-3 h-3 rounded-full ${
+                        day.available === 0 ? 'bg-red-500' : 
+                        day.available < day.capacity / 2 ? 'bg-yellow-500' : 'bg-green-500'
+                      }`}></div>
+                      <div>
+                        <span className="font-bold text-lg text-gray-800">{day.date}</span>
+                        <span className="ml-2 text-gray-600 font-medium">({day.dayName})</span>
+                        {isWeekend && <span className="ml-2 text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full">Weekend</span>}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm text-gray-600 mb-1">Availability</div>
+                      <div className={`text-xl font-bold ${
+                        day.available === 0 ? 'text-red-600' : 
+                        day.available < day.capacity / 2 ? 'text-yellow-600' : 'text-green-600'
+                      }`}>
+                        {day.available} / {day.capacity}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm">
+                  
+                  {/* Progress Bar */}
+                  <div className="mb-3">
+                    <div className="flex justify-between text-xs text-gray-600 mb-1">
+                      <span>Utilization</span>
+                      <span>{Math.round(utilizationPercent)}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-3">
+                      <div
+                        className={`h-3 rounded-full transition-all duration-300 ${
+                          day.available === 0 ? 'bg-gradient-to-r from-red-500 to-red-600' : 
+                          day.available < day.capacity / 2 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 
+                          'bg-gradient-to-r from-green-500 to-emerald-500'
+                        }`}
+                        style={{ width: `${utilizationPercent}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  
+                  {/* Status */}
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">
+                      {day.scheduled} scheduled, {day.available} available
+                    </span>
                     <span className={`font-semibold ${
                       day.available === 0 ? 'text-red-600' : 
-                      day.available < day.capacity / 2 ? 'text-yellow-600' : 
-                      'text-green-600'
+                      day.available < day.capacity / 2 ? 'text-yellow-600' : 'text-green-600'
                     }`}>
-                      {day.available} available
+                      {day.available === 0 ? 'Fully Booked' : 
+                       day.available < day.capacity / 2 ? 'Limited Slots' : 'Available'}
                     </span>
-                    <span className="text-gray-500"> / {day.capacity} total</span>
                   </div>
                 </div>
-                <div className="mt-2">
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className={`h-2 rounded-full ${
-                        day.available === 0 ? 'bg-red-500' : 
-                        day.available < day.capacity / 2 ? 'bg-yellow-500' : 
-                        'bg-green-500'
-                      }`}
-                      style={{ width: `${(day.scheduled / day.capacity) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

@@ -183,18 +183,20 @@ const CandidateProfilePage = () => {
           </div>
 
           {/* Candidate Evaluation Section */}
-          <CandidateEvaluation 
-            candidate={candidate} 
-            onEvaluate={(evaluationData) => {
-              // Update candidate with new evaluation data
-              setCandidate(prev => ({
-                ...prev,
-                interviewScore: evaluationData.interviewScore,
-                growthPotential: evaluationData.growthPotential,
-                retentionScore: evaluationData.retentionScore
-              }));
-            }}
-          />
+          <div className="mb-8">
+            <CandidateEvaluation 
+              candidate={candidate} 
+              onEvaluate={(evaluationData) => {
+                // Update candidate with new evaluation data
+                setCandidate(prev => ({
+                  ...prev,
+                  interviewScore: evaluationData.interviewScore,
+                  growthPotential: evaluationData.growthPotential,
+                  retentionScore: evaluationData.retentionScore
+                }));
+              }}
+            />
+          </div>
 
           {/* Enhanced Interview Summary */}
           {candidate.interviewSummary && candidate.interviewSummary.summary ? (
