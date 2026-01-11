@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, Users, Settings, CalendarDays, Play } from 'lucide-react';
+import showToast from '../utils/toast';
 
 const InterviewScheduler = () => {
   const [capacity, setCapacity] = useState(10);
@@ -65,14 +66,14 @@ const InterviewScheduler = () => {
       
       const data = await response.json();
       if (data.success) {
-        alert('Daily capacity updated successfully!');
+        showToast('Success\n\nDaily capacity has been updated successfully.', 'success');
         fetchSchedule();
       } else {
-        alert('Failed to update capacity: ' + (data.error || 'Unknown error'));
+        showToast('Error\n\nFailed to update capacity.\n' + (data.error || 'Unknown error'), 'error');
       }
     } catch (error) {
       console.error('Error updating capacity:', error);
-      alert('Failed to update capacity');
+      showToast('Error\n\nFailed to update capacity.', 'error');
     } finally {
       setLoading(false);
     }
