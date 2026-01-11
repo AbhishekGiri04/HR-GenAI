@@ -267,58 +267,7 @@ const TemplateSelection = () => {
                   </span>
                 </div>
 
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center space-x-3 text-gray-600">
-                    <Clock className="w-5 h-5 text-blue-500" />
-                    <span className="text-sm font-medium">{template.duration} minutes duration</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-gray-600">
-                    <BookOpen className="w-5 h-5 text-green-500" />
-                    <span className="text-sm font-medium">{template.totalQuestions} assessment questions</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-gray-600">
-                    <Star className="w-5 h-5 text-yellow-500" />
-                    <span className="text-sm font-medium">{template.passingScore}% minimum score to pass</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-gray-600">
-                    <Zap className="w-5 h-5 text-purple-500" />
-                    <span className="text-sm font-medium">Skill Match: {template.matchScore}%</span>
-                  </div>
-                </div>
 
-                <div className="mb-6">
-                  <p className="text-xs text-gray-500 mb-2 font-medium">Assessment Categories:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {template.categories.map((category, idx) => {
-                      const IconComponent = getCategoryIcon(category);
-                      return (
-                        <span key={idx} className="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium border border-blue-200">
-                          <IconComponent className="w-3 h-3 mr-1" />
-                          {category} ({template.categoryQuestions[category] || 1})
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {template.techStack && template.techStack.length > 0 && (
-                  <div className="mb-6">
-                    <p className="text-xs text-gray-500 mb-2 font-medium">Required Technical Skills:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {template.techStack.slice(0, 5).map((tech, idx) => (
-                        <span key={idx} className="inline-flex items-center px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium border">
-                          <Brain className="w-3 h-3 mr-1 text-gray-500" />
-                          {tech}
-                        </span>
-                      ))}
-                      {template.techStack.length > 5 && (
-                        <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs font-medium border">
-                          +{template.techStack.length - 5} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                )}
 
                 <button
                   onClick={() => handleUseTemplate(template)}

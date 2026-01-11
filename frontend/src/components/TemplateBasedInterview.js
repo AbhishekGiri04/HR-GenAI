@@ -175,46 +175,51 @@ const TemplateBasedInterview = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
         <Header />
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
-            <Mic className="w-16 h-16 text-purple-600 mx-auto mb-6" />
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Voice Interview Phase</h2>
-            <p className="text-gray-600 mb-6">
-              {isMixedInterview ? `Answering ${voiceQuestions.length} voice questions` : 'AI Voice Interview'}
-            </p>
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <div className="bg-white rounded-2xl shadow-xl p-8">
+            <div className="text-center mb-6">
+              <Mic className="w-16 h-16 text-purple-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Voice Interview with Huma AI</h2>
+              <p className="text-gray-600">
+                {isMixedInterview ? `${voiceQuestions.length} voice questions (Technical)` : 'AI Voice Interview'}
+              </p>
+            </div>
             
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mb-6">
-              <h3 className="font-semibold text-purple-800 mb-3">Voice Questions:</h3>
-              <div className="space-y-2">
+              <h3 className="font-semibold text-purple-800 mb-3">Voice Questions Preview:</h3>
+              <div className="space-y-2 max-h-60 overflow-y-auto">
                 {voiceQuestions.map((q, index) => (
                   <div key={index} className="text-left p-3 bg-white rounded border">
                     <span className="font-medium text-purple-700">Q{index + 1}:</span> {q.question}
+                    <span className="ml-2 text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">{q.category}</span>
                   </div>
                 ))}
               </div>
             </div>
             
-            <button
-              onClick={() => {
-                // Simulate voice interview completion
-                const voiceAnswersData = voiceQuestions.map((q, index) => ({
-                  question: q.question,
-                  answer: `Voice answer for question ${index + 1}`,
-                  type: 'voice',
-                  category: q.category
-                }));
-                setVoiceAnswers(voiceAnswersData);
-                
-                if (isMixedInterview && textQuestions.length > 0) {
-                  setInterviewPhase('text-interview');
-                } else {
-                  setInterviewPhase('completed');
-                }
-              }}
-              className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Complete Voice Interview
-            </button>
+            <div className="text-center">
+              <p className="text-sm text-gray-500 mb-4">Voice interview functionality will be integrated with Huma AI</p>
+              <button
+                onClick={() => {
+                  const voiceAnswersData = voiceQuestions.map((q, index) => ({
+                    question: q.question,
+                    answer: `Voice answer for question ${index + 1}`,
+                    type: 'voice',
+                    category: q.category
+                  }));
+                  setVoiceAnswers(voiceAnswersData);
+                  
+                  if (isMixedInterview && textQuestions.length > 0) {
+                    setInterviewPhase('text-interview');
+                  } else {
+                    handleCompleteInterview();
+                  }
+                }}
+                className="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+              >
+                {isMixedInterview && textQuestions.length > 0 ? 'Complete Voice & Continue to Text' : 'Complete Voice Interview'}
+              </button>
+            </div>
           </div>
         </div>
       </div>

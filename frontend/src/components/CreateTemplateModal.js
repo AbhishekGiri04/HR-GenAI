@@ -357,9 +357,9 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-3">Question Categories</label>
             <p className="text-sm text-gray-600 mb-3">
-              {template.interviewType === 'technical' && '🎤 Voice Interview: All questions via voice'}
-              {template.interviewType === 'behavioral' && '✍️ Text Interview: All questions via text'}
-              {template.interviewType === 'mixed' && '🎤 + ✍️ Voice + Text: Technical (Voice) + Behavioral (Text)'}
+              {template.interviewType === 'technical' && 'Voice Interview: All questions via voice'}
+              {template.interviewType === 'behavioral' && 'Text Interview: All questions via text'}
+              {template.interviewType === 'mixed' && 'Voice + Text: Technical (Voice) + Behavioral (Text)'}
             </p>
             <div className="space-y-3">
               {filteredCategories.map((category) => (

@@ -13,45 +13,57 @@ const letterService = new LetterGenerationService();
 router.post('/evaluate/:candidateId', async (req, res) => {
     try {
         const { candidateId } = req.params;
+        console.log(`\n=== EVALUATION START for ${candidateId} ===`);
+        
         const candidate = await Candidate.findById(candidateId).populate('assignedTemplate');
 
         if (!candidate) {
+            console.log('❌ Candidate not found');
             return res.status(404).json({
                 success: false,
                 error: 'Candidate not found'
             });
         }
 
+        console.log(`👤 Candidate: ${candidate.name} (${candidate.email})`);
+        
         // Evaluate candidate
         const evaluation = evaluationService.evaluateCandidate(candidate);
+        console.log(`📊 Evaluation: Score=${evaluation.interviewScore}, Passed=${evaluation.passed}`);
 
         // Update candidate with evaluation results
-        await Candidate.findByIdAndUpdate(candidateId, {
+        const updatedCandidate = await Candidate.findByIdAndUpdate(candidateId, {
             interviewScore: evaluation.interviewScore,
             growthPotential: evaluation.growthPotential,
             retentionScore: evaluation.retentionScore,
             interviewCompleted: true,
             status: 'completed',
             aiHireStatus: evaluation.passed ? 'offered' : 'rejected'
-        });
+        }, { new: true }).populate('assignedTemplate');
 
+        console.log(`✅ Candidate updated with scores`);
+        
         // Generate and send appropriate letter
         let letterResult;
         let emailSent = false;
 
         if (evaluation.passed) {
-            // Generate offer letter
-            letterResult = await letterService.generateOfferLetter(candidate);
+            console.log('🎉 Candidate PASSED - generating offer letter');
+            letterResult = await letterService.generateOfferLetter(updatedCandidate);
+            console.log(`📄 Offer letter generated: ${letterResult.fileName}`);
             
-            // Send offer email with PDF attachment
-            emailSent = await emailService.sendOfferEmail(candidate, letterResult.filePath);
+            emailSent = await emailService.sendOfferEmail(updatedCandidate, letterResult.filePath);
+            console.log(`📧 Offer email sent: ${emailSent}`);
         } else {
-            // Generate rejection letter
-            letterResult = await letterService.generateRejectionLetter(candidate);
+            console.log('❌ Candidate DID NOT PASS - generating rejection letter');
+            letterResult = await letterService.generateRejectionLetter(updatedCandidate);
+            console.log(`📄 Rejection letter generated: ${letterResult.fileName}`);
             
-            // Send rejection email with PDF attachment
-            emailSent = await emailService.sendRejectionEmail(candidate, letterResult.filePath);
+            emailSent = await emailService.sendRejectionEmail(updatedCandidate, letterResult.filePath);
+            console.log(`📧 Rejection email sent: ${emailSent}`);
         }
+
+        console.log(`=== EVALUATION COMPLETE ===\n`);
 
         res.json({
             success: true,
@@ -63,14 +75,14 @@ router.post('/evaluate/:candidateId', async (req, res) => {
                 emailSent,
                 status: evaluation.passed ? 'offered' : 'rejected'
             },
-            message: `Candidate evaluated and ${evaluation.passed ? 'offer' : 'rejection'} letter sent`
+            message: `Candidate evaluated and ${evaluation.passed ? 'offer' : 'rejection'} letter ${emailSent ? 'sent to ' + candidate.email : 'generated (email not sent)'}`
         });
 
     } catch (error) {
-        console.error('Evaluation error:', error);
+        console.error('❌ Evaluation error:', error);
         res.status(500).json({
             success: false,
-            error: 'Failed to evaluate candidate'
+            error: 'Failed to evaluate candidate: ' + error.message
         });
     }
 });
