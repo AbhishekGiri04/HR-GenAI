@@ -71,7 +71,7 @@ const TemplateBasedInterview = () => {
       <div className="min-h-screen relative">
         <div className="fixed inset-0 z-0">
           <img 
-            src="https://png.pngtree.com/thumb_back/fh260/background/20220824/pngtree-minimal-blue-desk-with-girl-writing-and-laptop-accessories-photo-image_38869118.jpg" 
+            src="https://png.pngtree.com/thumb_back/fh260/background/20220824/pngtree-freelance-writer-enjoys-coffee-break-at-tidy-desk-photo-image_38868896.jpg" 
             alt="Background" 
             className="w-full h-full object-cover"
           />
@@ -200,7 +200,7 @@ const TemplateBasedInterview = () => {
       <div className="min-h-screen relative">
         <div className="fixed inset-0 z-0">
           <img 
-            src="https://www.graduateprogram.org/wp-content/uploads/2020/12/Dec-18-What-Questions-Should-Student-Assessment-Results-Answer__web.jpg" 
+            src="https://st3.depositphotos.com/7865540/12758/i/450/depositphotos_127583080-stock-photo-business-assessment-concept.jpg" 
             alt="Background" 
             className="w-full h-full object-cover"
           />
