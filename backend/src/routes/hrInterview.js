@@ -3,7 +3,6 @@ const router = express.Router();
 const { Interview, InterviewResult } = require('../models/Interview');
 const Candidate = require('../models/Candidate');
 const questionGenerator = require('../ai-engines/intelligent-question-generator');
-const aiEvaluator = require('../ai-engines/ai-evaluation-engine');
 
 // HR Routes - Create and manage interviews
 router.post('/interviews', async (req, res) => {
