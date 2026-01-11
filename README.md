@@ -76,115 +76,158 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 ```
 HR-GenAI/
-├── 📂 frontend/                        #  React Frontend Application (Port 3000)
+├── 📂 frontend/                           # React Frontend (Port 3000)
 │   ├── 📂 public/
-│   │   └── 📄 index.html              #  Main HTML template
+│   │   └── 📄 index.html                  # Main HTML template
 │   ├── 📂 src/
-│   │   ├── 📂 components/              #  Reusable UI components
-│   │   │   ├── 📄 AIAgent.js           #  AI assistant component
-│   │   │   ├── 📄 Header.js            #  Navigation header
-│   │   │   ├── 📄 Footer.js            #  Page footer
-│   │   │   ├── 📄 ResumeUpload.js      #  Resume upload interface
-│   │   │   ├── 📄 VoiceInterviewBox.js #  Voice interview UI
-│   │   │   ├── 📄 GenomeChart.js       #  DNA profile visualization
-│   │   │   ├── 📄 TemplateSelection.js #  Interview template selector
-│   │   │   ├── 📄 BulkInviteModal.js   #  Bulk invitation modal
-│   │   │   └── 📄 CreateTemplateModal.js #  Template creation
-│   │   ├── 📂 pages/                   #  Application pages
-│   │   │   ├── 📄 LoadingPage.js       #  Loading screen
-│   │   │   ├── 📄 SignInPage.js        #  User authentication
-│   │   │   ├── 📄 SignUpPage.js        #  User registration
-│   │   │   ├── 📄 DashboardPage.js     #  Main dashboard
-│   │   │   ├── 📄 HRDashboardPage.js   #  HR management panel
-│   │   │   ├── 📄 InterviewPage.js     #  Interview interface
-│   │   │   ├── 📄 AnalyticsPage.js     #  Analytics dashboard
-│   │   │   ├── 📄 GenomeProfilePage.js #  DNA profile page
-│   │   │   └── 📄 SettingsPage.js      #  User settings
-│   │   ├── 📂 services/                #  API services
-│   │   │   └── 📄 websocketService.js  #  WebSocket connections
-│   │   ├── 📂 contexts/                #  React contexts
-│   │   │   └── 📄 authContext.js       #  Authentication context
-│   │   ├── 📂 firebase/                #  Firebase configuration
-│   │   │   └── 📄 firebaseConfig.js    #  Firebase setup
-│   │   ├── 📂 hooks/                   #  Custom React hooks
-│   │   │   └── 📄 useTemplateNotifications.js
-│   │   ├── 📂 config/                  #  Configuration files
-│   │   │   └── 📄 api.js               #  API endpoints
-│   │   ├── 📂 styles/                  #  CSS files
-│   │   │   └── 📄 main.css
-│   │   ├── 📄 App.js                   #  Main application
-│   │   └── 📄 index.js                 #  Entry point
-│   ├── 📄 package.json                 #  Frontend dependencies
-│   ├── 📄 tailwind.config.js           #  Tailwind CSS config
-│   └── 📄 .env.example                 #  Environment template
-├── 📂 backend/                         #  Node.js Backend Server (Port 5001)
+│   │   ├── 📂 components/                 # Reusable UI Components
+│   │   │   ├── 📄 AIAgent.js              # AI assistant chatbot
+│   │   │   ├── 📄 AutoEvaluationTrigger.js # Auto-evaluation trigger
+│   │   │   ├── 📄 BulkInviteModal.js      # Bulk email invitation modal
+│   │   │   ├── 📄 CandidateEvaluation.js  # Candidate evaluation UI
+│   │   │   ├── 📄 ConfirmModal.js         # Confirmation dialog
+│   │   │   ├── 📄 CreateTemplateModal.js  # Template creation modal
+│   │   │   ├── 📄 EmbeddedResumeViewer.js # Inline PDF resume viewer
+│   │   │   ├── 📄 Footer.js               # Page footer
+│   │   │   ├── 📄 GenomeChart.js          # DNA profile visualization
+│   │   │   ├── 📄 Header.js               # Navigation header
+│   │   │   ├── 📄 HumaChat.js             # Huma AI chatbot interface
+│   │   │   ├── 📄 InterviewManager.js     # Interview management
+│   │   │   ├── 📄 InterviewScheduler.js   # Interview scheduling
+│   │   │   ├── 📄 notificationTemplates.js # Notification templates
+│   │   │   ├── 📄 ProtectedRoute.js       # Route authentication guard
+│   │   │   ├── 📄 QuickHire.js            # Quick hire component
+│   │   │   ├── 📄 ResumeUpload.js         # Resume upload interface
+│   │   │   ├── 📄 RoleSelection.js        # User role selector
+│   │   │   ├── 📄 StatsCard.js            # Statistics card component
+│   │   │   ├── 📄 TemplateBasedInterview.js # Template interview UI
+│   │   │   ├── 📄 TemplateNotification.js # Template notifications
+│   │   │   ├── 📄 TemplateSelection.js    # Template selector
+│   │   │   ├── 📄 TextInterview.js        # Text-based interview
+│   │   │   ├── 📄 TimedCulturalInterview.js # Timed cultural fit test
+│   │   │   ├── 📄 Toast.js                # Toast notifications
+│   │   │   └── 📄 VoiceInterviewBox.js    # Voice interview UI
+│   │   ├── 📂 pages/                      # Application Pages
+│   │   │   ├── 📄 AnalyticsPage.js        # Analytics dashboard
+│   │   │   ├── 📄 CandidateInterviewPage.js # Candidate interview page
+│   │   │   ├── 📄 CandidateProfilePage.js # Candidate profile view
+│   │   │   ├── 📄 DashboardPage.js        # Main dashboard
+│   │   │   ├── 📄 GenomeProfilePage.js    # DNA profile page
+│   │   │   ├── 📄 HRDashboardPage.js      # HR management panel
+│   │   │   ├── 📄 InterviewPage.js        # Interview interface
+│   │   │   ├── 📄 LoadingPage.js          # Loading screen
+│   │   │   ├── 📄 SettingsPage.js         # User settings
+│   │   │   ├── 📄 SignInPage.js           # User authentication
+│   │   │   ├── 📄 SignUpPage.js           # User registration
+│   │   │   └── 📄 UserProfilePage.js      # User profile page
+│   │   ├── 📂 services/                   # API Services
+│   │   │   └── 📄 websocketService.js     # WebSocket connections
+│   │   ├── 📂 contexts/                   # React Contexts
+│   │   │   └── 📄 authContext.js          # Authentication context
+│   │   ├── 📂 firebase/                   # Firebase Configuration
+│   │   │   └── 📄 firebaseConfig.js       # Firebase setup
+│   │   ├── 📂 hooks/                      # Custom React Hooks
+│   │   │   └── 📄 useTemplateNotifications.js # Template notifications hook
+│   │   ├── 📂 config/                     # Configuration Files
+│   │   │   └── 📄 api.js                  # API endpoints config
+│   │   ├── 📂 styles/                     # CSS Stylesheets
+│   │   │   └── 📄 main.css                # Main stylesheet
+│   │   ├── 📂 utils/                      # Utility Functions
+│   │   │   └── 📄 toast.js                # Toast utility
+│   │   ├── 📄 ai-animation-flow.json      # AI animation data
+│   │   ├── 📄 loading-loop-animation.json # Loading animation
+│   │   ├── 📄 robot-ai-animation.json     # Robot animation
+│   │   ├── 📄 App.js                      # Main application
+│   │   ├── 📄 index.js                    # Entry point
+│   │   └── 📄 index.css                   # Global styles
+│   ├── 📄 package.json                    # Frontend dependencies
+│   ├── 📄 tailwind.config.js              # Tailwind CSS config
+│   └── 📄 .env.example                    # Environment template
+├── 📂 backend/                            # Node.js Backend (Port 5001)
 │   ├── 📂 src/
-│   │   ├── 📂 ai-engines/              #  AI processing engines
-│   │   │   ├── 📄 InterviewAIEngine.js #  Interview AI logic
-│   │   │   ├── 📄 ai-evaluation-engine.js #  Evaluation algorithms
-│   │   │   ├── 📄 intelligent-question-generator.js #  Dynamic questions
-│   │   │   ├── 📄 voice-emotion-analyzer.js #  Voice analysis
-│   │   │   ├── 📄 skill-dna.js         #  Skill profiling
-│   │   │   └── 📄 template-question-generator.js
-│   │   ├── 📂 controllers/             #  Business logic
-│   │   │   ├── 📄 candidateController.js #  Candidate management
-│   │   │   └── 📄 genomeController.js  #  DNA profile logic
-│   │   ├── 📂 models/                  #  Database models
-│   │   │   ├── 📄 Candidate.js         #  Candidate schema
-│   │   │   ├── 📄 Interview.js         #  Interview schema
-│   │   │   ├── 📄 Template.js          #  Template schema
-│   │   │   └── 📄 GenomeProfile.js     #  DNA profile schema
-│   │   ├── 📂 routes/                  #  API routes
-│   │   │   ├── 📄 candidates.js        #  Candidate endpoints
-│   │   │   ├── 📄 interview.js         #  Interview endpoints
-│   │   │   ├── 📄 templates.js         #  Template endpoints
-│   │   │   ├── 📄 analytics.js         #  Analytics endpoints
-│   │   │   ├── 📄 genome.js            #  DNA profile endpoints
-│   │   │   ├── 📄 invitations.js       #  Email invitations
-│   │   │   ├── 📄 hrInterview.js       #  HR interview routes
-│   │   │   └── 📄 aiCompletion.js      #  AI completion API
-│   │   ├── 📂 services/                #  External services
-│   │   │   ├── 📄 emailService.js      #  Email notifications
-│   │   │   ├── 📄 websocketService.js  #  Real-time communication
-│   │   │   └── 📄 templateScheduler.js #  Template scheduling
-│   │   ├── 📂 config/                  #  Configuration
-│   │   │   └── 📄 database.js          #  Database connection
-│   │   ├── 📂 scripts/                 #  Utility scripts
-│   │   │   └── 📄 seedTemplates.js     #  Database seeding
-│   │   └── 📄 server.js                #  Main server
-│   ├── 📂 uploads/                     #  File uploads
-│   │   ├── 📂 documents/               #  Resume documents
-│   │   └── 📂 temp/                    #  Temporary files
-│   ├── 📄 package.json                 #  Backend dependencies
-│   └── 📄 .env.example                 #  Environment template
-├── 📂 docs/                            #  Documentation & Assets
-│   ├── 📄 API_DOCUMENTATION.md         #  Complete API reference
-│   ├── 📄 HRGenAI.jpeg                 #  Project logo
-│   ├── 📄 CodeCatalyst.jpg             #  Team photo
-│   ├── 📄 ProblemStatements.png        #  Problem overview
-│   ├── 📄 Solutions.png                #  Solution overview
-│   ├── 📄 Features.png                 #  Features overview
-│   ├── 📄 Architecture.png             #  Architecture diagram
-│   ├── 📄 System_Architecture.png      #  System architecture
-│   ├── 📄 Loading_Page.png             #  Loading screen
-│   ├── 📄 Home_Page.png                #  Home page
-│   ├── 📄 SignIn_Page.png              #  Sign in page
-│   ├── 📄 SignUp_Page.png              #  Sign up page
-│   ├── 📄 HR-Dashboard.png             #  HR dashboard
-│   ├── 📄 Analytics-Dashboard.png      #  Analytics dashboard
-│   ├── 📄 Candidate_Page.png           #  Candidate page
-│   ├── 📄 Assesment_Page.png           #  Assessment page
-│   ├── 📄 Huma_Voice-AI.png            #  Voice AI interface
-│   ├── 📄 Proctoring_Setup.png         #  Proctoring setup
-│   ├── 📄 Settings.png                 #  Settings page
-│   ├── 📄 Profile_Page.png             #  Profile page
-│   └── 📄 ...                          #  Team member photos
-├── 📄 start-dev.sh                     #  Start development servers
-├── 📄 stop-dev.sh                      #  Stop development servers
-├── 📄 vercel.json                      #  Vercel deployment config
-├── 📄 LICENSE                          #  MIT License
-├── 📄 .gitignore                       #  Git ignore patterns
-└── 📄 README.md                        #  Project documentation
+│   │   ├── 📂 ai-engines/                 # AI Processing Engines
+│   │   │   ├── 📄 InterviewAIEngine.js    # Core interview AI logic
+│   │   │   ├── 📄 intelligent-question-generator.js # Dynamic question generation
+│   │   │   ├── 📄 skill-dna.js            # Skill DNA profiling
+│   │   │   ├── 📄 smartMessageGenerator.js # Smart message generation
+│   │   │   └── 📄 template-question-generator.js # Template questions
+│   │   ├── 📂 controllers/                # Business Logic Controllers
+│   │   │   ├── 📄 candidateController.js  # Candidate CRUD operations
+│   │   │   └── 📄 genomeController.js     # DNA profile operations
+│   │   ├── 📂 models/                     # MongoDB Schemas
+│   │   │   ├── 📄 Candidate.js            # Candidate schema
+│   │   │   ├── 📄 GenomeProfile.js        # DNA profile schema
+│   │   │   ├── 📄 Interview.js            # Interview schema
+│   │   │   └── 📄 Template.js             # Template schema
+│   │   ├── 📂 routes/                     # API Routes (52 endpoints)
+│   │   │   ├── 📄 aiCompletion.js         # AI completion endpoints
+│   │   │   ├── 📄 analytics.js            # Analytics endpoints
+│   │   │   ├── 📄 autoEval.js             # Auto-evaluation endpoints
+│   │   │   ├── 📄 autoHire.js             # Auto-hire endpoints
+│   │   │   ├── 📄 autoSchedule.js         # Auto-scheduling endpoints
+│   │   │   ├── 📄 candidates.js           # Candidate CRUD endpoints
+│   │   │   ├── 📄 evaluation.js           # Evaluation endpoints
+│   │   │   ├── 📄 genome.js               # DNA profile endpoints
+│   │   │   ├── 📄 hrInterview.js          # HR interview endpoints
+│   │   │   ├── 📄 huma.js                 # Huma AI chatbot endpoints
+│   │   │   ├── 📄 interview.js            # Interview endpoints
+│   │   │   ├── 📄 invitations.js          # Email invitation endpoints
+│   │   │   └── 📄 templates.js            # Template CRUD endpoints
+│   │   ├── 📂 services/                   # External Services
+│   │   │   ├── 📄 autoEvaluationService.js # Auto-evaluation service
+│   │   │   ├── 📄 autoInterviewScheduler.js # Auto-scheduling service
+│   │   │   ├── 📄 emailService.js         # Email notifications (Nodemailer)
+│   │   │   ├── 📄 humaAIService.js        # Huma AI service
+│   │   │   ├── 📄 interviewEvaluationService.js # Interview evaluation
+│   │   │   ├── 📄 letterGenerationService.js # PDF letter generation
+│   │   │   ├── 📄 templateScheduler.js    # Template scheduling
+│   │   │   └── 📄 websocketService.js     # Real-time WebSocket
+│   │   ├── 📂 config/                     # Configuration
+│   │   │   └── 📄 database.js             # MongoDB connection
+│   │   ├── 📂 scripts/                    # Utility Scripts
+│   │   │   └── 📄 seedTemplates.js        # Database seeding
+│   │   └── 📄 server.js                   # Express server entry
+│   ├── 📂 uploads/                        # File Uploads
+│   │   ├── 📂 documents/                  # Resume PDFs
+│   │   ├── 📂 letters/                    # Generated offer/rejection letters
+│   │   └── 📂 temp/                       # Temporary files
+│   ├── 📄 package.json                    # Backend dependencies
+│   └── 📄 .env.example                    # Environment template
+├── 📂 data/                               # Sample Data
+│   ├── 📄 employee_data.csv               # Employee dataset
+│   └── 📄 hr_policy.txt                   # HR policy document
+├── 📂 docs/                               # Documentation & Assets
+│   ├── 📄 API_DOCUMENTATION.md            # Complete API reference
+│   ├── 📄 HRGenAI.jpeg                    # Project logo
+│   ├── 📄 CodeCatalyst.jpg                # Team photo
+│   ├── 📄 ProblemStatements.png           # Problem overview
+│   ├── 📄 Solutions.png                   # Solution overview
+│   ├── 📄 Features.png                    # Features overview
+│   ├── 📄 Architecture.png                # Architecture diagram
+│   ├── 📄 System_Architecture.png         # System architecture
+│   ├── 📄 Loading_Page.png                # Loading screen
+│   ├── 📄 Home_Page.png                   # Home page
+│   ├── 📄 SignIn_Page.png                 # Sign in page
+│   ├── 📄 SignUp_Page.png                 # Sign up page
+│   ├── 📄 HR-Dashboard.png                # HR dashboard
+│   ├── 📄 Analytics-Dashboard.png         # Analytics dashboard
+│   ├── 📄 Candidate_Page.png              # Candidate page
+│   ├── 📄 Assesment_Page.png              # Assessment page
+│   ├── 📄 Huma_Voice-AI.png               # Voice AI interface
+│   ├── 📄 Proctoring_Setup.png            # Proctoring setup
+│   ├── 📄 Settings.png                    # Settings page
+│   ├── 📄 Profile_Page.png                # Profile page
+│   ├── 📄 AbhishekGiri.jpg                # Team member photo
+│   ├── 📄 MuskanSharma.jpeg               # Team member photo
+│   ├── 📄 KashishSharma.jpeg              # Team member photo
+│   └── 📄 SidhKhurana.jpeg                # Team member photo
+├── 📄 start-dev.sh                        # Start development servers
+├── 📄 stop-dev.sh                         # Stop development servers
+├── 📄 vercel.json                         # Vercel deployment config
+├── 📄 .env.example                        # Root environment template
+├── 📄 .gitignore                          # Git ignore patterns
+├── 📄 LICENSE                             # MIT License
+└── 📄 README.md                           # Project documentation
 ```
 
 ---
@@ -227,24 +270,83 @@ HR-GenAI/
 ### Architecture Overview
 <img src="docs/Architecture.png" alt="Architecture Diagram" width="100%"/>
 
-### Data Flow
+### Data Flow Diagram (DFD)
 
 ```mermaid
-graph TD
-    A[HR Manager] -->|Resume Upload| B[Resume Processor<br/>GPT-4 Analysis]
-    B -->|Extracted Data| C[Candidate Database]
-    B -->|Profile Info| D[Huma AI Interviewer]
-    D -->|Voice Data| E[AI Analysis Engine<br/>Personality + EQ]
-    E -->|Results| F[Digital DNA Generator]
-    F -->|Final Report| G[Email Service]
+graph TB
+    subgraph "User Layer"
+        HR[HR Manager]
+        CAND[Candidate]
+    end
     
-    style A fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#000
-    style B fill:#FFF9C4,stroke:#FFC107,stroke-width:2px,color:#000
-    style C fill:#E0F2F1,stroke:#009688,stroke-width:2px,color:#000
-    style D fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#000
-    style E fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px,color:#000
-    style F fill:#FFCCBC,stroke:#FF5722,stroke-width:2px,color:#000
-    style G fill:#FCE4EC,stroke:#E91E63,stroke-width:2px,color:#000
+    subgraph "Frontend Layer - React (Port 3000)"
+        UI[React UI]
+        AUTH[Firebase Auth]
+        WS_CLIENT[WebSocket Client]
+    end
+    
+    subgraph "Backend Layer - Node.js (Port 5001)"
+        API[Express API Server]
+        WS_SERVER[WebSocket Server]
+        ROUTES[API Routes - 52 Endpoints]
+    end
+    
+    subgraph "AI Processing Layer"
+        GPT4[GPT-4 Engine]
+        GEMINI[Gemini AI Fallback]
+        RESUME_AI[Resume Analyzer]
+        QUESTION_GEN[Question Generator]
+        EVAL_ENGINE[Evaluation Engine]
+        DNA_GEN[DNA Profile Generator]
+    end
+    
+    subgraph "Services Layer"
+        EMAIL[Email Service]
+        PDF_GEN[PDF Generator]
+        SCHEDULER[Template Scheduler]
+        HUMA[Huma AI Chatbot]
+    end
+    
+    subgraph "Data Layer"
+        MONGO[(MongoDB)]
+        UPLOADS[File Storage]
+    end
+    
+    HR -->|Upload Resume| UI
+    CAND -->|Take Interview| UI
+    UI -->|API Calls| API
+    UI <-->|Real-time| WS_CLIENT
+    WS_CLIENT <-->|WebSocket| WS_SERVER
+    
+    API --> ROUTES
+    ROUTES -->|Resume Processing| RESUME_AI
+    RESUME_AI -->|GPT-4 Analysis| GPT4
+    RESUME_AI -->|Fallback| GEMINI
+    
+    ROUTES -->|Generate Questions| QUESTION_GEN
+    QUESTION_GEN --> GPT4
+    
+    ROUTES -->|Evaluate Interview| EVAL_ENGINE
+    EVAL_ENGINE -->|Create Profile| DNA_GEN
+    
+    ROUTES -->|Send Emails| EMAIL
+    ROUTES -->|Generate Letters| PDF_GEN
+    ROUTES -->|Schedule Interviews| SCHEDULER
+    ROUTES -->|Chat Support| HUMA
+    
+    API <-->|CRUD Operations| MONGO
+    API <-->|File Operations| UPLOADS
+    
+    EMAIL -->|Offer/Rejection| CAND
+    PDF_GEN -->|Store Letters| UPLOADS
+    
+    style HR fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
+    style CAND fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
+    style UI fill:#FFF9C4,stroke:#FFC107,stroke-width:2px
+    style API fill:#E0F2F1,stroke:#009688,stroke-width:2px
+    style GPT4 fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
+    style MONGO fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px
+    style EMAIL fill:#FFCCBC,stroke:#FF5722,stroke-width:2px
 ```
 
 </div>
