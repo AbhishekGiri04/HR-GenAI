@@ -60,12 +60,12 @@ const TemplateBasedInterview = () => {
                 if (questionsResponse.ok) {
                   const data = await questionsResponse.json();
                   setQuestions(data.questions);
-                  setInterviewPhase('setup');
+                  setInterviewPhase('assessment');
                 }
               }
             }
           } else {
-            setInterviewPhase('setup');
+            setInterviewPhase('assessment');
           }
         }
       } catch (error) {
@@ -125,6 +125,114 @@ const TemplateBasedInterview = () => {
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-gray-800 mb-2">Interview Not Found</h2>
           <p className="text-gray-600">Please select a template to start the interview.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (interviewPhase === 'assessment') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <Header />
+        <div className="max-w-4xl mx-auto px-6 py-12">
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+            {/* Header Section */}
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-white">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold mb-2">{template?.name || 'Interview Assessment'}</h1>
+                  <p className="text-blue-100">Welcome, {candidateData?.name || 'Candidate'}</p>
+                </div>
+                <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-sm">
+                  <Clock className="w-12 h-12" />
+                </div>
+              </div>
+            </div>
+
+            {/* Content Section */}
+            <div className="p-8">
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Assessment Overview</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-blue-600 p-2 rounded-lg">
+                        <CheckCircle className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Total Questions</p>
+                        <p className="text-2xl font-bold text-gray-800">{questions?.length || 0}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-purple-50 p-4 rounded-xl border border-purple-200">
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-purple-600 p-2 rounded-lg">
+                        <Clock className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Duration</p>
+                        <p className="text-2xl font-bold text-gray-800">{template?.duration || 30} min</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-green-50 p-4 rounded-xl border border-green-200">
+                    <div className="flex items-center space-x-3">
+                      <div className="bg-green-600 p-2 rounded-lg">
+                        <Mic className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Interview Type</p>
+                        <p className="text-lg font-bold text-gray-800 capitalize">{template?.interviewType || 'Mixed'}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Instructions */}
+              <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-2xl border border-blue-200 mb-8">
+                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                  <AlertCircle className="w-6 h-6 mr-2 text-blue-600" />
+                  Important Instructions
+                </h3>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                    <span>Ensure you have a stable internet connection throughout the interview</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                    <span>Find a quiet environment with minimal background noise</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                    <span>Allow microphone and camera access when prompted</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                    <span>Answer all questions honestly and to the best of your ability</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                    <span>You cannot pause or restart once the interview begins</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Start Button */}
+              <div className="text-center">
+                <button
+                  onClick={() => setInterviewPhase('setup')}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3 mx-auto"
+                >
+                  <Play className="w-6 h-6" />
+                  <span>Start Assessment</span>
+                </button>
+                <p className="text-sm text-gray-500 mt-4">Click the button above when you're ready to begin</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
