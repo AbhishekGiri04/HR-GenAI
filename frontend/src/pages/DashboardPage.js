@@ -230,22 +230,6 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-3xl font-black mb-1">10x</p>
-                      <p className="text-sm text-blue-200 font-semibold">Faster Hiring</p>
-                    </div>
-                  </div>
-                  <div className="group flex flex-col items-center text-white hover:scale-105 transition-transform">
-                    <div className="w-14 h-14 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center mb-3 group-hover:bg-white/25 transition-colors">
-                      <Shield className="w-7 h-7" />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-3xl font-black mb-1">100%</p>
-                      <p className="text-sm text-blue-200 font-semibold">Bias-Free</p>
-                    </div>
-                  </div>
-                </div>
               </div>
               
               <div className="hidden lg:block">
