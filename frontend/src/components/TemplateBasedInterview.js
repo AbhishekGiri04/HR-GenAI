@@ -109,7 +109,7 @@ const TemplateBasedInterview = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading candidate data...</p>
@@ -118,24 +118,23 @@ const TemplateBasedInterview = () => {
     );
   }
 
-  if (!template || !questions) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Interview Not Found</h2>
-          <p className="text-gray-600">Please select a template to start the interview.</p>
-        </div>
-      </div>
-    );
-  }
-
   if (interviewPhase === 'assessment') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <Header />
-        <div className="max-w-4xl mx-auto px-6 py-12">
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+      <div className="min-h-screen relative">
+        {/* Background Image */}
+        <div className="fixed inset-0 z-0">
+          <img 
+            src="https://strobeleducation.com/wp-content/uploads/2023/05/blog50_featimg.png" 
+            alt="Background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-purple-900/70 to-indigo-900/70"></div>
+        </div>
+        
+        <div className="relative z-10">
+          <Header />
+          <div className="max-w-4xl mx-auto px-6 py-12">
+            <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
             {/* Header Section */}
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-white">
               <div className="flex items-center justify-between">
