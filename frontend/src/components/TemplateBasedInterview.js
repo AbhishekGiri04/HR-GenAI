@@ -25,11 +25,16 @@ const TemplateBasedInterview = () => {
           const candidate = await candidateResponse.json();
           setCandidateData(candidate);
           
-          if (!template) {
-            const templatesResponse = await fetch(`${API_URL}/api/hr/templates/deployed/public?candidateId=${candidateId}`);
-            if (templatesResponse.ok) {
-              const templates = await templatesResponse.json();
-              if (templates.length > 0) {
+          // Fetch all deployed templates
+          const templatesResponse = await fetch(`${API_URL}/api/hr/templates/deployed/public?candidateId=${candidateId}`);
+          if (templatesResponse.ok) {
+            const templates = await templatesResponse.json();
+            if (templates.length > 0) {
+              // Show template selection if multiple templates
+              if (templates.length > 1 && !template) {
+                setInterviewPhase('template-selection');
+                setTemplate(templates);
+              } else if (!template) {
                 const selectedTemplate = templates[0];
                 setTemplate(selectedTemplate);
                 
@@ -43,6 +48,8 @@ const TemplateBasedInterview = () => {
                   setQuestions(data.questions);
                   setInterviewPhase('assessment');
                 }
+              } else {
+                setInterviewPhase('assessment');
               }
             }
           } else {
@@ -69,6 +76,83 @@ const TemplateBasedInterview = () => {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading candidate data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (interviewPhase === 'template-selection') {
+    const templates = Array.isArray(template) ? template : [template];
+    return (
+      <div className="min-h-screen relative">
+        <div className="fixed inset-0 z-0">
+          <img 
+            src="https://www.graduateprogram.org/wp-content/uploads/2020/12/Dec-18-What-Questions-Should-Student-Assessment-Results-Answer__web.jpg" 
+            alt="Background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/40 to-indigo-900/40"></div>
+        </div>
+        
+        <div className="relative z-10">
+          <Header />
+          <div className="max-w-6xl mx-auto px-6 py-12">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-bold text-white mb-4">Select Your Interview Template</h1>
+              <p className="text-blue-100 text-lg">Choose the assessment you want to take</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {templates.map((tmpl) => (
+                <div key={tmpl._id} className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-100 hover:scale-105 transition-transform duration-300">
+                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">{tmpl.name}</h3>
+                    <p className="text-blue-100 text-sm">{tmpl.description || 'Interview Assessment'}</p>
+                  </div>
+                  
+                  <div className="p-6">
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Questions:</span>
+                        <span className="font-bold text-gray-800">{tmpl.questions?.length || 0}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Duration:</span>
+                        <span className="font-bold text-gray-800">{tmpl.duration || 30} min</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Type:</span>
+                        <span className="font-bold text-gray-800 capitalize">{tmpl.interviewType || 'Mixed'}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Passing Score:</span>
+                        <span className="font-bold text-gray-800">{tmpl.passingScore || 70}%</span>
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={async () => {
+                        setTemplate(tmpl);
+                        const questionsResponse = await fetch(`${API_URL}/api/interview/generate-questions/${candidateId}/${tmpl._id}`, {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' }
+                        });
+                        
+                        if (questionsResponse.ok) {
+                          const data = await questionsResponse.json();
+                          setQuestions(data.questions);
+                          setInterviewPhase('assessment');
+                        }
+                      }}
+                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      Select Template
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );
