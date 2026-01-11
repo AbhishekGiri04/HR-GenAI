@@ -79,11 +79,11 @@ const TemplateBasedInterview = () => {
       <div className="min-h-screen relative">
         <div className="fixed inset-0 z-0">
           <img 
-            src="https://strobeleducation.com/wp-content/uploads/2023/05/blog50_featimg.png" 
+            src="https://www.graduateprogram.org/wp-content/uploads/2020/12/Dec-18-What-Questions-Should-Student-Assessment-Results-Answer__web.jpg" 
             alt="Background" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-purple-900/70 to-indigo-900/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/40 to-indigo-900/40"></div>
         </div>
         
         <div className="relative z-10">
