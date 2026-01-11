@@ -71,70 +71,123 @@ const TemplateBasedInterview = () => {
       <div className="min-h-screen relative">
         <div className="fixed inset-0 z-0">
           <img 
-            src="https://www.graduateprogram.org/wp-content/uploads/2020/12/Dec-18-What-Questions-Should-Student-Assessment-Results-Answer__web.jpg" 
+            src="https://png.pngtree.com/thumb_back/fh260/background/20220824/pngtree-minimal-blue-desk-with-girl-writing-and-laptop-accessories-photo-image_38869118.jpg" 
             alt="Background" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/30 to-indigo-900/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-indigo-900/20"></div>
         </div>
         
         <div className="relative z-10">
           <Header />
-          <div className="max-w-6xl mx-auto px-6 py-12">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-white mb-4">Select Your Interview Template</h1>
-              <p className="text-blue-100 text-lg">Choose the assessment you want to take</p>
+          <div className="max-w-7xl mx-auto px-6 py-12">
+            <div className="text-center mb-12">
+              <h1 className="text-5xl font-black text-white mb-4 drop-shadow-lg">Select Your Interview Template</h1>
+              <p className="text-blue-100 text-xl font-medium drop-shadow">Choose the assessment that best matches your skills</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {templates.map((tmpl) => (
-                <div key={tmpl._id} className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-100 hover:scale-105 transition-transform duration-300">
-                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
-                    <h3 className="text-2xl font-bold mb-2">{tmpl.name}</h3>
-                    <p className="text-blue-100 text-sm">{tmpl.description || 'Interview Assessment'}</p>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Questions:</span>
-                        <span className="font-bold text-gray-800">{tmpl.questions?.length || 0}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Duration:</span>
-                        <span className="font-bold text-gray-800">{tmpl.duration || 30} min</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Type:</span>
-                        <span className="font-bold text-gray-800 capitalize">{tmpl.interviewType || 'Mixed'}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Passing Score:</span>
-                        <span className="font-bold text-gray-800">{tmpl.passingScore || 70}%</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {templates.map((tmpl, index) => {
+                const colors = [
+                  { from: 'from-blue-500', to: 'to-cyan-500', bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200' },
+                  { from: 'from-purple-500', to: 'to-pink-500', bg: 'bg-purple-50', text: 'text-purple-600', border: 'border-purple-200' },
+                  { from: 'from-green-500', to: 'to-emerald-500', bg: 'bg-green-50', text: 'text-green-600', border: 'border-green-200' },
+                  { from: 'from-orange-500', to: 'to-red-500', bg: 'bg-orange-50', text: 'text-orange-600', border: 'border-orange-200' },
+                  { from: 'from-indigo-500', to: 'to-blue-500', bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-200' },
+                  { from: 'from-pink-500', to: 'to-rose-500', bg: 'bg-pink-50', text: 'text-pink-600', border: 'border-pink-200' }
+                ];
+                const color = colors[index % colors.length];
+                
+                return (
+                  <div key={tmpl._id} className="group bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border-2 border-white/50 hover:scale-105 hover:shadow-3xl transition-all duration-300">
+                    <div className={`bg-gradient-to-r ${color.from} ${color.to} p-8 text-white relative overflow-hidden`}>
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
+                      <div className="relative">
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-3xl font-black">{tmpl.name}</h3>
+                          <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                            <span className="text-sm font-bold">#{index + 1}</span>
+                          </div>
+                        </div>
+                        <p className="text-white/90 text-sm font-medium">{tmpl.description || 'Professional Assessment'}</p>
                       </div>
                     </div>
                     
-                    <button
-                      onClick={async () => {
-                        setTemplate(tmpl);
-                        const questionsResponse = await fetch(`${API_URL}/api/interview/generate-questions/${candidateId}/${tmpl._id}`, {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' }
-                        });
+                    <div className="p-6">
+                      <div className="space-y-4 mb-6">
+                        <div className={`${color.bg} ${color.border} border-2 p-4 rounded-xl`}>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                              <div className={`bg-gradient-to-r ${color.from} ${color.to} p-2 rounded-lg`}>
+                                <CheckCircle className="w-5 h-5 text-white" />
+                              </div>
+                              <span className="text-gray-700 font-semibold">Questions</span>
+                            </div>
+                            <span className={`${color.text} font-black text-2xl`}>{tmpl.questions?.length || 0}</span>
+                          </div>
+                        </div>
                         
-                        if (questionsResponse.ok) {
-                          const data = await questionsResponse.json();
-                          setQuestions(data.questions);
-                          setInterviewPhase('assessment');
-                        }
-                      }}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl"
-                    >
-                      Select Template
-                    </button>
+                        <div className={`${color.bg} ${color.border} border-2 p-4 rounded-xl`}>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                              <div className={`bg-gradient-to-r ${color.from} ${color.to} p-2 rounded-lg`}>
+                                <Clock className="w-5 h-5 text-white" />
+                              </div>
+                              <span className="text-gray-700 font-semibold">Duration</span>
+                            </div>
+                            <span className={`${color.text} font-black text-2xl`}>{tmpl.duration || 30} min</span>
+                          </div>
+                        </div>
+                        
+                        <div className={`${color.bg} ${color.border} border-2 p-4 rounded-xl`}>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                              <div className={`bg-gradient-to-r ${color.from} ${color.to} p-2 rounded-lg`}>
+                                <Mic className="w-5 h-5 text-white" />
+                              </div>
+                              <span className="text-gray-700 font-semibold">Type</span>
+                            </div>
+                            <span className={`${color.text} font-black text-lg capitalize`}>{tmpl.interviewType || 'Mixed'}</span>
+                          </div>
+                        </div>
+                        
+                        <div className={`${color.bg} ${color.border} border-2 p-4 rounded-xl`}>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                              <div className={`bg-gradient-to-r ${color.from} ${color.to} p-2 rounded-lg`}>
+                                <AlertCircle className="w-5 h-5 text-white" />
+                              </div>
+                              <span className="text-gray-700 font-semibold">Passing Score</span>
+                            </div>
+                            <span className={`${color.text} font-black text-2xl`}>{tmpl.passingScore || 70}%</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <button
+                        onClick={async () => {
+                          setTemplate(tmpl);
+                          const questionsResponse = await fetch(`${API_URL}/api/interview/generate-questions/${candidateId}/${tmpl._id}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' }
+                          });
+                          
+                          if (questionsResponse.ok) {
+                            const data = await questionsResponse.json();
+                            setQuestions(data.questions);
+                            setInterviewPhase('assessment');
+                          }
+                        }}
+                        className={`w-full bg-gradient-to-r ${color.from} ${color.to} hover:shadow-2xl text-white py-4 rounded-2xl font-black text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2`}
+                      >
+                        <Play className="w-6 h-6" />
+                        <span>Select Template</span>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

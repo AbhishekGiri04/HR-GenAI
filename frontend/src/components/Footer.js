@@ -27,9 +27,9 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-slate-300 leading-relaxed mb-6 max-w-md">
-              Revolutionary AI-powered hiring intelligence platform featuring Digital DNA profiling, 
-              voice-based interviews with Huma AI, and predictive analytics that transforms traditional 
-              recruitment into data-driven talent acquisition with 95% accuracy and bias-free evaluation.
+              AI-powered hiring platform with resume analysis, voice interviews, Digital DNA profiling, 
+              template-based assessments, real-time proctoring, and automated evaluation delivering 95% accuracy 
+              in candidate assessment with bias-free, data-driven hiring decisions.
             </p>
           </div>
 

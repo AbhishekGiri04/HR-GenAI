@@ -189,17 +189,17 @@ const Dashboard = () => {
               <div>
                 <div className="inline-flex items-center px-5 py-2.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-7">
                   <Sparkles className="w-5 h-5 text-yellow-300 mr-3 animate-pulse" />
-                  <span className="text-white text-lg font-bold">AI-Powered Intelligence</span>
+                  <span className="text-white text-lg font-bold">AI-Powered Hiring Intelligence</span>
                 </div>
                 <h1 className="text-5xl font-black text-white mb-6 leading-tight">
-                  Revolutionize Recruitment with
+                  Transform Your Hiring with
                   <span className="block bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300 bg-clip-text text-transparent mt-2">
-                    AI-Powered Talent Intelligence
+                    Intelligent Assessment Platform
                   </span>
                 </h1>
                 <p className="text-xl text-blue-100 mb-10 leading-relaxed font-medium">
-                  Advanced AI algorithms analyze candidate potential beyond traditional resumes. 
-                  Discover hidden talents, predict performance, and eliminate hiring bias with our intelligent assessment platform.
+                  Streamline recruitment with AI-powered resume analysis, voice interviews, and Digital DNA profiling. 
+                  Make data-driven hiring decisions with 95% accuracy, eliminate bias, and reduce time-to-hire by 10x.
                 </p>
                 <div className="grid grid-cols-3 gap-6">
                   <div className="group flex flex-col items-center text-white hover:scale-105 transition-transform">
@@ -208,12 +208,28 @@ const Dashboard = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-3xl font-black mb-1">95%</p>
-                      <p className="text-sm text-blue-200 font-semibold">Resume Accuracy</p>
+                      <p className="text-sm text-blue-200 font-semibold">Analysis Accuracy</p>
                     </div>
                   </div>
                   <div className="group flex flex-col items-center text-white hover:scale-105 transition-transform">
                     <div className="w-14 h-14 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center mb-3 group-hover:bg-white/25 transition-colors">
                       <Zap className="w-7 h-7" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-3xl font-black mb-1">10x</p>
+                      <p className="text-sm text-blue-200 font-semibold">Faster Hiring</p>
+                    </div>
+                  </div>
+                  <div className="group flex flex-col items-center text-white hover:scale-105 transition-transform">
+                    <div className="w-14 h-14 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center mb-3 group-hover:bg-white/25 transition-colors">
+                      <Shield className="w-7 h-7" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-3xl font-black mb-1">100%</p>
+                      <p className="text-sm text-blue-200 font-semibold">Bias-Free</p>
+                    </div>
+                  </div>
+                </div>
                     </div>
                     <div className="text-center">
                       <p className="text-3xl font-black mb-1">10x</p>
@@ -628,9 +644,9 @@ const Dashboard = () => {
               <div className="bg-white/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <Brain className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold mb-3">Digital DNA Profiling</h3>
+              <h3 className="text-2xl font-bold mb-3">AI Resume Analysis</h3>
               <p className="text-blue-100 leading-relaxed">
-                Advanced AI extracts comprehensive skill profiles from resumes with 95% accuracy using GPT-4 technology
+                GPT-4 powered resume parsing extracts candidate profiles with 95% accuracy, identifying skills, experience, and qualifications instantly
               </p>
             </div>
             
@@ -638,9 +654,9 @@ const Dashboard = () => {
               <div className="bg-white/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <Target className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold mb-3">Voice AI Interviews</h3>
+              <h3 className="text-2xl font-bold mb-3">Template-Based Interviews</h3>
               <p className="text-purple-100 leading-relaxed">
-                Huma AI conducts natural voice interviews with real-time speech recognition and intelligent response evaluation
+                Customizable interview templates with voice and text questions, real-time proctoring, and automated scoring for comprehensive candidate evaluation
               </p>
             </div>
             
@@ -648,9 +664,9 @@ const Dashboard = () => {
               <div className="bg-white/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <Shield className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold mb-3">Predictive Analytics</h3>
+              <h3 className="text-2xl font-bold mb-3">Automated Evaluation</h3>
               <p className="text-emerald-100 leading-relaxed">
-                AI-powered evaluation system analyzes responses and provides comprehensive performance insights with detailed feedback
+                AI-powered scoring system analyzes interview responses, generates performance reports, and automatically sends offer/rejection letters with detailed feedback
               </p>
             </div>
           </div>

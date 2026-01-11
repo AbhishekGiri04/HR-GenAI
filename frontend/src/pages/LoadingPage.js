@@ -6,13 +6,13 @@ const LoadingScreen = () => {
   const [textIndex, setTextIndex] = useState(0);
 
   const loadingTexts = [
-    "Connecting to OpenAI GPT-4 API...",
-    "Loading Web Speech API for voice interviews...",
-    "Initializing PDF parsing engine...",
-    "Setting up MongoDB database connection...",
-    "Loading React frontend components...",
-    "Configuring Node.js backend services...",
-    "Preparing real-time analytics dashboard..."
+    "Initializing AI-powered resume analysis engine...",
+    "Loading voice interview system with Web Speech API...",
+    "Connecting to MongoDB for candidate data storage...",
+    "Setting up real-time proctoring and monitoring...",
+    "Preparing Digital DNA profiling algorithms...",
+    "Loading template-based interview framework...",
+    "Configuring automated evaluation system..."
   ];
 
   useEffect(() => {
@@ -93,19 +93,19 @@ const LoadingScreen = () => {
         <div className="grid grid-cols-2 md:grid-cols-2 gap-3 mb-10 max-w-2xl mx-auto">
           <div className="bg-blue-500/10 backdrop-blur-xl rounded-full px-4 py-3 border border-blue-500/30 flex items-center justify-center space-x-2">
             <Brain className="w-5 h-5 text-blue-400" />
-            <span className="text-gray-300 text-sm font-semibold">Voice Interviewer</span>
+            <span className="text-gray-300 text-sm font-semibold">AI Voice Interviews</span>
           </div>
           <div className="bg-purple-500/10 backdrop-blur-xl rounded-full px-4 py-3 border border-purple-500/30 flex items-center justify-center space-x-2">
             <Target className="w-5 h-5 text-purple-400" />
-            <span className="text-gray-300 text-sm font-semibold">GPT-4 Analysis</span>
+            <span className="text-gray-300 text-sm font-semibold">Resume Analysis</span>
           </div>
           <div className="bg-pink-500/10 backdrop-blur-xl rounded-full px-4 py-3 border border-pink-500/30 flex items-center justify-center space-x-2">
             <Zap className="w-5 h-5 text-pink-400" />
-            <span className="text-gray-300 text-sm font-semibold">Real-time Proctoring</span>
+            <span className="text-gray-300 text-sm font-semibold">Digital DNA Profiling</span>
           </div>
           <div className="bg-green-500/10 backdrop-blur-xl rounded-full px-4 py-3 border border-green-500/30 flex items-center justify-center space-x-2">
             <Shield className="w-5 h-5 text-green-400" />
-            <span className="text-gray-300 text-sm font-semibold">Anti-Cheating</span>
+            <span className="text-gray-300 text-sm font-semibold">Anti-Cheating System</span>
           </div>
         </div>
 
@@ -125,7 +125,7 @@ const LoadingScreen = () => {
         </div>
 
         <p className="mt-8 text-gray-500 text-sm">
-          Advanced AI-Powered Hiring Platform | Intelligent Resume Processing | Voice-Based Interviews | Real-Time Analytics | Enterprise-Grade Technology Stack
+          AI Resume Analysis • Voice & Text Interviews • Template-Based Assessments • Digital DNA Profiling • Real-Time Proctoring • Automated Evaluation • Performance Prediction
         </p>
       </div>
 
