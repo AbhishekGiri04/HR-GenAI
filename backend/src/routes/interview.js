@@ -69,9 +69,9 @@ router.post('/generate-questions/:candidateId/:templateId', async (req, res) => 
         question: q.question,
         difficulty: q.difficulty || template.difficulty,
         points: q.points || 10,
-        type: q.category === 'Technical Skills' ? 'voice' : 'text',
+        type: q.type || q.interviewMode || 'text',
         expectedAnswer: q.expectedAnswer,
-        timeLimit: Math.floor((template.duration * 60) / template.questions.length) // Divide time equally
+        timeLimit: q.timeLimit || Math.floor((template.duration * 60) / template.questions.length)
       }));
 
       return res.json({

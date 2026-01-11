@@ -12,10 +12,12 @@ const TemplateBasedInterview = () => {
   const { candidateId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { template, questions, aiGenerated } = location.state || {};
+  const { template: locationTemplate, questions: locationQuestions, aiGenerated } = location.state || {};
   
-  const [interviewPhase, setInterviewPhase] = useState('setup');
+  const [interviewPhase, setInterviewPhase] = useState('loading');
   const [candidateData, setCandidateData] = useState(null);
+  const [template, setTemplate] = useState(locationTemplate);
+  const [questions, setQuestions] = useState(locationQuestions);
   const [loading, setLoading] = useState(true);
   const [voiceAnswers, setVoiceAnswers] = useState([]);
   const [textAnswers, setTextAnswers] = useState([]);
@@ -32,33 +34,53 @@ const TemplateBasedInterview = () => {
   console.log('Voice Questions:', voiceQuestions.length);
   console.log('Text Questions:', textQuestions.length);
   useEffect(() => {
-    const fetchCandidateData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/candidates/${candidateId}`);
-        if (response.ok) {
-          const data = await response.json();
-          setCandidateData(data);
+        // Fetch candidate data
+        const candidateResponse = await fetch(`${API_URL}/api/candidates/${candidateId}`);
+        if (candidateResponse.ok) {
+          const candidate = await candidateResponse.json();
+          setCandidateData(candidate);
+          
+          // If no template from location, fetch deployed templates
+          if (!template) {
+            const templatesResponse = await fetch(`${API_URL}/api/hr/templates/deployed/public?candidateId=${candidateId}`);
+            if (templatesResponse.ok) {
+              const templates = await templatesResponse.json();
+              if (templates.length > 0) {
+                const selectedTemplate = templates[0];
+                setTemplate(selectedTemplate);
+                
+                // Generate questions
+                const questionsResponse = await fetch(`${API_URL}/api/interview/generate-questions/${candidateId}/${selectedTemplate._id}`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (questionsResponse.ok) {
+                  const data = await questionsResponse.json();
+                  setQuestions(data.questions);
+                  setInterviewPhase('setup');
+                }
+              }
+            }
+          } else {
+            setInterviewPhase('setup');
+          }
         }
       } catch (error) {
-        console.error('Failed to fetch candidate data:', error);
+        console.error('Failed to fetch data:', error);
       } finally {
         setLoading(false);
       }
     };
 
     if (candidateId) {
-      fetchCandidateData();
+      fetchData();
     } else {
       setLoading(false);
     }
-  }, [candidateId]);
-
-  useEffect(() => {
-    if (!template || !questions) {
-      navigate('/dashboard');
-      return;
-    }
-  }, [template, questions, navigate]);
+  }, [candidateId, template]);
 
   const handleCompleteInterview = async () => {
     try {

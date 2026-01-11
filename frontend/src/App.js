@@ -60,8 +60,8 @@ function AppContent() {
           user ? (userRole ? <Navigate to="/dashboard" replace /> : <RoleSelection />) : <Navigate to="/signin" replace />
         } />
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-        <Route path="/template-selection/:candidateId" element={<ProtectedRoute><TemplateSelection /></ProtectedRoute>} />
-        <Route path="/template-selection" element={<ProtectedRoute><TemplateSelection /></ProtectedRoute>} />
+        <Route path="/template-selection/:candidateId" element={<ProtectedRoute><TemplateBasedInterview /></ProtectedRoute>} />
+        <Route path="/template-selection" element={<ProtectedRoute><TemplateBasedInterview /></ProtectedRoute>} />
         <Route path="/profile/:candidateId" element={<ProtectedRoute><CandidateProfilePage /></ProtectedRoute>} />
         <Route path="/genome/:id" element={<ProtectedRoute><GenomeProfilePage /></ProtectedRoute>} />
         <Route path="/analytics" element={<ProtectedRoute requireRole="hr"><AnalyticsPage /></ProtectedRoute>} />
