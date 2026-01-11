@@ -19,9 +19,9 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
   const [estimatedQuestions, setEstimatedQuestions] = useState(0);
 
   const interviewTypes = [
-    { value: 'technical', label: 'Technical Interview', desc: 'Focus on coding and technical skills' },
-    { value: 'behavioral', label: 'Behavioral Interview', desc: 'Assess soft skills and culture fit' },
-    { value: 'mixed', label: 'Mixed Interview', desc: 'Combination of technical and behavioral' }
+    { value: 'technical', label: 'Technical Interview', desc: 'Focus on coding and technical skills', mode: 'Voice Interview' },
+    { value: 'behavioral', label: 'Behavioral Interview', desc: 'Assess soft skills and culture fit', mode: 'Text Interview' },
+    { value: 'mixed', label: 'Mixed Interview', desc: 'Combination of technical and behavioral', mode: 'Voice + Text Interview' }
   ];
 
   const difficultyLevels = [
@@ -31,25 +31,19 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
   ];
 
   const questionCategories = [
-    { value: 'technical', label: 'Technical Skills', defaultCount: 3, type: 'voice', interviewMode: 'voice' },
-    { value: 'behavioral', label: 'Behavioral Assessment', defaultCount: 2, type: 'text', interviewMode: 'text' },
-    { value: 'problem-solving', label: 'Problem Solving', defaultCount: 2, type: 'voice', interviewMode: 'voice' },
-    { value: 'communication', label: 'Communication', defaultCount: 1, type: 'voice', interviewMode: 'voice' },
-    { value: 'leadership', label: 'Leadership', defaultCount: 1, type: 'text', interviewMode: 'text' },
-    { value: 'cultural-fit', label: 'Cultural Fit', defaultCount: 1, type: 'text', interviewMode: 'text' }
+    { value: 'technical', label: 'Technical Skills', defaultCount: 3, type: 'voice' },
+    { value: 'behavioral', label: 'Behavioral Assessment', defaultCount: 2, type: 'text' },
+    { value: 'problem-solving', label: 'Problem Solving', defaultCount: 2, type: 'voice' },
+    { value: 'communication', label: 'Communication', defaultCount: 1, type: 'voice' },
+    { value: 'leadership', label: 'Leadership', defaultCount: 1, type: 'text' },
+    { value: 'cultural-fit', label: 'Cultural Fit', defaultCount: 1, type: 'text' }
   ];
 
-  // Filter categories based on interview type
-  const getFilteredCategories = () => {
-    if (template.interviewType === 'technical') {
-      return questionCategories.filter(cat => cat.type === 'voice');
-    } else if (template.interviewType === 'behavioral') {
-      return questionCategories.filter(cat => cat.type === 'text');
-    }
-    return questionCategories; // mixed - all categories
-  };
-
-  const filteredCategories = getFilteredCategories();
+  const filteredCategories = template.interviewType === 'technical' 
+    ? questionCategories.filter(cat => cat.type === 'voice')
+    : template.interviewType === 'behavioral'
+    ? questionCategories.filter(cat => cat.type === 'text')
+    : questionCategories;
 
   const [categoryQuestions, setCategoryQuestions] = useState({
     'technical': 0,
@@ -140,27 +134,31 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
       template.categories.forEach(categoryValue => {
         const category = questionCategories.find(c => c.value === categoryValue);
         const questionCount = categoryQuestions[categoryValue] || category.defaultCount;
+        const questionType = category.type; // 'voice' or 'text'
         
         for (let i = 0; i < questionCount; i++) {
           generatedQuestions.push({
-            question: `Sample ${category.label} question ${i + 1}`,
+            question: `AI will generate ${category.label} question ${i + 1}`,
             category: categoryValue,
-            type: category.type, // 'voice' or 'text'
-            interviewMode: category.type, // for compatibility
-            difficulty: template.difficulty
+            type: questionType,
+            interviewMode: questionType,
+            difficulty: template.difficulty,
+            timeLimit: Math.floor((template.duration * 60) / (estimatedQuestions || 1))
           });
         }
       });
       
-      // Add custom questions
+      // Add custom questions with proper types
       template.customQuestions.forEach(customQ => {
         const category = questionCategories.find(c => c.value === customQ.category);
+        const questionType = category?.type || 'text';
         generatedQuestions.push({
           question: customQ.question,
           category: customQ.category,
-          type: category?.type || 'text',
-          interviewMode: category?.type || 'text',
-          difficulty: template.difficulty
+          type: questionType,
+          interviewMode: questionType,
+          difficulty: template.difficulty,
+          timeLimit: Math.floor((template.duration * 60) / (estimatedQuestions || 1))
         });
       });
       
@@ -301,9 +299,7 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
                   <p className="text-sm text-gray-600">{type.desc}</p>
                   {template.interviewType === type.value && (
                     <div className="mt-2 text-xs font-medium text-blue-700">
-                      {type.value === 'technical' && 'Voice Interview'}
-                      {type.value === 'behavioral' && 'Text Interview'}
-                      {type.value === 'mixed' && 'Voice + Text Interview'}
+                      {type.mode}
                     </div>
                   )}
                 </div>
@@ -361,9 +357,9 @@ const CreateTemplateModal = ({ isOpen, onClose, onSave }) => {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-3">Question Categories</label>
             <p className="text-sm text-gray-600 mb-3">
-              {template.interviewType === 'technical' && 'All questions will be conducted via Voice Interview'}
-              {template.interviewType === 'behavioral' && 'All questions will be conducted via Text Interview'}
-              {template.interviewType === 'mixed' && 'Mixed Interview: Voice questions (Technical) + Text questions (Behavioral)'}
+              {template.interviewType === 'technical' && '🎤 Voice Interview: All questions via voice'}
+              {template.interviewType === 'behavioral' && '✍️ Text Interview: All questions via text'}
+              {template.interviewType === 'mixed' && '🎤 + ✍️ Voice + Text: Technical (Voice) + Behavioral (Text)'}
             </p>
             <div className="space-y-3">
               {filteredCategories.map((category) => (

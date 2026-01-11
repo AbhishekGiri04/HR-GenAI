@@ -121,14 +121,20 @@ router.post('/templates', async (req, res) => {
       techStack: template.techStack,
       interviewType: template.interviewType,
       difficulty: template.difficulty,
+      duration: template.duration,
       categories: template.categoryQuestions,
-      customQuestions: template.customQuestions.map(q => q.question)
+      customQuestions: template.customQuestions.map(q => ({
+        question: q.question,
+        category: q.category
+      }))
     });
     
     if (questionResult.success) {
       template.questions = questionResult.questions;
       await template.save();
-      console.log(`✅ ${questionResult.questions.length} questions generated and saved`);
+      console.log(`✅ ${questionResult.questions.length} questions generated`);
+      console.log(`🎤 Voice questions: ${questionResult.voiceQuestions?.length || 0}`);
+      console.log(`✍️  Text questions: ${questionResult.textQuestions?.length || 0}`);
     }
     
     res.status(201).json(template);

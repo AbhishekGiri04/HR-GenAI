@@ -40,7 +40,23 @@ Format as JSON array with fields: question, category, type, expectedPoints (arra
     const jsonMatch = text.match(/\[\s*{[\s\S]*}\s*\]/);    
     
     if (jsonMatch) {
-      const questions = JSON.parse(jsonMatch[0]);
+      let questions = JSON.parse(jsonMatch[0]);
+      
+      // Add custom questions with proper types
+      if (templateConfig.customQuestions && templateConfig.customQuestions.length > 0) {
+        const customQs = templateConfig.customQuestions.map(cq => {
+          const category = cq.category || 'technical';
+          const type = ['technical', 'problem-solving', 'communication'].includes(category) ? 'voice' : 'text';
+          return {
+            question: cq.question,
+            category,
+            type,
+            expectedPoints: ['Custom question - evaluate based on response quality']
+          };
+        });
+        questions = [...questions, ...customQs];
+      }
+      
       console.log(`✅ Generated ${questions.length} AI questions`);
       
       return {
@@ -73,7 +89,7 @@ Format as JSON array with fields: question, category, type, expectedPoints (arra
  * Fallback questions if Gemini API fails
  */
 function generateFallbackQuestions(templateConfig) {
-  const { positionTitle, difficulty, categories, duration, interviewType, techStack } = templateConfig;
+  const { positionTitle, difficulty, categories, duration, interviewType, techStack, customQuestions } = templateConfig;
   const fallbackQuestions = [];
   
   const totalQuestions = Object.values(categories).reduce((sum, count) => sum + count, 0);
@@ -130,12 +146,30 @@ function generateFallbackQuestions(templateConfig) {
           category,
           difficulty,
           type,
+          interviewMode: type,
           timeLimit: timePerQuestion,
           expectedPoints: ['Relevant experience', 'Technical depth', 'Problem-solving approach']
         });
       }
     }
   });
+  
+  // Add custom questions
+  if (customQuestions && customQuestions.length > 0) {
+    customQuestions.forEach(cq => {
+      const category = cq.category || 'technical';
+      const type = getCategoryType(category);
+      fallbackQuestions.push({
+        question: cq.question,
+        category,
+        difficulty,
+        type,
+        interviewMode: type,
+        timeLimit: timePerQuestion,
+        expectedPoints: ['Custom question - evaluate based on response quality']
+      });
+    });
+  }
   
   return fallbackQuestions;
 }

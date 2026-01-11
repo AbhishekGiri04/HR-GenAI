@@ -30,7 +30,11 @@ const templateSchema = new mongoose.Schema({
     question: String,
     expectedAnswer: String,
     points: Number,
-    difficulty: String
+    difficulty: String,
+    type: { type: String, enum: ['voice', 'text'], default: 'voice' },
+    interviewMode: { type: String, enum: ['voice', 'text'], default: 'voice' },
+    timeLimit: Number,
+    expectedPoints: [String]
   }],
   createdBy: { type: String, default: 'HR User' },
   isActive: { type: Boolean, default: true },
