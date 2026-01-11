@@ -30,24 +30,10 @@ const TemplateBasedInterview = () => {
           if (templatesResponse.ok) {
             const templates = await templatesResponse.json();
             if (templates.length > 0) {
-              // Show template selection if multiple templates
-              if (templates.length > 1 && !template) {
+              // Always show template selection if templates exist
+              if (!template) {
                 setInterviewPhase('template-selection');
                 setTemplate(templates);
-              } else if (!template) {
-                const selectedTemplate = templates[0];
-                setTemplate(selectedTemplate);
-                
-                const questionsResponse = await fetch(`${API_URL}/api/interview/generate-questions/${candidateId}/${selectedTemplate._id}`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' }
-                });
-                
-                if (questionsResponse.ok) {
-                  const data = await questionsResponse.json();
-                  setQuestions(data.questions);
-                  setInterviewPhase('assessment');
-                }
               } else {
                 setInterviewPhase('assessment');
               }
@@ -91,7 +77,7 @@ const TemplateBasedInterview = () => {
             alt="Background" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/40 to-indigo-900/40"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/30 to-indigo-900/30"></div>
         </div>
         
         <div className="relative z-10">
@@ -167,7 +153,7 @@ const TemplateBasedInterview = () => {
             alt="Background" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/40 to-indigo-900/40"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/30 to-indigo-900/30"></div>
         </div>
         
         <div className="relative z-10">
