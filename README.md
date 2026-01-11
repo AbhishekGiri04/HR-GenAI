@@ -4,7 +4,7 @@
 
 <h1>💡 HR-GenAI — AI-Powered Hiring Intelligence Platform</h1>
 
-<p style="color: #2563eb; margin: 15px 0; font-size: 1.1em;">🚀 A revolutionary AI-powered hiring intelligence platform that transforms recruitment by combining intelligent resume analysis, AI-driven voice interviews, and proprietary Digital DNA Profiling to deliver up to 95% accuracy in candidate evaluation—enabling faster, fairer, and data-driven hiring decisions at scale.</p>
+<p style="color: #2563eb; margin: 15px 0; font-size: 1.1em;">🚀 An enterprise-grade AI hiring platform that combines GPT-4 resume analysis, real-time voice interviews with Huma AI, and Digital DNA profiling to deliver 95% accurate candidate evaluations. Features automated workflows, bias-free assessments, predictive analytics, and comprehensive proctoring—transforming recruitment with intelligent automation at scale.</p>
 
 <p style="font-size: 1.2em; color: #1e40af; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 20px; border-radius: 12px; max-width: 800px; margin: 20px auto; line-height: 1.6; border-left: 4px solid #2563eb;">
 </p>
@@ -28,7 +28,7 @@
 
 <br/>
 
-The hiring industry is fundamentally broken. Traditional recruitment processes are plagued with inefficiencies that cost companies millions while missing top talent. HR teams spend 40+ hours per hire reading resumes manually, leading to overwhelmed staff and missed opportunities. With 90% of hiring decisions influenced by unconscious bias, diverse talent is systematically excluded, limiting innovation. The crisis deepens with 85% of resumes containing inaccurate information, making it impossible to trust candidate qualifications. Slow 45+ day hiring cycles result in losing top candidates to faster competitors, while surface-level interviews ignore personality and cultural alignment, leading to 33% turnover within 6 months. Each wrong hire costs 30% of annual salary ($18,000 for a $60K role), multiplying losses across organizations.
+Traditional recruitment is broken. HR teams waste 40+ hours per hire on manual resume screening, while 90% of decisions are influenced by unconscious bias, excluding diverse talent. With 85% of resumes containing inaccurate information and 45+ day hiring cycles, companies lose top candidates to faster competitors. Surface-level interviews ignore personality fit, causing 33% turnover within 6 months. Each wrong hire costs 30% of annual salary ($18,000 for a $60K role), multiplying losses across organizations. The industry needs intelligent automation to eliminate bias, accelerate hiring, and predict candidate success.
 
 ---
 
@@ -40,13 +40,14 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 **HR-GenAI revolutionizes hiring with intelligent automation and data-driven insights:**
 
-• **3.2 Second Resume Analysis** - GPT-4 powered extraction with 95% accuracy, eliminating hours of manual screening  
-• **AI Voice Interviewer (Huma)** - Conducts natural conversations, adapts questions dynamically, and analyzes voice patterns for confidence levels  
-• **100% Bias-Free Evaluation** - Objective AI assessment eliminates unconscious bias, ensuring fair evaluation for all candidates  
-• **Digital DNA Profiling** - MBTI personality analysis, OCEAN traits evaluation, and EQ scoring for comprehensive candidate insights  
-• **Real-Time Anti-Cheating** - Advanced proctoring with camera monitoring, screen sharing enforcement, and automatic violation detection  
-• **Predictive Analytics** - 91.5% accurate performance and retention predictions based on interview data and personality analysis  
-• **Automated Workflow** - Template-based interviews, bulk email invitations, and detailed PDF reports streamline the entire hiring process
+• **Instant Resume Analysis** - GPT-4 powered extraction with 95% accuracy in 3.2 seconds, eliminating manual screening  
+• **Huma AI Voice Interviewer** - Conducts natural conversations with dynamic questioning and real-time voice pattern analysis  
+• **Bias-Free Evaluation** - 100% objective AI assessment eliminates unconscious bias for fair candidate evaluation  
+• **Digital DNA Profiling** - Comprehensive personality analysis using MBTI, OCEAN traits, and EQ scoring  
+• **Advanced Proctoring** - Multi-layer monitoring with webcam, screen sharing, and automatic violation detection  
+• **Predictive Analytics** - 91.5% accurate performance and 6-month retention predictions  
+• **Automated Workflows** - Template-based interviews, bulk invitations, auto-scheduling, and PDF report generation  
+• **Smart Communication** - Automated offer/rejection letters with email notifications via Nodemailer
 
 ---
 
@@ -57,18 +58,22 @@ The hiring industry is fundamentally broken. Traditional recruitment processes a
 
 <br/>
 
-**Advanced AI-Powered Hiring Platform Features:**
+**Core Platform Features:**
 
-• **GPT-4 Resume Analysis** - Complete candidate profile extraction with 95% accuracy and red flag detection  
-• **Huma Voice AI** - Natural conversation interviewer with dynamic questioning and voice pattern analysis  
-• **Dynamic Question Engine** - Role-specific questions based on candidate background to prevent cheating  
-• **Multi-Layer Proctoring** - Webcam monitoring, screen sharing, and suspicious behavior detection  
-• **Personality & EQ Profiling** - MBTI framework, Big Five traits, and emotional intelligence scoring  
-• **Performance Prediction** - 91.5% accurate job performance and retention probability algorithms  
-• **Enterprise Dashboard** - Real-time analytics, candidate comparison, and customizable reporting  
-• **Smart Communication** - Automated email templates, scheduling, and PDF report generation  
-• **Template Management** - Reusable interview templates with custom scoring criteria  
-• **API Integration** - RESTful APIs and webhook support for existing HR systems
+• **GPT-4 Resume Parser** - Extracts name, email, phone, skills, experience, education with 95% accuracy and red flag detection  
+• **Huma AI Chatbot** - Real-time HR assistant powered by GPT-4 for policy queries, leave balance, and workplace support  
+• **Voice Interview System** - Web Speech API integration for natural conversation with dynamic question adaptation  
+• **Intelligent Question Generator** - Role-specific questions based on resume analysis to prevent cheating  
+• **Real-Time Proctoring** - Webcam monitoring, screen sharing enforcement, and automatic violation alerts  
+• **Digital DNA Profiling** - MBTI personality framework, Big Five OCEAN traits, and emotional intelligence scoring  
+• **Evaluation Engine** - Automated scoring with growth potential, retention prediction, and performance forecasting  
+• **Template Management** - Reusable interview templates with custom questions and scoring criteria  
+• **Auto-Scheduling** - Intelligent interview scheduling with email notifications and calendar integration  
+• **PDF Letter Generation** - Automated offer/rejection letters using PDFKit with professional formatting  
+• **Bulk Invitations** - Mass email campaigns via Nodemailer with template customization  
+• **Analytics Dashboard** - Real-time metrics, candidate comparison, and data visualization  
+• **WebSocket Support** - Real-time updates for interview status and notifications  
+• **RESTful API** - 52 endpoints across 13 routes for complete system integration
 
 ---
 
@@ -236,28 +241,64 @@ HR-GenAI/
 
 <table>
 <tr>
-<td><img src="docs/Loading_Page.png" width="100%"/><br/><b>Loading Screen</b></td>
-<td><img src="docs/Home_Page.png" width="100%"/><br/><b>Home Page</b></td>
+<td width="50%">
+  <img src="docs/Loading_Page.png" width="100%"/>
+  <p align="center"><b>Loading Screen</b></p>
+</td>
+<td width="50%">
+  <img src="docs/SignIn_Page.png" width="100%"/>
+  <p align="center"><b>Sign In Page</b></p>
+</td>
 </tr>
 <tr>
-<td><img src="docs/SignIn_Page.png" width="100%"/><br/><b>Sign In Page</b></td>
-<td><img src="docs/SignUp_Page.png" width="100%"/><br/><b>Sign Up Page</b></td>
+<td width="50%">
+  <img src="docs/SignUp_Page.png" width="100%"/>
+  <p align="center"><b>Sign Up Page</b></p>
+</td>
+<td width="50%">
+  <img src="docs/Home_Page.png" width="100%"/>
+  <p align="center"><b>Dashboard Home</b></p>
+</td>
 </tr>
 <tr>
-<td><img src="docs/HR-Dashboard.png" width="100%"/><br/><b>HR Dashboard</b></td>
-<td><img src="docs/Analytics-Dashboard.png" width="100%"/><br/><b>Analytics Dashboard</b></td>
+<td width="50%">
+  <img src="docs/HR-Dashboard.png" width="100%"/>
+  <p align="center"><b>HR Dashboard</b></p>
+</td>
+<td width="50%">
+  <img src="docs/Analytics-Dashboard.png" width="100%"/>
+  <p align="center"><b>Analytics Dashboard</b></p>
+</td>
 </tr>
 <tr>
-<td><img src="docs/Candidate_Page.png" width="100%"/><br/><b>Candidate Dashboard</b></td>
-<td><img src="docs/Assesment_Page.png" width="100%"/><br/><b>Assessment Selection</b></td>
+<td width="50%">
+  <img src="docs/Candidate_Page.png" width="100%"/>
+  <p align="center"><b>Candidate Profile</b></p>
+</td>
+<td width="50%">
+  <img src="docs/Assesment_Page.png" width="100%"/>
+  <p align="center"><b>Interview Assessment</b></p>
+</td>
 </tr>
 <tr>
-<td><img src="docs/Huma_Voice-AI.png" width="100%"/><br/><b>Huma AI Interviewer</b></td>
-<td><img src="docs/Proctoring_Setup.png" width="100%"/><br/><b>Proctoring Setup</b></td>
+<td width="50%">
+  <img src="docs/Huma_Voice-AI.png" width="100%"/>
+  <p align="center"><b>Huma AI Voice Interview</b></p>
+</td>
+<td width="50%">
+  <img src="docs/Proctoring_Setup.png" width="100%"/>
+  <p align="center"><b>Proctoring System</b></p>
+</td>
 </tr>
 <tr>
-<td><img src="docs/Settings.png" width="100%"/><br/><b>Settings Page</b></td>
-<td><img src="docs/Profile_Page.png" width="100%"/><br/><b>User Profile</b></td>
+<td width="50%">
+  <img src="docs/Settings.png" width="100%"/>
+  <p align="center"><b>Settings Page</b></p>
+</td>
+<td width="50%">
+  <img src="docs/Profile_Page.png" width="100%"/>
+  <p align="center"><b>User Profile</b></p>
+</td>
 </tr>
 </table>
 
@@ -273,80 +314,23 @@ HR-GenAI/
 ### Data Flow Diagram (DFD)
 
 ```mermaid
-graph TB
-    subgraph "User Layer"
-        HR[HR Manager]
-        CAND[Candidate]
-    end
+graph TD
+    A[HR Manager] -->|Upload Resume| B[Resume Processor<br/>GPT-4 Analysis]
+    B -->|Extracted Data| C[Candidate Database]
+    B -->|Profile Info| D[Huma AI Interviewer]
+    D -->|Voice Data| E[AI Analysis Engine<br/>Personality + EQ]
+    E -->|Results| F[Digital DNA Generator]
+    F -->|Final Report| G[Email Service]
+    G -->|Offer/Rejection Letter| H[Candidate]
     
-    subgraph "Frontend Layer - React (Port 3000)"
-        UI[React UI]
-        AUTH[Firebase Auth]
-        WS_CLIENT[WebSocket Client]
-    end
-    
-    subgraph "Backend Layer - Node.js (Port 5001)"
-        API[Express API Server]
-        WS_SERVER[WebSocket Server]
-        ROUTES[API Routes - 52 Endpoints]
-    end
-    
-    subgraph "AI Processing Layer"
-        GPT4[GPT-4 Engine]
-        GEMINI[Gemini AI Fallback]
-        RESUME_AI[Resume Analyzer]
-        QUESTION_GEN[Question Generator]
-        EVAL_ENGINE[Evaluation Engine]
-        DNA_GEN[DNA Profile Generator]
-    end
-    
-    subgraph "Services Layer"
-        EMAIL[Email Service]
-        PDF_GEN[PDF Generator]
-        SCHEDULER[Template Scheduler]
-        HUMA[Huma AI Chatbot]
-    end
-    
-    subgraph "Data Layer"
-        MONGO[(MongoDB)]
-        UPLOADS[File Storage]
-    end
-    
-    HR -->|Upload Resume| UI
-    CAND -->|Take Interview| UI
-    UI -->|API Calls| API
-    UI <-->|Real-time| WS_CLIENT
-    WS_CLIENT <-->|WebSocket| WS_SERVER
-    
-    API --> ROUTES
-    ROUTES -->|Resume Processing| RESUME_AI
-    RESUME_AI -->|GPT-4 Analysis| GPT4
-    RESUME_AI -->|Fallback| GEMINI
-    
-    ROUTES -->|Generate Questions| QUESTION_GEN
-    QUESTION_GEN --> GPT4
-    
-    ROUTES -->|Evaluate Interview| EVAL_ENGINE
-    EVAL_ENGINE -->|Create Profile| DNA_GEN
-    
-    ROUTES -->|Send Emails| EMAIL
-    ROUTES -->|Generate Letters| PDF_GEN
-    ROUTES -->|Schedule Interviews| SCHEDULER
-    ROUTES -->|Chat Support| HUMA
-    
-    API <-->|CRUD Operations| MONGO
-    API <-->|File Operations| UPLOADS
-    
-    EMAIL -->|Offer/Rejection| CAND
-    PDF_GEN -->|Store Letters| UPLOADS
-    
-    style HR fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
-    style CAND fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
-    style UI fill:#FFF9C4,stroke:#FFC107,stroke-width:2px
-    style API fill:#E0F2F1,stroke:#009688,stroke-width:2px
-    style GPT4 fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
-    style MONGO fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px
-    style EMAIL fill:#FFCCBC,stroke:#FF5722,stroke-width:2px
+    style A fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
+    style B fill:#FFF9C4,stroke:#FFC107,stroke-width:2px
+    style C fill:#E0F2F1,stroke:#009688,stroke-width:2px
+    style D fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
+    style E fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px
+    style F fill:#FFCCBC,stroke:#FF5722,stroke-width:2px
+    style G fill:#FCE4EC,stroke:#E91E63,stroke-width:2px
+    style H fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
 ```
 
 </div>
