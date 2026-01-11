@@ -9,7 +9,7 @@ class EmailService {
   initTransporter() {
     try {
       if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        console.log('❌ Gmail credentials not configured - Email service disabled');
+        console.log(' Gmail credentials not configured - Email service disabled');
         return;
       }
 
@@ -30,7 +30,7 @@ class EmailService {
       console.log('📧 Email service initialized (connection will be tested on first send)');
         
     } catch (error) {
-      console.log('❌ Email service initialization failed:', error.message);
+      console.log(' Email service initialization failed:', error.message);
       this.transporter = null;
     }
   }
@@ -44,7 +44,7 @@ class EmailService {
       const mailOptions = {
         from: process.env.EMAIL_USER || 'HR-GenAI <noreply@hrgenai.com>',
         to: candidate.email,
-        subject: `🎉 Congratulations! Job Offer - ${candidate.name}`,
+        subject: ` Congratulations! Job Offer - ${candidate.name}`,
         html: `
 <!DOCTYPE html>
 <html>
@@ -62,7 +62,7 @@ class EmailService {
 <body>
   <div class="container">
     <div class="header">
-      <h1>🎉 Congratulations!</h1>
+      <h1> Congratulations!</h1>
       <p>You've been selected for our team!</p>
     </div>
     
@@ -72,7 +72,7 @@ class EmailService {
       <p>We are thrilled to extend a job offer to you based on your outstanding performance in our AI-powered interview process!</p>
       
       <div class="offer-details">
-        <h3>🏆 Your Interview Results</h3>
+        <h3> Your Interview Results</h3>
         <p><strong>Overall Score:</strong> ${candidate.interviewScore || 'Excellent'}/100</p>
         <p><strong>Growth Potential:</strong> ${candidate.growthPotential || 'High'}%</p>
         <p><strong>Retention Score:</strong> ${candidate.retentionScore || 'High'}%</p>
@@ -81,10 +81,10 @@ class EmailService {
       
       <p>Your skills, experience, and personality make you an excellent fit for our organization. We believe you will make significant contributions to our team.</p>
       
-      <p><strong>📎 Please find your detailed offer letter attached to this email.</strong></p>
+      <p><strong> Please find your detailed offer letter attached to this email.</strong></p>
       
       <div class="offer-details">
-        <h3>📋 Next Steps</h3>
+        <h3> Next Steps</h3>
         <ul>
           <li>Review the attached offer letter carefully</li>
           <li>Confirm your acceptance within 7 days</li>
@@ -113,7 +113,7 @@ class EmailService {
       };
 
       await this.transporter.sendMail(mailOptions);
-      console.log(`✅ Offer letter sent to ${candidate.email}`);
+      console.log(` Offer letter sent to ${candidate.email}`);
       return true;
     } catch (error) {
       console.error('Offer email error:', error);
@@ -157,7 +157,7 @@ class EmailService {
       <p>Thank you for participating in our AI-powered interview process. We appreciate the time and effort you invested.</p>
       
       <div class="results-details">
-        <h3>📊 Your Interview Results</h3>
+        <h3> Your Interview Results</h3>
         <p><strong>Overall Score:</strong> ${candidate.interviewScore || 'N/A'}/100</p>
         <p><strong>Growth Potential:</strong> ${candidate.growthPotential || 'N/A'}%</p>
         <p><strong>Areas of Strength:</strong> ${candidate.interviewSummary?.strengths?.slice(0, 2).join(', ') || 'Multiple areas assessed'}</p>
@@ -165,7 +165,7 @@ class EmailService {
       
       <p>After careful consideration, we have decided to move forward with other candidates whose qualifications more closely match our current requirements.</p>
       
-      <p><strong>📎 Please find your detailed feedback letter attached to this email.</strong></p>
+      <p><strong> Please find your detailed feedback letter attached to this email.</strong></p>
       
       <p>We encourage you to continue developing your skills and consider applying for future opportunities that may be a better fit.</p>
       
@@ -190,7 +190,7 @@ class EmailService {
       };
 
       await this.transporter.sendMail(mailOptions);
-      console.log(`✅ Rejection letter sent to ${candidate.email}`);
+      console.log(` Rejection letter sent to ${candidate.email}`);
       return true;
     } catch (error) {
       console.error('Rejection email error:', error);
@@ -198,7 +198,7 @@ class EmailService {
     }
   }
 
-  async sendInterviewInvitation({ candidateName, candidateEmail, interviewDate, interviewTime, interviewLink, hrEmail }) {
+  async sendInterviewInvitation({ candidateName, candidateEmail, templateName, templateDuration, templateDifficulty, interviewLink, customMessage }) {
     if (!this.transporter) {
       console.log('Email service not configured - skipping invitation email');
       return false;
@@ -207,74 +207,134 @@ class EmailService {
       const mailOptions = {
         from: process.env.EMAIL_USER || 'HR-GenAI <noreply@hrgenai.com>',
         to: candidateEmail,
-        cc: hrEmail,
-        subject: `🎯 Interview Invitation - ${candidateName}`,
+        subject: `Interview Invitation - ${templateName} Position`,
         html: `
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
-    .interview-details { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea; }
-    .cta-button { display: inline-block; background: #667eea; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 20px 0; }
-    .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; padding: 20px; }
+    .email-container { max-width: 650px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; }
+    .header h1 { color: white; font-size: 28px; margin-bottom: 8px; font-weight: 700; }
+    .header p { color: rgba(255,255,255,0.9); font-size: 16px; }
+    .content { padding: 40px 30px; }
+    .greeting { font-size: 20px; color: #1a202c; margin-bottom: 20px; font-weight: 600; }
+    .intro { color: #4a5568; line-height: 1.8; margin-bottom: 30px; font-size: 15px; }
+    .info-box { background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); border-left: 4px solid #667eea; padding: 25px; border-radius: 8px; margin: 25px 0; }
+    .info-box h3 { color: #2d3748; font-size: 18px; margin-bottom: 15px; font-weight: 600; }
+    .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #718096; font-weight: 500; }
+    .info-value { color: #2d3748; font-weight: 600; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 30px 0; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: transform 0.2s; }
+    .cta-button:hover { transform: translateY(-2px); }
+    .features { margin: 30px 0; }
+    .feature-item { display: flex; align-items: start; margin: 15px 0; }
+    .feature-icon { width: 24px; height: 24px; background: #667eea; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 12px; flex-shrink: 0; }
+    .feature-text { color: #4a5568; line-height: 1.6; }
+    .instructions { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 8px; margin: 25px 0; }
+    .instructions h3 { color: #92400e; margin-bottom: 15px; font-size: 16px; font-weight: 600; }
+    .instructions ul { list-style: none; }
+    .instructions li { color: #78350f; margin: 8px 0; padding-left: 20px; position: relative; }
+    .instructions li:before { content: '✓'; position: absolute; left: 0; color: #f59e0b; font-weight: bold; }
+    .custom-message { background: #e6fffa; border-left: 4px solid #38b2ac; padding: 20px; border-radius: 8px; margin: 25px 0; color: #234e52; line-height: 1.8; }
+    .footer { background: #f7fafc; padding: 30px; text-align: center; border-top: 1px solid #e2e8f0; }
+    .footer p { color: #718096; font-size: 13px; margin: 5px 0; }
+    .footer a { color: #667eea; text-decoration: none; }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="email-container">
     <div class="header">
-      <h1>🧬 HR-GenAI</h1>
-      <p>AI-Powered Interview Invitation</p>
+      <h1>HR-GenAI</h1>
+      <p>AI-Powered Hiring Intelligence Platform</p>
     </div>
     
     <div class="content">
-      <h2>Hello ${candidateName}! 👋</h2>
+      <div class="greeting">Dear ${candidateName},</div>
       
-      <p>Congratulations! You have been selected for an AI-powered interview with our HR-GenAI platform.</p>
+      <p class="intro">
+        We are pleased to invite you to participate in our AI-powered interview process for the <strong>${templateName}</strong> position. 
+        This is an exciting opportunity to showcase your skills through our innovative interview platform.
+      </p>
       
-      <div class="interview-details">
-        <h3>📅 Interview Details</h3>
-        <p><strong>Date:</strong> ${interviewDate}</p>
-        <p><strong>Time:</strong> ${interviewTime}</p>
-        <p><strong>Duration:</strong> Approximately 60 minutes</p>
-        <p><strong>Type:</strong> AI Voice Interview with Huma</p>
+      ${customMessage ? `<div class="custom-message"><strong>Message from HR:</strong><br>${customMessage}</div>` : ''}
+      
+      <div class="info-box">
+        <h3>Interview Details</h3>
+        <div class="info-row">
+          <span class="info-label">Position</span>
+          <span class="info-value">${templateName}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Duration</span>
+          <span class="info-value">${templateDuration} minutes</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Difficulty Level</span>
+          <span class="info-value">${templateDifficulty}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Interview Type</span>
+          <span class="info-value">AI-Powered Voice Interview</span>
+        </div>
       </div>
-      
-      <p>Our AI interviewer, Huma, will conduct a comprehensive assessment including:</p>
-      <ul>
-        <li>🎯 Role-specific technical questions</li>
-        <li>🧠 Personality and EQ evaluation</li>
-        <li>💬 Natural conversation assessment</li>
-        <li>📊 Real-time performance analysis</li>
-      </ul>
       
       <div style="text-align: center;">
-        <a href="${interviewLink}" class="cta-button">🚀 Start Your Interview</a>
+        <a href="${interviewLink}" class="cta-button">Start Interview</a>
       </div>
       
-      <div class="interview-details">
-        <h3>📋 Before You Start</h3>
+      <div class="features">
+        <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 18px;">What to Expect</h3>
+        <div class="feature-item">
+          <div class="feature-icon">1</div>
+          <div class="feature-text"><strong>AI Interviewer (Huma):</strong> Our intelligent AI will conduct a natural conversation with you</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">2</div>
+          <div class="feature-text"><strong>Real-time Proctoring:</strong> Camera and screen monitoring for interview integrity</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">3</div>
+          <div class="feature-text"><strong>Comprehensive Assessment:</strong> Technical skills, personality, and emotional intelligence evaluation</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">4</div>
+          <div class="feature-text"><strong>Instant Feedback:</strong> Receive detailed results and performance analysis</div>
+        </div>
+      </div>
+      
+      <div class="instructions">
+        <h3>Before You Begin</h3>
         <ul>
-          <li>Ensure stable internet connection</li>
-          <li>Use Chrome or Firefox browser</li>
-          <li>Enable camera and microphone access</li>
+          <li>Ensure you have a stable internet connection</li>
+          <li>Use Google Chrome or Firefox browser for best experience</li>
+          <li>Enable camera and microphone permissions</li>
           <li>Find a quiet, well-lit environment</li>
+          <li>Keep your government ID ready for verification</li>
+          <li>Do not switch tabs or windows during the interview</li>
         </ul>
       </div>
       
-      <p>If you have any questions or need to reschedule, please contact our HR team immediately.</p>
+      <p class="intro">
+        If you have any questions or need assistance, please don't hesitate to contact our HR team.
+      </p>
       
-      <p>Best of luck with your interview!</p>
-      
-      <p>Best regards,<br><strong>HR-GenAI Team</strong></p>
+      <p style="color: #2d3748; margin-top: 30px;">
+        Best regards,<br>
+        <strong>HR Team</strong><br>
+        HR-GenAI Platform
+      </p>
     </div>
     
     <div class="footer">
-      <p>© 2025 HR-GenAI. All Rights Reserved.</p>
-      <p>Interview Link: <a href="${interviewLink}">${interviewLink}</a></p>
+      <p><strong>HR-GenAI</strong> - AI-Powered Hiring Intelligence Platform</p>
+      <p>© 2025 HR-GenAI. All rights reserved.</p>
+      <p style="margin-top: 15px; font-size: 12px;">This is an automated email. Please do not reply directly to this message.</p>
     </div>
   </div>
 </body>
@@ -284,7 +344,7 @@ class EmailService {
 
       if (this.transporter) {
         await this.transporter.sendMail(mailOptions);
-        console.log(`✅ Interview invitation sent to ${candidateEmail}`);
+        console.log(`Interview invitation sent to ${candidateEmail}`);
       }
       return true;
     } catch (error) {
@@ -307,7 +367,7 @@ class EmailService {
       const mailOptions = {
         from: process.env.EMAIL_USER || 'HR-GenAI <noreply@hrgenai.com>',
         to: candidate.email,
-        subject: passed ? `🎉 Congratulations! Interview Passed - ${candidate.name}` : `Interview Completed - ${candidate.name}`,
+        subject: passed ? ` Congratulations! Interview Passed - ${candidate.name}` : `Interview Completed - ${candidate.name}`,
         html: `
 <!DOCTYPE html>
 <html>
@@ -332,12 +392,12 @@ class EmailService {
 <body>
   <div class="container">
     <div class="header">
-      <h1>🧬 HR-GenAI</h1>
+      <h1> HR-GenAI</h1>
       <p>AI-Powered Hiring Intelligence</p>
     </div>
     
     <div class="content">
-      <h2>Hello ${candidate.name}! 👋</h2>
+      <h2>Hello ${candidate.name}! </h2>
       
       <p>Thank you for completing your AI interview with HR-GenAI. Here's your comprehensive evaluation:</p>
       
@@ -346,12 +406,12 @@ class EmailService {
       </div>
       
       <div class="section">
-        <h3>📋 Interview Summary</h3>
+        <h3> Interview Summary</h3>
         <p>${summary?.summary || 'Your interview has been completed and is under review.'}</p>
       </div>
       
       <div class="section">
-        <h3>✅ Your Strengths</h3>
+        <h3> Your Strengths</h3>
         <div class="list">
           <ul>
             ${summary?.strengths?.map(s => `<li>${s}</li>`).join('') || '<li>Analysis in progress</li>'}
@@ -360,7 +420,7 @@ class EmailService {
       </div>
       
       <div class="section">
-        <h3>📈 Areas for Improvement</h3>
+        <h3> Areas for Improvement</h3>
         <div class="list">
           <ul>
             ${summary?.weaknesses?.map(w => `<li>${w}</li>`).join('') || '<li>Analysis in progress</li>'}
@@ -369,12 +429,12 @@ class EmailService {
       </div>
       
       <div class="section">
-        <h3>🎯 Recommended Role</h3>
+        <h3> Recommended Role</h3>
         <p><strong>${summary?.recommendedRole || 'To be determined'}</strong></p>
       </div>
       
       <div class="section">
-        <h3>📊 Your Scores</h3>
+        <h3> Your Scores</h3>
         <div class="list">
           <ul>
             <li><strong>Overall Score:</strong> ${candidate.skillDNA?.overallScore || 'N/A'}/100</li>
@@ -385,7 +445,7 @@ class EmailService {
       </div>
       
       <div class="section">
-        <h3>🔮 Next Steps</h3>
+        <h3> Next Steps</h3>
         <div class="list">
           <ul>
             ${summary?.nextSteps?.map(s => `<li>${s}</li>`).join('') || '<li>Our HR team will contact you soon</li>'}
@@ -410,7 +470,7 @@ class EmailService {
 
       if (this.transporter) {
         await this.transporter.sendMail(mailOptions);
-        console.log(`✅ Email sent to ${candidate.email}`);
+        console.log(` Email sent to ${candidate.email}`);
         
 
       }
@@ -423,7 +483,7 @@ class EmailService {
 
   async sendEmail(to, subject, text) {
     if (!this.transporter) {
-      console.log('⚠️ Email not sent (service not configured)');
+      console.log(' Email not sent (service not configured)');
       return false;
     }
     try {
@@ -433,7 +493,7 @@ class EmailService {
         subject,
         text
       });
-      console.log(`✅ Email sent to ${to}`);
+      console.log(` Email sent to ${to}`);
       return true;
     } catch (error) {
       console.error('Email error:', error.message);

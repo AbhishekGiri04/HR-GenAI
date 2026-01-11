@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calculator, Mail, FileText, Award, TrendingUp, Users } from 'lucide-react';
+import showToast from '../utils/toast';
 
 const CandidateEvaluation = ({ candidate, onEvaluate }) => {
   const [loading, setLoading] = useState(false);
@@ -28,7 +29,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
 
   const handleEvaluate = async () => {
     if (!candidate._id) {
-      alert('Candidate ID not found');
+      showToast('Error\n\nCandidate ID not found', 'error');
       return;
     }
 
@@ -55,19 +56,16 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
         setEvaluated(true);
         if (onEvaluate) onEvaluate(data.data.evaluation);
         
-        // Show professional success message
         const letterType = data.data.status === 'offered' ? 'Offer' : 'Rejection';
-        const message = `Evaluation Complete\n\nCandidate has been successfully evaluated.\n${letterType} letter has been sent to ${candidate.email}.`;
-        alert(message);
+        showToast(`Success\n\nCandidate has been successfully evaluated.\n${letterType} letter has been sent to ${candidate.email}.`, 'success');
         
-        // Refresh page to show updated scores
         setTimeout(() => window.location.reload(), 2000);
       } else {
         throw new Error(data.error || 'Evaluation failed');
       }
     } catch (error) {
       console.error('Evaluation error:', error);
-      alert(`Evaluation Error\n\nUnable to evaluate candidate.\nReason: ${error.message}`);
+      showToast(`Error\n\nUnable to evaluate candidate.\n${error.message}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -75,7 +73,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
 
   const handleRecalculate = async () => {
     if (!candidate._id) {
-      alert('Candidate ID not found');
+      showToast('Error\n\nCandidate ID not found', 'error');
       return;
     }
 
@@ -102,13 +100,13 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
         });
         
         if (onEvaluate) onEvaluate(data.data);
-        alert('Score Recalculation Complete\n\nAll scores have been successfully recalculated based on interview performance.');
+        showToast('Success\n\nAll scores have been successfully recalculated based on interview performance.', 'success');
       } else {
         throw new Error(data.error || 'Recalculation failed');
       }
     } catch (error) {
       console.error('Recalculation error:', error);
-      alert(`Recalculation Error\n\nUnable to recalculate scores.\nReason: ${error.message}`);
+      showToast(`Error\n\nUnable to recalculate scores.\n${error.message}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -116,7 +114,7 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
 
   const downloadLetter = async (type) => {
     if (!candidate._id) {
-      alert('Candidate ID not found');
+      showToast('Error\n\nCandidate ID not found', 'error');
       return;
     }
     
@@ -145,10 +143,10 @@ const CandidateEvaluation = ({ candidate, onEvaluate }) => {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
       
-      alert(`Letter Download Complete\n\n${type.charAt(0).toUpperCase() + type.slice(1)} letter has been downloaded successfully.`);
+      showToast(`Success\n\n${type.charAt(0).toUpperCase() + type.slice(1)} letter has been downloaded successfully.`, 'success');
     } catch (error) {
       console.error('Download error:', error);
-      alert(`Download Error\n\nUnable to download ${type} letter.\nReason: ${error.message}`);
+      showToast(`Error\n\nUnable to download ${type} letter.\n${error.message}`, 'error');
     }
   };
 

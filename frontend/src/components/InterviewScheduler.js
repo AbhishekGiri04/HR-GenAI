@@ -65,14 +65,14 @@ const InterviewScheduler = () => {
       
       const data = await response.json();
       if (data.success) {
-        alert('✅ Daily capacity updated successfully!');
+        alert('Daily capacity updated successfully!');
         fetchSchedule();
       } else {
-        alert('❌ Failed to update capacity: ' + (data.error || 'Unknown error'));
+        alert('Failed to update capacity: ' + (data.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error updating capacity:', error);
-      alert('❌ Failed to update capacity');
+      alert('Failed to update capacity');
     } finally {
       setLoading(false);
     }
@@ -102,9 +102,8 @@ const InterviewScheduler = () => {
         ? 'https://hrgen-dev.onrender.com' 
         : 'http://localhost:5001';
 
-      addProgress('🤖 AI Creating Template...');
+      addProgress('AI Creating Template...');
       
-      // Use the original auto-hire endpoint
       const response = await fetch(`${API_BASE}/api/auto-hire`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -117,13 +116,13 @@ const InterviewScheduler = () => {
       const data = await response.json();
 
       if (response.ok) {
-        addProgress(`✓ Template Created: ${data.templateName}`);
+        addProgress(`Template Created: ${data.templateName}`);
         await new Promise(resolve => setTimeout(resolve, 800));
-        addProgress('✓ Template Auto-Deployed');
+        addProgress('Template Auto-Deployed');
         await new Promise(resolve => setTimeout(resolve, 800));
-        addProgress(`✓ Emails Sent: ${data.emailsSent}/${data.totalEmails}`);
+        addProgress(`Emails Sent: ${data.emailsSent}/${data.totalEmails}`);
         await new Promise(resolve => setTimeout(resolve, 500));
-        addProgress(`🎉 Done! ${data.emailsSent} candidates invited.`);
+        addProgress(`Done! ${data.emailsSent} candidates invited.`);
         
         setTimeout(() => {
           setCandidateEmails('');
@@ -138,7 +137,7 @@ const InterviewScheduler = () => {
       fetchNextSlot();
     } catch (error) {
       console.error('Error starting AI hire:', error);
-      addProgress('✗ ' + error.message);
+      addProgress('Error: ' + error.message);
     } finally {
       setLoading(false);
     }
