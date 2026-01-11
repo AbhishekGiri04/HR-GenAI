@@ -25,17 +25,15 @@ const TemplateBasedInterview = () => {
           const candidate = await candidateResponse.json();
           setCandidateData(candidate);
           
-          // Fetch all deployed templates
-          const templatesResponse = await fetch(`${API_URL}/api/hr/templates/deployed/public?candidateId=${candidateId}`);
-          if (templatesResponse.ok) {
-            const templates = await templatesResponse.json();
-            if (templates.length > 0) {
-              // Always show template selection if templates exist
-              if (!template) {
+          // Only fetch templates if no template was passed from location state
+          if (!locationTemplate) {
+            const templatesResponse = await fetch(`${API_URL}/api/hr/templates/deployed/public?candidateId=${candidateId}`);
+            if (templatesResponse.ok) {
+              const templates = await templatesResponse.json();
+              console.log('Fetched templates:', templates.length);
+              if (templates.length > 0) {
                 setInterviewPhase('template-selection');
                 setTemplate(templates);
-              } else {
-                setInterviewPhase('assessment');
               }
             }
           } else {
@@ -54,7 +52,7 @@ const TemplateBasedInterview = () => {
     } else {
       setLoading(false);
     }
-  }, [candidateId, template]);
+  }, [candidateId]);
 
   if (loading) {
     return (
