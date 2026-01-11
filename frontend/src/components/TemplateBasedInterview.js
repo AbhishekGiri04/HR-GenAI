@@ -132,64 +132,62 @@ const TemplateBasedInterview = () => {
 
   if (interviewPhase === 'setup') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-        <Header />
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-800 mb-4">{template.name} Assessment</h1>
-              <p className="text-gray-600 text-lg">
-                {isMixedInterview && 'Mixed Interview: Voice + Text Questions'}
-                {isVoiceInterview && 'Voice Interview with AI'}
-                {isTextInterview && 'Text-based Cultural Interview'}
-              </p>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
-                <p className="text-blue-800 text-sm">
-                  {isMixedInterview && `🎤 ${voiceQuestions.length} Voice Questions + 📝 ${textQuestions.length} Text Questions`}
-                  {isVoiceInterview && '🎤 Voice interview with AI conversation'}
-                  {isTextInterview && '📝 Timed text questions with proctoring'}
-                </p>
-              </div>
-            </div>
+      <TimedCulturalInterview 
+        questions={questions}
+        candidateInfo={candidateData || {
+          personalInfo: { 
+            name: candidateData?.skillDNA?.personalInfo?.name || candidateData?.personalInfo?.name || 'Candidate',
+            profilePicture: candidateData?.skillDNA?.personalInfo?.profilePicture || candidateData?.personalInfo?.profilePicture
+          },
+          skillDNA: candidateData?.skillDNA,
+          position: template?.name || 'Interview'
+        }}
+        onComplete={async (answers) => {
+          console.log('📝 Interview completed with', answers.length, 'answers');
+          setTextAnswers(answers);
+          
+          try {
+            const saveResponse = await fetch(`${API_URL}/api/candidates/${candidateId}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                appliedFor: template?.name,
+                templateId: template?._id,
+                interviewResponses: answers,
+                status: 'interviewed',
+                $addToSet: { completedTemplates: template?._id }
+              })
+            });
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-blue-50 p-6 rounded-xl text-center">
-                <Clock className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-800 mb-2">Duration</h3>
-                <p className="text-blue-600 font-bold">{template.duration} minutes</p>
-              </div>
+            if (saveResponse.ok) {
+              console.log('✅ Interview responses saved');
               
-              <div className="bg-green-50 p-6 rounded-xl text-center">
-                <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-800 mb-2">Questions</h3>
-                <p className="text-green-600 font-bold">{questions.length} total</p>
-              </div>
+              const evalResponse = await fetch(`${API_URL}/api/analysis/evaluate-interview`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  candidateId,
+                  templateId: template?._id,
+                  answers
+                })
+              });
               
-              <div className="bg-purple-50 p-6 rounded-xl text-center">
-                <AlertCircle className="w-8 h-8 text-purple-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-800 mb-2">Passing Score</h3>
-                <p className="text-purple-600 font-bold">{template.passingScore}%</p>
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <button
-                onClick={() => {
-                  if (isMixedInterview && voiceQuestions.length > 0) {
-                    setInterviewPhase('voice-interview');
-                  } else {
-                    setInterviewPhase('text-interview');
-                  }
-                }}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl hover:shadow-lg transition-all font-semibold text-lg flex items-center space-x-3 mx-auto"
-              >
-                <Play className="w-5 h-5" />
-                <span>Start Interview</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+              if (evalResponse.ok) {
+                const evalResult = await evalResponse.json();
+                console.log('✅ Interview evaluated, score:', evalResult.score);
+              }
+            }
+          } catch (error) {
+            console.error('Failed to save/evaluate interview:', error);
+          }
+          
+          setInterviewPhase('completed');
+          setTimeout(() => {
+            navigate(`/genome/${candidateId}`);
+          }, 3000);
+        }}
+        template={template}
+      />
     );
   }
 
